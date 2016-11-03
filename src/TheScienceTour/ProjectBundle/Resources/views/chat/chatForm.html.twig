@@ -1,0 +1,38 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans%}{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% block form_title %}{% endblock %}</h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="project_chat_form_content" class="center">
+	<form class="w600p" {%  block form_action %}{% endblock %} method="post">
+		<div class="form-row">
+			<label class="label-big" for="message">Message</label>
+			{% if error_message %}
+				<div class="error">{{ error_message }}</div>
+			{% endif %}
+			<textarea rows="10" class="w99 tinymce" rows="5" name="message">{{ mess }}</textarea>
+		</div>
+		<div class="form-row txtright">
+			{% block form_checkbox %}{% endblock %}
+			<input class="middle" type="submit" value="{% trans %}Send{% endtrans %}" />
+		</div>
+	</form>
+</div>
+
+{{ tinymce_init() }}
+{% endblock %}

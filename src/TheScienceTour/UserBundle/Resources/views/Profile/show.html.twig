@@ -1,0 +1,251 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{%  block scripts %}
+<script>
+	function show(id) {
+	
+		var tabsul = document.getElementById('tabs');
+		var containers = document.getElementsByClassName('tab-container');
+
+		for (var i=0; i<containers.length; i++) {
+			if (i==id) {
+				tabsul.children[i].className = 'active';
+				containers[i].style.display = 'block';
+			} else {
+				tabsul.children[i].className = '';
+				containers[i].style.display = 'none';
+			}
+		}
+	}
+	
+</script>			
+{% endblock %}
+
+{% block banner %}
+{{ parent() }}
+
+<div class="profile_panel">
+	<div class="profile_panel_avatar">
+    {% if user.avatar is null %}
+		<img title="{{ user.username }}" width="120" height="120" src="{{ asset('img/test_avatar50.png') }}" alt="" />
+	{% else %}
+		{% thumbnail user.avatar, 'big' %}
+	{% endif %}
+	</div>
+	
+	<div class="profile_panel_content">
+		<a href="{{ path('fos_user_profile_edit') }}" class="profile_edit_link">{% trans %}Edit{% endtrans %}</a>
+		<header class="profile_panel_header">
+			<h1 class="profile_panel_username txtshadowed">{{ user.username }}</h1>
+			<p class="profile_panel_city txtshadowed">{{ user.city }}</p>
+		</header>
+		<p class="profile_panel_description txtshadowed">{{ user.description }}</p>
+	</div>
+
+	<div class="banner-overlay">
+		<div class="banner-overlay-box">
+			<h2 class="profile_numbers">{% trans %}In figures{% endtrans %}</h2>
+			<ul class="banner-overlay-nav">
+				<li>
+					<div>
+						<b class="profile_number">{{ createdProjects.count }}</b> {% trans %}Created projects{% endtrans %}
+					</div>
+				</li>
+				<li>
+					<div>
+						<b class="profile_number">{{ contribProjects.count }}</b> {% trans %}Contributions{% endtrans %}
+					</div>
+				</li>
+				{#
+				<li>
+					<div>
+						<b class="profile_number">-</b> {% trans %}Skills{% endtrans %}
+					</div>
+				</li>
+				#}
+			</ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block fos_user_content %}
+
+<ul id="tabs" class="tabs">
+	<li{% if tab == "mychats" %} class="active"{% endif %}><a href="javascript:show(0);"><h1>{% trans %}My chats{% endtrans %}{% if app.user.numberOf("chat") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("chat")}}</div>{% endif %}</h1></a></li>
+	<li{% if tab == "myprojects" %} class="active"{% endif %}><a href="javascript:show(1);"><h1>{% trans %}My projects{% endtrans %}{% if app.user.numberOf("project") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("project")}}</div>{% endif %}</h1></a></li>
+	<li{% if tab == "mydrafts" %} class="active"{% endif %}><a href="javascript:show(2);"><h1>{% trans %}My drafts{% endtrans %}</h1></a></li>
+	{#<li{% if tab == "myskills" %} class="active"{% endif %}><a href="javascript:show(3);"><h1>{% trans %}My skills{% endtrans %}</h1></a></li>#}
+	{% if is_granted('ROLE_SUPER_ANIM') %}
+	<li{% if tab == "mychallenges" %} class="active"{% endif %}><a href="javascript:show(3);"><h1>{% trans %}My challenges{% endtrans %}{% if app.user.numberOf("challenge") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("challenge")}}</div>{% endif %}</h1></a></li>
+	{% elseif is_granted('ROLE_RESEARCHER') %}
+	<li{% if tab == "mypublicinfo" %} class="active"{% endif %}><a href="javascript:show(3);"><h1>{% trans %}My public information{% endtrans %}</h1></a></li>
+	{% elseif is_granted('ROLE_SUPER_ANIM') and is_granted('ROLE_RESEARCHER') %}
+	<li{% if tab == "mychallenges" %} class="active"{% endif %}><a href="javascript:show(3);"><h1>{% trans %}My challenges{% endtrans %}{% if app.user.numberOf("challenge") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("challenge")}}</div>{% endif %}</h1></a></li>
+	<li{% if tab == "mypublicinfo" %} class="active"{% endif %}><a href="javascript:show(4);"><h1>{% trans %}My public information{% endtrans %}</h1></a></li>
+	{% endif %}
+</ul>
+
+<div class="tab-container"{% if tab != "mychats" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}My chats{% endtrans %}</h1>
+		{% if myChats.count > 0 %}
+			{% for chat in myChats %}
+				<div class="admin_helper w100">
+					<a href="{{ path('fos_user_profile_chat', {'id' : chat.id}) }}" alt="">
+						<h2>{{ chat.title }}<span>
+						{% for user in chat.users %}
+							{% if user != app.user %}
+								{% if user.avatar is null %}
+								<img src="{{ asset('img/test_avatar25.png') }}" alt="" />
+								{% else%}
+								{% thumbnail user.avatar, 'tiny' %}
+								{% endif %}
+								{{ user.username }}
+							{% endif %}
+						{% endfor %}
+						{% if chat.messages|length > 0 %}
+						- {{ chat.messages.last.createdAt | localizeddate('short', 'short') }}
+						{% endif %}
+						</span>
+						{% if app.user.numberOf("chat", chat.id) > 0 %}<div class="notif bgRed">{{ app.user.numberOf("chat", chat.id)}}</div>{% endif %}
+						</h2>
+						<p class="overview nomargin">
+							{% if chat.messages|length > 0 %}
+								{% if app.user in chat.messages.last.unreadBy %}
+								<b>{{ chat.messages.last.content|purify('no_html') }}</b>
+								{% else %}
+								{% if app.user == chat.messages.last.author %}<i class="icon-reply mgr5p"></i> {% endif %}{{ chat.messages.last.content|purify('no_html') }}
+								{% endif %}
+							{% endif %}
+						</p>
+					</a>
+					{% if not loop.last %}
+					<hr/>
+					{% endif %}
+				</div>
+			{% endfor %}
+		{% else %}
+			<p>{% trans %}No chat{% endtrans %}</p>
+		{% endif %}
+	</div>
+</div>
+<div class="tab-container"{% if tab != "myprojects" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		{% if is_granted('ROLE_RESEARCHER') %}
+			<h1>{% trans %}Projects I sponsor{% endtrans %}</h1>
+			{% if sponsoredProjects.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': sponsoredProjects, 'nbByRow': 4, 'mgr': 2 })) }}
+			{% else %}
+			<p>{% trans %}No sponsored project{% endtrans %}</p>
+			{% endif %}
+		{% endif %}
+		<h1>{% trans %}Projects I have created{% endtrans %}</h1>
+		{% if createdProjects.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': createdProjects, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No created project{% endtrans %}</p>
+		{% endif %}
+		<h1>{% trans %}Projects I contribute to{% endtrans %}</h1>
+		{% if contribProjects.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': contribProjects, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No contribution{% endtrans %}</p>
+		{% endif %}
+		<h1>{% trans %}Projects I support{% endtrans %}</h1>
+		{% if supportedProjects.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': supportedProjects, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No supported project{% endtrans %}</p>
+		{% endif %}
+		<h1>{% trans %}Projects I follow{% endtrans %}</h1>
+		{% if followedProjects.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': followedProjects, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No followed project{% endtrans %}</p>
+		{% endif %}
+	</div>
+</div>
+<div class="tab-container"{% if tab != "mydrafts" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}My drafts{% endtrans %}</h1>
+		{% if drafts.count > 0 %}
+			{{ render(controller('TheScienceTourProjectBundle:Project:draftPanels', { 'projectList': drafts })) }}
+		{% else %}
+			<p>{% trans %}No draft{% endtrans %}</p>
+		{% endif %}
+		<a class="profile_add_draft" href="{{ path('tst_project_add') }}"><div><i class="icon-plus"></i>{% trans %}Add an draft{% endtrans %}</div></a>
+	</div>
+</div>
+{#<div class="tab-container"{% if tab != "myskills" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}My skills{% endtrans %}</h1>
+	</div>
+</div>#}
+{% if is_granted('ROLE_SUPER_ANIM') %}
+<div class="tab-container"{% if tab != "mychallenges" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}Challenges I have created{% endtrans %}</h1>
+		{% if createdChallenges|length > 0 %}
+			{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': createdChallenges, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No created challenge{% endtrans %}</p>
+		{% endif %}
+		<h1>{% trans %}Other challenges{% endtrans %}</h1>
+		{% if otherChallenges|length > 0 %}
+			{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': otherChallenges, 'nbByRow': 4, 'mgr': 2 })) }}
+		{% else %}
+			<p>{% trans %}No other challenge{% endtrans %}</p>
+		{% endif %}
+	</div>
+</div>
+{% endif %}
+
+{% if is_granted('ROLE_RESEARCHER') %}
+<div class="tab-container"{% if tab != "mypublicinfo" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<div class="txtright">
+			<a href="{{ path('fos_user_profile_public', {'nickname': app.user.username}) }}" alt="" class="btn2">{% trans %}Voir mon profil public{% endtrans %}</a>
+		</div>
+		<h1>{% trans %}Education{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ user.info1|purify }}
+		</div>
+		<h1>{% trans %}Research topics{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ user.info2|purify }}
+		</div>
+		<h1>{% trans %}Availability{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ user.info3|purify }}
+		</div>
+		<div class="txtcenter">
+			<a href="{{ path('fos_user_profile_edit_publicinfo') }}" alt="" class="btn">{% trans %}Edit my public information{% endtrans %}</a>
+		</div>
+		
+		<br><br><br>
+		<h1>{% trans %}Roles{% endtrans %}<a href="{{ path('fos_user_profile_add_role') }}" alt="" class="btn addrole">{% trans %}Add a role{% endtrans %}</a></h1>
+		{% if app.user.userRoles and app.user.userRoles|length > 0 %}
+		<div class="profile_my_researcher_roles">
+			<ul>
+			{% set roles = app.user.userRoles %}
+			{% for role in roles %}
+				<li>
+					{% if role.picture is null %}
+					<img title="{{ role.organization }}" src="{{ asset('img/test_researcher_role35.png') }}" alt="" />
+					{% else %}
+					{% thumbnail role.picture, 'small' with {'title': role.organization} %}
+					{% endif %}
+					<span><b>{{ role.organization }}</b><br>{{ role.job }}</span>
+					<a href="{{ path('fos_user_profile_delete_role', {'idrole': loop.index0}) }}"></a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endif %}
+
+{% endblock fos_user_content %}

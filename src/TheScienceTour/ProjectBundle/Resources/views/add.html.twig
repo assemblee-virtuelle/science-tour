@@ -1,0 +1,35 @@
+{%  extends "TheScienceTourProjectBundle::form.html.twig" %}
+{% block form_title %}{% trans %}Add a project{% endtrans %}{% endblock %}
+{% block form_js %}
+				if ($toolsContainer.children().length == 0) {
+					addTool($toolsContainer);
+				} else {
+					$toolsContainer.children().each(function() {
+						addDeleteToolLink($(this), $toolsContainer);
+					});
+				}
+				
+				if ($materialsContainer.children().length == 0) {
+					addMaterial($materialsContainer);
+				} else {
+					$materialsContainer.children().each(function() {
+						addDeleteMaterialLink($(this), $materialsContainer);
+					});
+				}
+				
+				if ($premisesContainer.children().length == 0) {
+					addPremise($premisesContainer);
+				} else {
+					$premisesContainer.children().each(function() {
+						addDeletePremiseLink($(this), $premisesContainer);
+					});
+				}				
+
+				if ($skillsContainer.children().length == 0) {
+					addSkill($skillsContainer);
+				} else {
+					$skillsContainer.children().each(function() {
+						addDeleteSkillLink($(this), $skillsContainer);
+					});
+				}
+{% endblock %}

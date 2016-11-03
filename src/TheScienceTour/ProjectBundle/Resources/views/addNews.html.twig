@@ -1,0 +1,8 @@
+{% extends "TheScienceTourProjectBundle::newsForm.html.twig" %}
+{% block form_title %}{% trans %}Add an article{% endtrans %}{% endblock %}
+{%  block form_action %}
+	action = "{{ path('tst_project_add_news', {'id' : project.id}) }}"
+{% endblock %}
+{% block form_submit %}
+	<input type="submit" value="{% trans %}Add{% endtrans %}" />
+{% endblock %}

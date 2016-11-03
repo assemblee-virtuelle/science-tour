@@ -1,0 +1,32 @@
+{% block subject %}
+{% autoescape false %}
+The Science Tour : Bienvenue, {{ user.username }}
+{% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Bonjour {{ user.username }} !
+
+Pour valider votre compte utilisateur, merci de vous rendre sur {{ confirmationUrl }}
+
+
+S'inscrire sur le site web du Science Tour, c'est aussi accepter l'ensemble des Conditions Générales d'Utilisation. En voici une version simplifiée  :
+
+Accepter les conditions générales d'utilisation, c'est s'engager, entre autre, à se conformer aux obligations suivantes :
+
+	- Être majeur pour ouvrir un compte et fournir des informations exactes lors de l'inscription. Si tu as moins de 18 ans, tu dois, préalablement à ton inscription, en avoir discuté avec tes parents et avoir obtenu leur autorisation. 
+	- S'engager à ne diffuser aucune information personnelle, telles que numéro de téléphone, adresse email, adresse postale... 
+	- S'engager à respecter les lois françaises (diffamation, racolage, spam...). 
+	- S'engager à ne pas publier de textes, de photos, de sons et vidéos sans le consentement de leur propriétaire. Tu t'engages également à les retirer immédiatement à leur première demande s'ils ne souhaitent pas apparaitre. 
+	- S'engager à te comporter sur le site de façon correcte, tant dans tes propos (pas d'insulte, de chantage, de diffusion de numéro de téléphone ou d'information privée...), que dans ton comportement (spam, faux votes...). 
+
+En cas de manquement à ces obligations, l'équipe du ScienceTour pourra légitimement fermer ton compte
+
+
+L'ensemble des termes et conditions générales d'utilisation sont visible à l'adresse : {{ url('tst_cgu') }}
+
+
+L'équipe du Science Tour.
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

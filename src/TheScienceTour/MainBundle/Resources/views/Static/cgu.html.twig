@@ -1,0 +1,290 @@
+{%  extends "TheScienceTourMainBundle::main-bigcontent.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}CGU{% endtrans %}{% endblock %}
+
+{% block nav_cgu %}id="nav_cgu"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-purple"{% endblock %}
+
+{% block banner %}
+<div class="banner-title with-little-man">
+	<h1 class="txtshadowed">Conditions générales d'utilisation</h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/event-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="tab-container">
+	<div class="tab-container-inner tinymce-content">
+		<h1>Conditions Générales d'Utilisation des services en lignes « Le Science Tour »</h1>
+		<h2 class="pt15">1- Définitions :</h2>
+		<p>
+			CGU : 
+			<span class="pl30">
+				désigne les présentes conditions générales d'utilisation des Services du site web lesciencetour.org.
+			</span>
+			Compte Personnel : 
+			<span class="pl30">
+				désigne les données personnelles relatives à un Utilisateur, comprenant notamment ses Identifiants, dont l'enregistrement est nécessaire pour accéder à l'ensemble des fonctionnalités et au(x) Service(s).
+			</span>
+			Contenu(s) : 
+			<span class="pl30">
+				désigne les informations, données, textes, logiciels, musiques, sons, photographies, images, vidéos, messages ou tous autres éléments susceptibles d'être mis en ligne par un Utilisateur et accessibles par les autres Utilisateurs et les Visiteurs 		
+			</span>
+			Identifiants :
+			<span class="pl30">
+				désigne le pseudonyme (pseudo), ainsi que tout code confidentiel ou mot de passe choisis par l'Utilisateur et permettant à l'Utilisateur de s'identifier afin d'accéder au(x) Service(s). 		
+			</span>
+			Inscription :
+			<span class="pl30"> 
+				désigne la procédure d'inscription en ligne que l'Utilisateur doit accomplir sur lesciencetour.org afin de pouvoir accéder au(x) Service(s). Cette Inscription conduit à la création des Identifiants et du Compte Personnel de l'Utilisateur. 
+			</span>
+			Service(s) : 
+			<span class="pl30">
+				désigne l'un ou l'ensemble des services fournis par L'équipe du Science Tour et accessibles en ligne à partir du site web « lesciencetour.org »  
+			</span>
+			Utilisateur : 
+			<span class="pl30">
+				désigne toute personne physique ou morale accédant au(x) Service(s) pour fournir du Contenu et/ou titulaire d'un Compte Personnel. 
+			</span>
+			Visiteur : 
+			<span class="pl30">
+				désigne toute personne physique ou morale accédant au(x) Service(s) à des fins de consultation.
+			</span>
+		</p>
+		<p>			
+			L'équipe du Science Tour :
+			<span class="pl30">
+				désigne l'équipe de salariés mis à contribution pour la mise en place et l'animation du Science Tour.
+			</span>
+		</p>	
+		
+		
+		<h2 class="pt15">2- Objet des CGU et version en vigueur</h2>
+		<p>
+			2.1 Les présentes Conditions Générales d'Utilisation ont pour objet de définir les conditions dans lesquelles les Utilisateurs et les Visiteurs peuvent accéder aux Services et les utiliser.
+		</p>
+		<p>	
+			2.2 Toute personne qui accède à l'un des Services proposés par Le Science Tour s'engage à respecter, sans réserve, les présentes Conditions Générales d'Utilisation.
+		</p>
+		<p>
+			2.3 L'équipe du Science Tour est libre de modifier, à tout moment, les présentes CGU, afin notamment de prendre en compte toute évolution légale, jurisprudentielle, éditoriale et/ou technique. La version qui prévaut est celle qui est accessible en ligne à l'adresse suivante :
+			<a href="{{ url('tst_cgu') }}">{{ url('tst_cgu') }}</a>. 
+		</p>
+		<p>
+			2.4 L'Utilisateur est expressément informé que l'unique version des Conditions Générales d'Utilisation des services en lignes du Science Tour qui fait foi est celle qui se trouve en ligne sur le site lesciencetour.org, ce qu'il reconnaît et accepte sans restriction, s'engageant à s'y référer systématiquement lors de chaque connexion
+		</p>
+		
+		
+		<h2 class="pt15">3- Inscription & accès</h2>
+		<h3>3.1 Modalités générales d'Inscription aux Services en ligne et de création de son Compte Personnel</h3>
+		<p>
+			3.1 Après validation des CGU et la création de son compte personnel, l'Utilisateur reçoit un premier e-mail dans sa messagerie personnelle et doit ensuite impérativement valider son Inscription en cliquant ou en copiant dans son navigateur l'adresse url temporaire et personnelle qui lui aura été attribuée. Dès lors, l'Utilisateur pourra s'identifier et avoir accès à l'interface d'administration/gestion de son contenu.
+			<b>Suite à la validation de son inscription l'Utilisateur reçoit un second courrier électronique lui confirmant l'ouverture de son Compte Personnel.</b>
+		</p>
+		<h3>3.2 Modalités particulières d'inscription aux Services par des mineurs</h3>
+		<p>
+			3.2.1 Il est rappelé aux parents et à toute personne exerçant l'autorité parentale, qu'il leur appartient, d'une part, de déterminer quels services leur enfant mineur est autorisé à utiliser et, d'autre part, de surveiller l'utilisation que celui-ci fait de ces services.
+		</p>
+		<p>
+			3.2.2 Les mineurs sont admis à s'inscrire, à la condition expresse qu'ils aient préalablement obtenu de leurs parents (ou de la personne exerçant l'autorité parentale) l'autorisation de le faire. Le fait pour eux de s'inscrire implique qu'ils ont obtenu cette autorisation préalable. L'équipe du Science Tour se réserve le droit d'en demander éventuellement, la justification écrite à tout moment, et de procéder à toutes vérifications, ainsi que de supprimer tout compte personnel dont le titulaire mineur ne remettrait pas immédiatement ladite justification, ou éventuellement dans le délai qui lui serait imparti. L'Utilisateur accepte que L'équipe du Science Tour puisse supprimer tout compte personnel, dès la réception par ses services d'une demande parentale de fermeture du compte personnel.
+		</p>
+		<h3>3.3 Accès aux Services et spécificités techniques</h3>
+		<p>
+			3.3.1 Une fois inscrits, les Utilisateurs peuvent accéder aux services, à savoir création de projets,  ainsi qu'éditer en leurs noms et faire héberger leurs contenus.
+		</p>
+		<p>
+			3.3.2 Matériels et logiciels requis pour accéder aux Services
+		</p>
+		<p>
+			Au 01/03/14, l'accès aux Services nécessite que l'Utilisateur dispose du matériel et des logiciels suivants :
+			<ul>
+				<li>Moniteur affichant une résolution de 980x600 pixels ;</li>
+				<li>Navigateur Internet norme W3C ;</li>
+				<li>Connexion internet  ;</li>
+			</ul>
+		</p>
+		<p>
+			Ces données techniques sont susceptibles d'évolution par définition et les conditions techniques actualisées seront indiquées dans les mêmes CGU concernés.
+		</p>
+		<p>
+			3.3.3 Les équipements (notamment ordinateur, téléphone, logiciels, moyens de communication électronique) permettant l'accès et l'utilisation du ou des Services sont à la charge exclusive de l'utilisateur, de même que les frais de communications électroniques (notamment coûts téléphoniques, coûts d'accès à internet) résultant de leur utilisation. Il appartient à l'Utilisateur de s'informer du prix d'utilisation desdits équipements ou services auprès des opérateurs concernés. L'utilisateur est seul redevable de leurs prix.
+		</p>
+		
+		
+		<h2 class="pt15">4- Facteurs opérationnels communs</h2>
+		<h3>4.1 Obligation de l'Utilisateur relative à ses Identifiants et son Compte Personnel</h3>
+		<p>
+			4.1.1 Le Compte Personnel d'un Utilisateur comprend notamment ses Identifiants, confiés par Science Tour et placés sous la responsabilité exclusive de l'utilisateur. L'utilisateur s'oblige à les conserver secrets et à ne pas les divulguer sous quelque forme que ce soit. Si l'un des éléments d'identification de l'Utilisateur est perdu ou volé, ce dernier doit informer sans délai L'équipe du Science Tour, qui procédera alors à l'annulation et/ou la mise à jour immédiate(s) de l'Identifiant concerné.
+		</p>
+		<p>
+			4.1.2 L'utilisateur est seul responsable de l'utilisation qui est faite de ses identifiants, même si l'Utilisateur peut préenregistrer sur son ordinateur, son téléphone mobile ou sur n'importe quel autre type d'équipement son Identifiant, permettant ainsi la connexion automatique aux Services.
+		</p>
+		<p>
+			4.1.3 Tout accès, utilisation des Services et transmission de données effectués à partir du Compte d'un Utilisateur sera réputé avoir été effectué par ce dernier. La sauvegarde de la confidentialité du mot de passe confié à l'Utilisateur relève de l'entière responsabilité de ce dernier. A cet égard, l'Utilisateur est tenu de s'assurer qu'à l'issue de chaque session il se déconnecte effectivement des Services, en particulier lorsqu'il accède aux Services à partir d'un ordinateur public.
+		</p>
+		<h3>4.2 Durée et Résiliation</h3>
+		<p>
+			4.2.1 Les Services sont fournis par Le Science Tour pour une durée indéterminée.
+		</p>
+		<p>
+			4.2.2 L'Utilisateur reconnaît expressément que L'équipe du Science Tour a la faculté de résilier de plein droit, sans mise en demeure préalable, sans préavis ni indemnité ni justification, tout ou partie des Services fournis aux Utilisateurs.
+		</p>
+		<p>
+			4.2.3 En cas de manquement de l'Utilisateur aux présentes CGU, ou plus généralement en cas de violation des lois et règlements en vigueur, L'équipe du Science Tour pourra résilier de plein droit, sans mise en demeure préalable, sans préavis ni indemnité, tout ou partie des Services fournis à l'Utilisateur. L'équipe du Science Tour pourra prononcer cette résiliation sans préjudice de tous dommages et intérêts auxquels elle pourrait prétendre du fait de ces manquements et de toutes pénalités qui lui seraient dûes. L'Utilisateur reconnaît ainsi à L'équipe du Science Tour la faculté de restreindre son droit d'accès ou d'utilisation à tout ou partie des Services, voire de supprimer son compte personnel, ainsi que tout Contenu dont l'Utilisateur est l'auteur, l'émetteur ou le destinataire, et ce avec effet immédiat et interdiction d'accès ultérieur à ces Contenus ou aux Services.
+		</p>
+		
+		
+		<h2 class="pt15">5- Description des Services</h2>
+		<p>
+			L'équipe du Science Tour fournit aux Utilisateurs une plateforme interactive, laquelle comprend, sans que cette énumération puisse être considérée comme exhaustive :
+		</p>
+		<p>
+			 des services d'hébergement de journaux en ligne illustrant la réalisation d'un projet à caractère scientifique, technique, artistique ou social. , des services d'hébergement de profils, de dépôts de commentaires, de contenus éditoriaux, d'informations, de jeux et concours, de courriers électroniques.
+		</p>
+		<h3>5.1 Les Profils</h3>
+		<p>
+			5.1.1 L'équipe du Science Tour met à disposition des Utilisateurs un Service d'hébergement et de personnalisation de profils . Chaque Utilisateur a la possibilité de publier sous sa pleine et entière responsabilité un profil (ci-après le Profil) lui permettant de se présenter aux autres Utilisateurs et Visiteurs du Service. 
+		</p>
+		<p>			
+			L'insertion des Contenus est effectuée à l'aide du navigateur de l'Utilisateur, ou grâce à un autre procédé technique d'entrée des données. L'Utilisateur peut créer des projets et autoriser le dépôt de commentaires sur les journaux de ses projets. Il peut aussi permettre à l'ensemble des Utilisateurs de le faire ou le limiter aux personnes. L'Utilisateur s'engage à modérer obligatoirement ses commentaires. L'Utilisateur s'engage à ne pas répondre ou à supprimer tous les propos contraires à la léglislation. Par ailleurs, le profil ne doit contenir aucune information contraire à l'ordre public ou aux bonnes moeurs.
+		</p>
+		<p>			
+			L'équipe du Science Tour ne garantit pas la véracité, la probité ou l'honnêteté de ce Contenu. L'équipe du Science Tour ne pourra être tenu pour responsable des fausses déclarations faites par un Utilisateur et dégage toute responsabilité lors de rencontres entre Utilisateurs suite à l'utilisation du Service.
+		</p>
+		<p>
+			5.1.2 Dans le cadre de l'utilisation du Service, l'Utilisateur s'interdit de divulguer des informations permettant l'identification nominative et précise des autres Utilisateurs, ou de toute personne physique ou morale, telles que nom de famille, adresse postale, adresse électronique nominative et téléphone. Il est également recommandé à l'Utilisateur de ne pas divulguer sur le Service des informations permettant son identification nominative et précise.
+		</p>
+		<p>
+			5.1.3 L'équipe du Science Tour se réserve le droit de contrôler a posteriori, éventuellement à modifier ou à rejeter toute photo, vidéo et description incorrecte, vulgaire, non conforme à l'esprit du Service ou ne correspondant visiblement pas aux caractéristiques de l'Utilisateur l'ayant publié notamment suite aux Signalements portés à sa connaissance par les Utilisateurs ou après réception d'une notification conforme à la LCEN. En conséquence, les photos, les vidéos et descriptions de profils fournis par l'Utilisateur doivent être décentes et se rapporter exclusivement à l'Utilisateur.
+		</p>
+		<p>
+			5.1.4 Un système de messagerie unifiée permet à un Utilisateur de recevoir des messages depuis son Profil. Ces derniers sont automatiquement envoyés dans sa messagerie dédiée aux Utilisateurs du Service. Il est précisé que cette messagerie est restreinte aux Utilisateurs du Service. L'Utilisateur s'engage à ne pas adresser de messages dont le Contenu ne respecterait pas les règles énoncées à l'article 6-3 ci-dessous, et ce même si le Contenu est adressé dans le cadre d'une correspondance privée.
+		</p>
+		<p>
+			5.1.5 Des outils de protection sont mis à la disposition des Utilisateurs (fonction de blocage, système de signalisation des contenus).
+		</p>
+		<h3>5.2 Le dialogue asynchrone au sein des projets</h3>
+		<p>
+			5.2.1 L'Utilisateur a la possibilité d'utiliser le service de messagerie asynchrone du sciencetour.org. Ce Service est ouvert à tous les Utilisateurs. En conséquence l'Utilisateur assume l'entière responsabilité des Contenus qu'il produit ; publie sous sa pleine et entière responsabilité et communique à des tiers au travers du journal de discussions. L'équipe du Science Tour ne pourra en aucun cas être tenu pour responsable des Contenus distribués et transmis au travers de ce service de messagerie. L'équipe du Science Tour n'approuve ni ne réfute les opinions exprimées dans ces messages par les Utilisateurs.
+		</p>
+		<p>			
+			Le Service de messagerie permet, d'une part des discussions binaires entre deux Utilisateurs et, d'autre part, des discussions à plusieurs Utilisateurs, ces derniers pouvant soit participer auxdites discussions, soit simplement les lire.
+		</p>
+		<p>			
+			S'agissant des discussions binaires, L'équipe du Science Tour garantit à l'Utilisateur la confidentialité des messages échangés entre les deux Utilisateurs y participant, hors les cas de signalement à L'équipe du Science Tour via le bouton <b>« Signaler un abus »</b> et/ou en cas de notification LCEN. Toutefois, compte tenu de l'intérêt général attaché à la répression de l'apologie des crimes contre l'humanité, de l'incitation à la haine raciale ainsi que de la pornographie enfantine, L'équipe du Science Tour se doit de concourir à la lutte contre la diffusion des infractions visées à l'article 6.I.7 al 3 & 4 de la loi LCEN du 21/06/2004 renvoyant aux cinquième et huitième alinéas de l'article 24 de la loi du 29 juillet 1881 sur la liberté de la presse et à l'article 227-23 du Code pénal.
+		</p>
+		<p>			
+			A ce titre, L'équipe du Science Tour met en place un dispositif facilement accessible et visible permettant à tout Utilisateur du service de messagerie de porter à sa connaissance ce type de données. L'équipe du Science Tour a également l'obligation d'informer promptement les autorités publiques compétentes de toutes activités illicites mentionnées à l'alinéa précédent qui lui serait signalées et qu'exerceraient les Utilisateurs du Service. En conséquence, il peut être fait exception à cette règle de confidentialité dans les limites autorisées par la loi ci-dessus évoquées.
+		</p>
+		<p>			
+			S'agissant des discussions publiques, L'équipe du Science Tour se réserve le droit de faire intervenir un modérateur. En conséquence, l'Utilisateur s'engage à ne pas s'y exprimer dans une langue autre que les langues proposées par L'équipe du Science Tour pour ce Service.
+		</p>
+		<p>
+			5.2.3 L'Utilisateur s'engage et garantit que le Contenu de ses messages ne contient aucun Contenu susceptible d'être contraire aux lois et règlements en vigueur, dans le pays depuis lequel il accède au Service ou dans le pays où ces Contenus sont destinés à être reçus, et n'est pas susceptible de causer un dommage à un tiers ni ne viole en aucune façon les règles posées à l'article 6-3 ci-dessous.
+		</p><p>
+			L'Utilisateur s'interdit notamment, et sans que cette énumération puisse être considérée comme limitative :
+			<ul>
+				<li>d'utiliser un pseudonyme incorrect ;</li>
+				<li>de monnayer quelque service ou avantage que ce soit ;</li>
+				<li>de se faire passer pour toute personne qu'il n'est pas. L'Utilisateur s'interdit d'usurper l'identité, ou les qualité(s), titre(s), fonction(s) d'un autre Utilisateur, une célébrité, ou communiquer sous un faux nom, une fausse qualité ou un pseudonyme qu'il n'est pas autorisé, ni habilité à utiliser ;</li>
+			</ul>
+		</p>
+
+		
+		<h2 class="pt15">6- Aspects « légaux »</h2>
+		<h3>6.1 Limitation de responsabilité</h3>
+		<p>
+			6.1.1 L'équipe du ScienceTour.org ne peut être tenue responsable de l'utilisation qui serait faite des Services par les Utilisateurs. En particulier, l'équipe du ScienceTour.org ne peut en aucune façon être responsable au titre des Contenus affichés, mis en ligne, envoyés, reçus ou transmis par les Utilisateurs ou présents sur les Sites Tiers, conformément à son statut d'hébergeur établi par la Loi n° 2004-575 pour la confiance dans l'économie numérique en date du 21 juin 2004.
+		</p>
+		<p>
+			6.1.2 L'Utilisateur reconnaît être informé et accepte le fait que L'équipe du ScienceTour.org ne peut être, à aucun titre, tenue pour responsable de la création, de la modification, de la suppression, ou du défaut de réception, d'émission, de transmission ou de stockage de données des Utilisateurs, relevant de l'unique et entière responsabilité de ces derniers. 
+		</p>
+		<p>
+			6.1.3 L'Utilisateur reconnaît que son utilisation du Service se fait à ses risques et périls. Le Service lui est fourni « en l'état » et est accessible sans aucune garantie de disponibilité et de régularité. L'équipe du ScienceTour.org s'efforcera de rendre les Services accessibles 24 heures sur 24, sept jours sur sept, sauf en cas de force majeure ou d'un événement hors du contrôle de L'équipe du ScienceTour.org et sous réserve des périodes de maintenance, des pannes éventuelles, des aléas techniques liés à la nature du réseau internet ou des actes de malveillance ou toute atteinte portée au matériel ou aux logiciels de L'équipe du ScienceTour.org.
+		</p>
+		<p>
+			6.1.4 L'équipe du ScienceTour.org ne pourra en aucun cas être tenue pour responsable en raison d'une interruption d'un Service quelque soit la cause, la durée ou la fréquence de cette interruption.
+		</p>
+		<h3>6.2 Protection de la vie privée et des données à caractère personnel des Utilisateurs</h3>
+		<p>
+			6.2.1 L'équipe du ScienceTour.org respecte les libertés fondamentales et en particulier le droit au respect de la vie privée des Utilisateurs.
+		</p>
+		<p>
+			6.2.2 En application de la loi n°78-17 du 6 janvier 1978 modifiée par la loi n°2004-801 du 06 Août 2004 relative à l'informatique, aux fichiers et aux libertés, chaque Utilisateur dispose des droits d'opposition, d'accès et de rectification des données le concernant. Il peut ainsi exiger que soient rectifiées, complétées, clarifiées, mises à jour ou effacées les informations le concernant qui sont inexactes, incomplètes, équivoques, ou périmées. Chaque Utilisateur peut exercer à tout moment en ligne ce droit en envoyant un mail à abus@lesciencetour.org ou en cliquant ur le bouton prévu à cet effet sur chaque page del'interface.
+		</p>
+		<p>
+			6.2.3 À la clôture du Compte Personnel d'un Utilisateur, pour quelque cause que ce soit, les données relatives à ce compte et en particulier les données de trafic, sont effacées ou rendues anonymes. 
+		</p>
+		<p>
+			6.2.4 A la demande des autorités judicaires, L'équipe du Science Tour peut transmettre l'adresse IP de l'Utilisateur, afin que ce dernier soit identifié en coopération avec son fournisseur d'accès à Internet.
+		</p>
+		<h3>6.3 Responsabilité de l'Utilisateur sur les Contenus et comportement à adopter de l'Utilisateur</h3>
+		<p>
+			6.3.1 L'Utilisateur déclare et reconnaît être conscient que toutes les informations, données, textes, photographies, images, ou tous autres contenus ou tous autres matériels (ci-avant et ci-après dénommés collectivement le « Contenu ») qu'ils soient portés à la connaissance du public ou transmis de manière privée, sont sous la seule responsabilité de la personne ayant émis ce Contenu. L'Utilisateur seul, et non L'équipe du ScienceTour.org, est entièrement responsable du Contenu qu'il affiche, télécharge, envoie ou transmet de quelque manière que ce soit par les Services. Sauf stipulation contraire expresse dans les présentes, L'équipe du ScienceTour.org n'exerce pas de contrôle du Contenu transmis via les Services et en conséquence ne garantit pas l'opportunité, la licéité, la probité ou la qualité de ce Contenu. En toutes hypothèses, L'équipe du ScienceTour.org ne pourra en aucun cas être tenue pour responsable du Contenu, notamment du caractère illégal du Contenu au regard de la réglementation en vigueur, d'erreur ou d'omission dans tout Contenu, de toute perte ou dommage consécutifs à l'utilisation de tout Contenu affiché, transmis par message instantané ou de toute autre manière via les Services. L'équipe du ScienceTour.org informe également les Utilisateurs des risques encourus par eux du fait d'actes de jeux réalisés en violation de la loi.
+		</p>
+		<p>
+			6.3.2 L'Utilisateur s'interdit, et sans que cette énumération puisse être considérée comme limitative, de détourner la finalité de l'un quelconque des Services pour faire de la propagande ou du prosélytisme, d'utiliser son Projet, son Profil ou son Contenu de Discussion à des fins professionnelles ou commerciales (prospection, racolage ou prostitution).
+		</p>
+		<p>
+			De manière générale, l'Utilisateur s'engage à se conformer à l'ensemble des lois et réglementations en vigueur concernant l'interdiction de la diffusion d'images pornographiques, pédophiles, obscènes, ou de nature à porter gravement atteinte à la dignité humaine.
+		</p>
+		<p>
+			De même, l'Utilisateur s'interdit de harceler d'autres Utilisateurs en continuant d'essayer ou en réussissant à communiquer avec toute personne qui lui a clairement demandé de cesser la communication. L'Utilisateur est responsable de s'assurer que son comportement avec les autres Utilisateurs est légal et est conforme à toutes les lois applicables.
+		</p>
+		<p>
+			6.3.3 De manière générale, et sans que cette liste puisse être considérée comme exhaustive, l'Utilisateur s'interdit de :
+			<ul>
+				<li>télécharger, envoyer, transmettre, mettre en ligne, afficher par tout moyen, tout Contenu -y compris le pseudo & toute photo/image, vidéo personnelle- qui soit illégal, nuisible, menaçant, violant, abusif, constitutif de harcèlement, diffamatoire, injurieux, obscène, pornographique, menaçant ou attentatoire à la vie privée d'autrui ou à la dignité humaine, haineux, raciste, ou autrement répréhensible ; </li>
+				<li>d'afficher, transmettre, faire la promotion ou faciliter la distribution de tout Contenu illégal ou contestable pour une personne raisonnable (menaçant, diffamant, vulgaire, obscène, haineux, raciste, etc.) ou employer un langage haineux ou vulgaire (même masqué par des symboles ou d'autres caractères). L'Utilisateur qui ne partage pas une opinion, peut critiquer ce point de vue et non la personne l'ayant émis ;</li>
+				<li>porter atteinte d'une quelconque manière aux Utilisateurs mineurs, notamment par la fabrication, le transport, et la diffusion de message à caractère violent ou pornographique ou de nature à porter gravement atteinte à la dignité humaine ;</li>
+				<li>diffamer les autres Utilisateurs, tenir des propos injurieux ou attentatoires aux bonnes mœurs ;</li>
+				<li>télécharger, envoyer, transmettre, mettre en ligne, afficher tout Contenu qui pourrait être constitutif, sans que ce qui suit ne soit limitatif, d'incitation au suicide, d'incitation à la réalisation de crimes et délits ; de provocation à la discrimination, à la haine ou à la violence en raison de la race, de l'ethnie, de la religion ou de la nation ; d'apologie du nazisme, de contestations de l'existence de crimes contre l'humanité ou de génocides reconnus ;</li>
+				<li>télécharger, envoyer, transmettre, mettre en ligne, afficher tout Contenu qui pourrait être constitutif de corruption de mineurs,</li>
+				<li>télécharger, envoyer, transmettre, mettre en ligne, afficher tout Contenu qui pourrait être constitutif de fausse nouvelle, d'atteinte à l'autorité de la justice ou qui contiendrait des informations relatives à des procès en cours, à une situation fiscale individuelle ou à l'adoption ;</li>
+				<li>télécharger, envoyer, transmettre, mettre en ligne, afficher tout Contenu destiné à exhiber ou vendre des objets et/ou des ouvrages interdits ;</li>
+				<li>diffuser hors des conditions autorisées des sondages et simulations de vote relatifs à une élection ou un référendum ;</li>
+				<li>télécharger, afficher, transmettre par tout moyen tout Contenu violant tout brevet, marque déposée, secret de fabrication, droit d'auteur, droit de propriété intellectuelle ou tout autre droit de propriété appartenant à autrui ;</li>
+				<li>télécharger, afficher, envoyer, transmettre, par tout moyen, toutes données, informations, publicité, ayant un caractère commercial ou non, tout matériel promotionnel et qui n'aurait pas été sollicitées ou autorisés au préalable par son ou ses destinataires, et en particulier se livrer à du « spam », « mass mailing », à la transmission de « junk mail », de chaîne de lettres ou toute autre forme de sollicitation ;</li>
+				<li>télécharger, afficher, transmettre par tout moyen tout Contenu comprenant des virus informatiques, ou tout autre code, ou logiciel conçus pour entraver, fausser, interrompre, détruire ou limiter le fonctionnement normal ou les fonctionnalités de tout logiciel, ordinateur, serveur, ou outil de communications électroniques sans que cette énumération ne soit limitative ;</li>
+				<li>télécharger, afficher, transmettre par tout moyen tout Contenu comprenant des chevaux de Troie, ou tout autre code conçus pour intercepter, détourner, des données sans autorisation, ou pour prendre le contrôle, interrompre, détruire ou limiter le fonctionnement normal ou les fonctionnalités de tout logiciel, ordinateur, serveur, ou outil de communications électroniques sans que cette énumération ne soit limitative ;</li>
+				<li>perturber le flux normal des dialogues, accélérer le rythme de défilement de l'écran de telle manière que les Utilisateurs du Service se trouvent dans l'impossibilité de suivre et de taper leur dialogue ou commettre toute autre action ayant un effet perturbateur similaire entravant la capacité des Utilisateurs de communiquer ;</li>
+				<li>entraver ou perturber les Services, les serveurs, les réseaux connectés aux Services, ou refuser de se conformer aux conditions requises, aux procédures, aux règles générales ou aux dispositions réglementaires applicables aux réseaux connectés aux Services ;</li>
+				<li>télécharger, afficher, transmettre par tout moyen tout Contenu comprenant des virus, routines, scripts ou programmes susceptibles de causer des dommages aux personnes ou à leurs biens ;</li>
+				<li>harceler, persécuter, embarrasser de quelque manière que ce soit un autre ou plusieurs autres Utilisateurs. Cela signifie que l'Utilisateur ne doit pas dire du mal d'autrui, ou faire des attaques personnelles ou fondées sur la race, la nationalité, l'origine ethnique, la religion, le sexe, les préférences sexuelles, les handicaps ou toute autre différence;</li>
+				<li>collecter et stocker des données à caractères personnels relatives à d'autres Utilisateurs ou à un tiers </li>
+				<li>de solliciter l'échange, la vente ou l'achat de matériaux à caractère pornographique et/ou à caractère illégal, y compris des photographies, des films, des vidéos et des images réalistes ou non, cette liste n'étant pas limitative ;</li>
+				<li>référencer ou donner accès à des sites en contradiction avec les présentes, </li>
+			</ul>
+		</p>
+		<p>
+			6.3.4 Conformément à l'article 6. I. alinéa 7 de la LOI n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, L'équipe du ScienceTour.org met en place un dispositif de signalement identifié par le lien "Contacter le modérateur" facilement accessible et visible par tous permettant aux Utilisateurs du Service de porter à sa connaissance toutes données faisant l'apologie des crimes contre l'humanité, incitant à la haine raciale ou la pornographie enfantine, incitant à la violence ou attentatoires à la dignité humaine, ainsi que contre les infractions visées au cinquième et huitièmes alinéas de l'article 24 de la loi du 29 juillet 1881 sur la liberté de la presse, et aux articles 227-23 et 227-24 du Code pénal. Le message d'alerte transmis à L'équipe du ScienceTour.org indiquera automatiquement la date et l'heure de l'alerte, l'adresse IP de l'émetteur de l'alerte, la référence de l'article présentant le Contenu incriminé. L'Utilisateur reconnaît être informé que si L'équipe du ScienceTour.org est alerté par un tiers ou par quelque moyen que ce soit de l'illicéité d'un Contenu accessible par les Services ou transmis par les Services, y compris la messagerie, L'équipe du ScienceTour.org, aura le droit de retirer immédiatement ce Contenu ou d'en rendre l'accès impossible, et conformément à l'article 6. I. 7. de la Loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, remettra lesdits ainsi que les données d'identification de l'Utilisateur Contenus, sur leur demande, aux autorités judiciaires.
+		</p>
+		<p>
+			6.3.5 L'Utilisateur déclare et reconnaît également qu'il doit faire preuve de discernement, et supporter tous les risques y afférant, dans l'utilisation qu'il fait du Contenu et notamment lorsqu'il se fie à l'opportunité, l'utilité ou le caractère complet de ce Contenu. En conséquence, l'Utilisateur reconnaît qu'il ne peut se fier ni au Contenu créé par TELEFUN ni au Contenu soumis à TELEFUN disponible dans les Services.
+		</p>
+		<p>
+			6.3.6 En cas de manquement par un Utilisateur à une ou plusieurs de ces règles, L'équipe du ScienceTour.org se réserve le droit de bloquer le(s) Compte(s) de l'Utilisateur concerné, de supprimer automatiquement les messages ou Contenus litigieux, quelle que soit leur nature, d'empêcher la publication de tout ou partie du profil, du Contenu du Chat ou du Blog d'un Utilisateur, et/ou de bloquer son accès à tout ou partie des Services, de façon temporaire ou définitive, sans contrepartie ni remboursement et sans préjudice des recours susceptibles d'être ouverts à l'encontre de l'Utilisateur concerné.
+		</p>
+		<p>
+			6.3.7 L'Utilisateur reste seul responsable des dommages qu'il pourrait causer à un autre Utilisateur ou au tiers en utilisant le Service.
+		</p>
+		<p>
+			6.3.8 En contrepartie du caractère gratuit des Services qui lui sont offerts par L'équipe du ScienceTour.org, l'Utilisateur autorise L'équipe du ScienceTour.org à associer au Contenu que l'Utilisateur diffuse sur l'un quelconque des Services, des messages publicitaires ou promotionnels de type textes, images, vidéo ou sons, transmis par L'équipe du ScienceTour.org et ce sous toutes formes. Plus généralement, l'Utilisateur accepte que L'équipe du ScienceTour.org puisse utiliser (et y faire référence) la diffusion technique (transmission technique) du Contenu généré par l'Utilisateur pour assurer la promotion de ses Services. En aucun cas l'Utilisateur ne peut prétendre à une quelconque rémunération ou rétribution au titre de la présente autorisation. Si l'Utilisateur souhaite révoquer la présente autorisation, il lui appartiendra de procéder à la clôture de son Compte Personnel. Ladite révocation ne pourra avoir d'effets que pour l'avenir. Toute action publicitaire ou promotionnelle qui pourrait être engagée par L'équipe du ScienceTour.org au moment de la clôture de son Compte Personnel par l'Utilisateur se poursuivra jusqu'à son terme.
+		</p>
+		<p>
+			6.3.9 En contrepartie de l'utilisation des Services, l'Utilisateur accorde à L'équipe du ScienceTour.org, à titre gratuit, une licence d'exploitation mondiale, pour l'autorisation de diffusion technique (transmission technique) sur tout réseau de communication électronique, et notamment internet, du Contenu qu'il héberge, et ce pour toute la durée de mise en ligne des Contenus par l'Utilisateur.
+		</p>
+		<h2 class="pt15">7- Informations légales</h2>
+		<p>
+			7.1 Le site web « lesciencetour.org » est exploité par L'association Les Petits Débrouillards, association loi 1901 et dont le siège social est situé au 2, rue de la clôture 75930 Paris Cedex 19.
+		</p>
+		<p>
+			7.2 Directeur de la publication : Madame Ghislaine HIERSO, Présidente
+		</p>
+	</div>
+</div>
+{% endblock %}

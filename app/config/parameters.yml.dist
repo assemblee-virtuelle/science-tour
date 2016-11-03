@@ -1,0 +1,19 @@
+parameters:
+
+    mailer_transport:   mail
+    mailer_encryption:  ~
+    mailer_auth_mode:   ~
+    mailer_host:        ~
+    mailer_user:        ~
+    mailer_password:    ~
+    mailer_sender_address: no-reply@web2com.org
+
+    locale:            fr
+    secret:            Th3Sci3nc3T0urS3cr37T0k3n
+
+    root_url:          http://testing-sciencetour.web2com.org
+
+    db_name:           testing_sciencetour
+    
+    elastica_host:		localhost
+    elastica_port:		9200

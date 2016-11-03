@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Le Science Tour - Erreur {{ status_code }}</title>
+	</head>
+    <body>
+		<div style="width: 650px; margin: 100px auto; text-align:center;">
+			<img src="{{ asset('img/tow_truck.png') }}" alt="" />
+			<h2>Erreur {{ status_code }} - {{ status_text }}</h2>
+			<p>Vous pouvez <a href="mailto:info@lesciencetour.fr">nous contacter</a> ou retourner à l'<a href="{{ path('tst_home') }}">accueil du site</a>.</p>
+        </div>
+    </body>
+</html>

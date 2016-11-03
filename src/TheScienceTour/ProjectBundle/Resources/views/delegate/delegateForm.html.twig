@@ -1,0 +1,46 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - Projet{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Delegate{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+
+	<div class="center w400p">
+	<div id="delegate_form_content">
+		{% if project.team.count() < 2 %}
+			<div class="vpad10">{% trans %}To delegate, you should invite people to join your project!{% endtrans %}</div>
+		{% else %}		
+			<h2>{% trans %}Delegate to...{% endtrans %}</h2>
+			{% if error_message %}
+			<div class="error">{{ error_message }}</div>
+			{% endif %}
+			<form class="delegate_form" action="{{ path('tst_project_delegate', {'id' : project.id}) }}" method="post">
+				<div class="form-row">
+					<div class="w20 inbl middle"><lable for="delegate">{% trans %}User{% endtrans %}</lable></div>
+					<div class="w79 inbl txtright middle">
+						<select class="w80" name="delegate">
+						{% for member in project.team %}
+							{% if member != project.creator %}
+							<option value="{{ member.username }}">{{ member.username }}</option>
+							{% endif %}
+						{% endfor %}
+						</select>				
+					</div>
+				</div>
+				<div class="form-row txtright">
+					<input type="submit" value="Envoyer" />
+				</div>
+			</form>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

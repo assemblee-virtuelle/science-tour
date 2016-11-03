@@ -1,0 +1,304 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: "@TheScienceTourEventBundle/Resources/config/admin.yml" }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: "%kernel.debug%"
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] } 
+    default_locale:  "%locale%"
+    session:         ~
+#    trusted_proxies: [] 
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'TheScienceTourMainBundle:Form:fields.html.twig'
+            - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
+    globals:
+        tst_version: %tst_version%
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+#    bundles:        [ TheScienceTourMainBundle ]
+    filters:
+        cssrewrite: ~
+        lessphp:
+            file: "%kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php"
+            apply_to: "\.less$"
+            
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    encryption: "%mailer_encryption%"
+    auth_mode: "%mailer_auth_mode%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    sender_address: "%mailer_sender_address%"
+
+# Doctrine MongoDB Configuration
+doctrine_mongodb:
+    connections:
+        default:
+            server: mongodb://localhost:27017
+            options: {}
+    default_database: %db_name%
+    document_managers:
+        default:
+            auto_mapping: true
+    auto_generate_hydrator_classes: true
+
+# Ivory Google Map Configuration
+ivory_google_map:
+    map:
+        # If this flag is enabled, the map will autozoom on the overlays added
+        auto_zoom: false
+
+        # Center coordinate of the map
+        # If the autozoom flag is enabled, the center is not used
+        center:
+            latitude: 48.8613
+            longitude: 2.353
+            no_wrap: true
+
+        # Zoom of the map
+        # If the autozoom flag is enabled, the zoom is not used
+        zoom: 11
+        
+        # Default map type
+        # Available map type : hybrid, roadmap, satellite, terrain
+        type: "roadmap"
+
+        # Map width
+        width: "950px"
+
+        # Map height
+        height: "405px"
+
+        # Custom stylesheet options
+        # By default, there is no stylesheet options except width & height
+        stylesheet_options:
+            border: "1px solid #000"
+            background-color: "#fff"
+
+        # google map Api language, default en
+        language: fr
+    
+# FOSUser Configuration
+fos_user:
+    db_driver:      mongodb
+    firewall_name:  main
+    user_class:     TheScienceTour\UserBundle\Document\User
+    from_email:
+        address: "%mailer_sender_address%"
+        sender_name: noreply
+    profile:
+        form:
+            type: tst_user_profile
+            validation_groups: [tstProfile, Default]
+    change_password:
+        form:
+            validation_groups: [tstChangePassword, Default]
+    registration:
+        confirmation:
+          enabled: true
+          template: TheScienceTourUserBundle:Registration:email.txt.twig
+        form:
+            validation_groups: [tstRegistration, Default]
+    resetting:
+        email:
+            template: TheScienceTourUserBundle:Resetting:email.txt.twig
+        form:
+            validation_groups: [tstResetPassword, Default]
+
+# Sonata Configuration
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.block.service.text:
+        sonata.block.service.rss:
+        
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
+        
+sonata_media:
+    default_context: default
+    db_driver: doctrine_mongodb
+    class:
+        media: TheScienceTour\MediaBundle\Document\Media
+        gallery: TheScienceTour\MediaBundle\Document\Gallery
+    contexts:
+        default:
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+            formats:
+                small: { width: 100, quality: 70}
+                big:   { width: 500, quality: 70}
+        user:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                big: { width: 120, height: 120, quality: 100}
+                normal: { width: 50, height: 50, quality: 100}
+                small: { width: 35, height: 35, quality: 100}
+                tiny: { width: 25, height: 25, quality: 100}
+        researcher_role:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                small: { width: 35, height: 35, quality: 100}
+        project:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                idea: { width: 119, height: 114, quality: 100}
+                banner: { width: 950, height: 405, quality: 100}
+                thumbnail: { width: 221, height: 112, quality: 100}
+        challenge:
+            providers: 
+                - sonata.media.provider.image
+            formats:
+                banner: { width: 950, height: 405, quality: 100}
+                thumbnail: { width: 221, height: 112, quality: 100}
+                inprogress: { width: 462, height: 182, quality: 100}
+        news:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                big: { width: 665, quality: 100}
+        event:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                thumbnail: { width: 119, height: 114, quality: 100}
+                medium: { width: 217, height: 212, quality: 100}
+        marker:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                small: { width: 19, height: 19, quality: 100}
+                medium: { width: 24, height: 24, quality: 100}
+                big: { width: 32, height: 32, quality: 100}
+    cdn:
+        server:
+            path: "%root_url%/uploads/media"
+    filesystem:
+        local:
+            directory:  "%kernel.root_dir%/../web/uploads/media"
+            create:     false
+    providers:
+        image:
+            resizer: sonata.media.resizer.square
+
+sonata_intl:
+    timezone:
+        # default timezone used as fallback
+        default: Europe/Paris
+
+        # locale specific overrides
+        locales:
+            fr: Europe/Paris
+            en_UK: Europe/London
+
+# Doctrine Extensions:
+stof_doctrine_extensions:
+    mongodb:
+        default:
+            timestampable: true
+
+# Knp Paginator:
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
+        pagination: TheScienceTourMainBundle::pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+stfalcon_tinymce:
+    include_jquery: true
+    tinymce_jquery: true
+    theme:
+        simple:
+            body_class: "tinymce-content"
+            content_css: "%root_url%/css/compiled/main.css"
+            menubar: false
+            toolbar_items_size: 'small'
+            statusbar: false
+            plugins: ["advlist link"]
+            external_plugins: {"tstpre": "../../../thesciencetourmain/js/tinymce-plugin/tstpre/plugin.js"}
+            advlist_bullet_styles: "circle,disc,square"
+            toolbar1: "undo redo | bold italic underline strikethrough | link | tstpre | bullist | outdent indent"
+
+exercise_html_purifier:
+    default:
+        HTML.Allowed: 'p[style],span[style],pre,ul[style],li,a[href|target],strong,em,br'
+        Attr.AllowedFrameTargets: '_blank'
+        CSS.AllowedProperties: 'text-decoration,padding-left,text-decoration,list-style-type'
+    no_html:
+        HTML.Allowed: ''
+
+fos_elastica:
+    clients: 
+        default: { host: "%elastica_host%", port: "%elastica_port%" }
+    indexes:
+        tst:
+            types:
+                project:
+                    mappings:
+                        title:
+                            type: string
+                            boost: 5
+                        place:
+                            type: string
+                        goal:
+                            type: string
+                            boost: 2
+                        description:
+                            type: string
+                            boost: 3
+                        status:
+                            type: integer
+                    persistence:
+                        driver: mongodb
+                        model: TheScienceTour\ProjectBundle\Document\Project
+                        finder: ~
+                        provider: ~
+                        listener: ~
+
+services:
+    twig.extension.intl:
+       class: Twig_Extensions_Extension_Intl
+       tags:
+           - { name: twig.extension }
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+  
+parameters:
+    sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
+    tst_version: 'V1.2'

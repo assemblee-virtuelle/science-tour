@@ -1,0 +1,164 @@
+.profile_panel {
+	padding-bottom: 10px;
+	overflow: hidden;
+	
+	.profile_panel_avatar {
+		float: left;
+		margin: 22px 0;
+		img {
+			height: 120px;
+			width: 120px;
+			border: 1px solid #CFCFCF;
+		}
+	}
+	.profile_panel_content {
+		width: 550px;
+		margin-left: 130px;
+		padding: 15px;
+		.profile_edit_link {
+			.box-shadow(1px 2px 3px rgba(0, 0, 0, 0.3));
+			float: right;
+			padding: 5px 20px 3px 20px;
+			background-color: #F7B10F;
+			color: @colorLight;			
+			font-family: @font1;
+			font-size: 15px;
+			text-align: center;
+			text-decoration: inherit;			
+		}
+		.profile_panel_header {
+			.profile_panel_username {
+				margin: 0;
+				overflow: hidden;
+				color: @colorLight;
+				font-family: @font2;
+				font-size: 35px;			
+			}
+			.profile_panel_city {
+				margin: 0;
+				overflow: hidden;
+				color: @colorLight;
+				font-family: @font2;
+				font-size: 15px;
+				font-weight: bold;
+			}
+		}
+		.profile_panel_description {
+			margin: 0;
+			padding-top: 7px;
+			overflow: hidden;
+			color: @colorLight;
+		}
+	}
+}
+.profile_number {
+	display: inline-block;
+	width: 15px;
+	margin-right: 10px;
+	color: #D14742;
+	text-align: right;
+}
+.profile_numbers {
+	padding: 0 0 7px;
+	margin: 0;
+	font-family: @font1;
+	font-size: @font1Normal;
+}
+.profile_add_draft {
+	text-decoration: inherit;
+	div {
+		font-family: @font1;
+		font-size: @font1Small;
+		padding: 15px;
+		border: solid #DBDBDB 1px;
+		.box-shadow();
+		text-align: center;
+		color: @colorGrey4;
+		i {
+			margin-right: 10px;
+		}
+	}
+}
+.profile_add_role {
+	.picture_selector {
+		width: 250px;
+		max-height: 220px;
+		float: right;
+		margin-bottom: 10px;
+		padding: 10px 0 10px 10px;
+		overflow: auto;
+		background: white;
+		border: 1px solid #BBBBBB;
+		a {
+			margin: 10px;
+			display: inline-block;
+			width: 35px;
+			height: 35px;
+			&.selected {
+				border: 2px solid black;
+				margin: 8px;
+			}
+		}
+	}
+	#new_pic_div {
+		width: 250px;
+		float: right;
+		margin-bottom: 7px;
+		#new_pic {
+			font-size: 14px;
+			text-decoration: inherit;
+			color: #565656;
+			.icon-ico:before {
+				width: 15px;
+				margin-right: 5px;
+				content: '\f0da';
+				text-align: center;
+			}
+			&.expanded {
+				color: #888888;
+				.icon-ico:before {
+					content: '\f0d7';
+				}
+			}
+		}
+	}
+}
+.profile_my_researcher_roles {
+	margin-top: 15px;
+	li {
+		display: inline-block;
+		background: #EDEDED;
+		margin: 0 10px 10px 0;
+		border-radius: 5px;
+		padding: 5px 10px;
+		img {
+			border: 2px white solid;
+			border-radius: 50px;
+			vertical-align: middle;
+			margin-right: 10px;
+		}
+		span {
+			color: black;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		a {
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 10px;
+			width: 15px;
+			height: 15px;
+			background: transparent url('pictos/delete.png') no-repeat right top;
+		}
+	}
+}
+
+.btn.addrole {
+	font-size: 12px;
+	font-family: @font2;
+	font-weight: bold;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 20px;
+	padding: 5px 20px;
+}

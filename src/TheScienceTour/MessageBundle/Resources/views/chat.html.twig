@@ -1,0 +1,37 @@
+{% if chat is not null %}
+<ul class="admin_list">
+{% for message in chat.messages%}
+	<li {% if message in unreadMessages %}class="unread"{% endif %}>
+		<div class="admin_helper w100">
+			{% if message.author is not null %}
+				{% if message.author.avatar is null %}
+				<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+				{% else%}
+				{% thumbnail message.author.avatar, 'small' %}
+				{% endif %}
+				<h2>{{ message.author.username }}<span>{{ message.createdAt | localizeddate('long', 'short') }}</span></h2>
+				<p class="vpad5">
+					{{ message.content|purify('no_html')|nl2br }}
+				</p>
+			{% else %}
+				<p class="vpad5">
+					<i>{{ message.content }}</i>
+				</p>			
+			{% endif %}
+
+		</div>
+	</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<div>
+	<form method="post">
+		<div class="form-row">
+			<textarea placeholder="Écrire un nouveau message" class="w99" rows="5" name="message"></textarea>
+		</div>
+		<div class="form-row txtright">
+			<input type="submit" value="Envoyer" />
+		</div>
+	</form>
+</div>

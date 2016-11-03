@@ -1,0 +1,22 @@
+tst_home:
+    pattern:    /
+    defaults: { _controller: "TheScienceTourMainBundle:Main:home" }
+
+tst_about:
+    path: /about
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'TheScienceTourMainBundle:Static:about.html.twig'
+
+tst_cgu:
+    path: /cgu
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'TheScienceTourMainBundle:Static:cgu.html.twig'
+        
+tst_search_noreq:
+    pattern: /search
+    defaults: { _controller: "TheScienceTourMainBundle:Main:search", request: '' }
+tst_search:
+    pattern: /search/{request}
+    defaults: { _controller: "TheScienceTourMainBundle:Main:search" }

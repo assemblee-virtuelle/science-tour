@@ -1,0 +1,49 @@
+#calendar-holder {
+	padding: 4px;
+	background-color: #f6c450;
+	
+	&.fc {
+		font-size: 11px;
+		
+		table {
+			font-size: inherit;
+		}
+	}
+
+	h2 {
+		font-family: Arial, sans-serif;
+		font-size: 1em;
+		line-height: 1.9em;
+		color: #fef9ee;
+	}
+	
+	.fc-grid {
+		.ui-widget-content {
+			.fc-day-number {
+				float: none;
+				text-align: center;
+				line-height: 20px;
+			}
+			
+			.fc-day-content {
+				clear: none;
+				margin-top: -20px;
+				padding: 0;
+			}
+		}
+	}
+	
+	.fc-event-hori {
+		margin: 0;
+		border: none;
+		background: url(../img/fc-event-inner-bg.png) 100% 0 no-repeat;
+		
+		.fc-event-inner {
+			border: none;
+			
+			.fc-event-title {
+				line-height: 20px;
+			}
+		}
+	}
+}

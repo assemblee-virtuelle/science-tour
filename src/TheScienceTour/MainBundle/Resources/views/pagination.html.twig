@@ -1,0 +1,14 @@
+{% if pageCount > 1 %}
+<div style="text-align: center; font-size: 20px;">
+    {% for page in pagesInRange %}
+        {% if page != current %}
+            <span>
+                <a style="display: inline-block; color: inherit; text-decoration: inherit;" href="{{ path(route, query|merge({(pageParameterName): page})) }}">○</a>
+            </span>
+        {% else %}
+            <span>●</span>
+        {% endif %}
+
+    {% endfor %}
+</div>
+{% endif %}

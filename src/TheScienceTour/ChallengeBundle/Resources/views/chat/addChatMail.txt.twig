@@ -1,0 +1,8 @@
+Bonjour {{ challenge.creator|raw }} !
+
+L'utilisateur {{ author.username|raw }} vient de créer une nouvelle discussion dans votre défi "{{ challenge.title|raw }}".
+
+{{ url('tst_challenge', {'id': challenge.id, 'tab': 'chats'}) }}
+
+
+L'équipe du Science Tour.

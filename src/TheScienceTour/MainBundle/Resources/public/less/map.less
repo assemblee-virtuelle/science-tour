@@ -1,0 +1,99 @@
+.map-infoWindow {
+	.shadItem(auto, auto);
+	min-width: 200px;
+	max-width: 400px;
+	font-family: @font2;
+	margin-bottom: 5px;
+	display: block;
+	a {
+		display: block;
+		color: inherit;
+		text-decoration: inherit;
+	}
+	h2 {
+		overflow: hidden;
+		font-family: @font2;
+		color: @colorGrey1;
+		font-size: 13px;
+		margin: 6px 10px 4px 10px;
+	}
+	p {
+		margin: 0 10px 2px;
+		span {
+			margin-top: -2px;
+			float: right;
+			color: @colorRed;
+			font-size: 15px;
+			font-weight: bold;
+			i {
+				margin-right: 3px;
+				color: @colorGrey7;
+			}
+		}
+	}
+	.progress_bar {
+		margin-top: 6px;
+		width: 100%;
+		height: 6px;
+		background-color: #C2C2C2;
+		div {
+			height: 100%;
+			background-color: #78BA5D;
+		}
+	}
+}
+
+.cluster-infoWindow {
+	max-height: 160px;
+	overflow-x: hidden;
+	padding-right: 10px;
+}
+
+#map-filter-geonear {
+	padding: 5px 13px;
+	
+	form {
+		padding: 0;
+		margin: 0;
+		border: 1px solid @colorGrey9;
+		.clearfix;
+		
+		button {
+			display: block;
+			float: left;
+			width: 35px;
+			background: none;
+			border: 0 @colorLight none;
+			color: @colorGrey9;
+		}
+		
+		input {
+			display: block;
+			width: 147px;
+			margin-left: 35px;
+			background: none;
+			border: 0 @colorLight none;
+		}
+	}
+	
+	p {
+		padding: 0;
+		margin: 5px 0 0;
+		border: 1px solid @colorGrey9;
+		.clearfix;
+		
+		a {
+			display: block;
+			float: left;
+			width: 50%;
+			color: @colorGrey9;
+			text-decoration: none;
+			text-align: center;
+			
+			&.active, &:hover, &:focus, &:active {
+				background: @colorGrey9;
+				color: @colorLight;
+			}
+		}
+	}
+}

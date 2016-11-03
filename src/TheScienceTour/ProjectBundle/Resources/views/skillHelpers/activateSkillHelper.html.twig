@@ -1,0 +1,14 @@
+{%  extends "TheScienceTourProjectBundle::message.html.twig" %}
+
+{% block message_title %}Activation{% endblock %}
+
+{% block message_content %}
+
+	{% if project.creator == helper %}
+		Vous aidez
+	{% else %}
+		L'utilisateur {{ helper.username }} aide
+	{% endif %}
+		désormais votre projet en tant que <i>{{ skill.name }}</i>.
+
+{% endblock %}

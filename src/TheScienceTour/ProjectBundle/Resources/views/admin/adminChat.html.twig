@@ -1,0 +1,63 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
+
+{%  block scripts %}
+<script>
+
+	$(document).ready(function() {
+		var unread = $('.unread');
+		if (unread.length == 0) {
+			window.scroll(0,10000);
+		} else {
+			$('body,html').animate({
+			    'scrollTop':  unread.first().offset().top
+			}, 'slow');
+		}
+	});
+
+	
+</script>
+{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed"><a href="{{ path('tst_project', {'id' : project.id}) }}">{{ project.title }}</a></h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+<ul id="tabs" class="tabs">
+	<li class="active"><h1>{% trans %}Proposals{% endtrans %}</h1></li>
+	<li><a href="{{ path('tst_project_admin', {'id' : project.id, 'tab' : 'team' }) }}"><h1>{% trans %}Team{% endtrans %}</h1></a></li>
+</ul>
+
+<div class="tab-container">
+	<div class="tab-container-inner">
+		<div class="admin_chat_buttons">
+			<form method="post">
+			{% if help.nbNeeded == 0 %}
+			<select name="nb">
+			{% for i in 1..help.nbProposed %}
+				<option value="{{ i }}" {% if loop.last %}selected{% endif %}>{{ i }}</option>
+			{% endfor %}
+			</select>
+			{% endif %}
+			<input class="pause" type="submit" name="pause" value="{% if help.nbNeeded != 0 %}{{ help.nbNeeded }}" disabled="disabled"{% else %}#"{% endif %} />
+			<input class="play" type="submit" name="play" value="#" />
+			<input class="stop" type="submit" name="stop" value="#">
+			</form>
+		</div>
+		<h1><span class="admin_back"><a href="{{ path('tst_project_admin', {'id' : project.id}) }}" alt=""><i class="icon-long-arrow-left"></i></a></span>Proposition pour {{ res.name }} {{ res.actualNumber }}/{{ res.number }}</h1>
+		{{ render(controller('TheScienceTourMessageBundle:Message:chat', { 'chat': help.chat, 'request': app.request })) }}
+	</div>
+</div>
+
+{% endblock %}

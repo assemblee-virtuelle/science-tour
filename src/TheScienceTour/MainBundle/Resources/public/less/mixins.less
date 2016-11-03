@@ -1,0 +1,63 @@
+.box-shadow(@shadow: 1px 2px 3px @shadowColor) {
+	-moz-box-shadow: @shadow;
+	-webkit-box-shadow: @shadow;
+	box-shadow: @shadow;
+}
+
+.border-radius(@radius: 2px) {
+	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	border-radius: @radius;
+}
+
+.shadItem (@width, @height, @mgB: 18px) {
+	display: inline-block;
+	width: @width;
+	height: @height;
+	margin-bottom: @mgB;
+	background-color: #FFFFFF;
+	border: solid @shadowColor 1px;
+	.box-shadow;
+	vertical-align: top;
+}
+
+.transform-origin (@x:center, @y:center) {
+	-webkit-transform-origin:	@x @y;
+	-moz-transform-origin:		@x @y;
+	-o-transform-origin:		@x @y;
+	-ms-transform-origin:		@x @y;
+	transform-origin:			@x @y;
+}
+
+.rotate(@deg) {
+	-webkit-transform:	rotate(@deg);
+	-moz-transform:		rotate(@deg);
+	-ms-transform:		rotate(@deg);
+	-o-transform:		rotate(@deg);
+	transform:			rotate(@deg);
+}
+
+.translate (@x, @y:0) {
+	-webkit-transform:	translate(@x, @y);
+	-moz-transform:		translate(@x, @y);
+	-ms-transform:		translate(@x, @y);
+	-o-transform:		translate(@x, @y);
+	transform:			translate(@x, @y);
+}
+
+.matrix(@a, @b, @c, @d, @tx, @ty, @ux: px, @uy: px) {
+	-moz-transform:		matrix(@a, @b, @c, @d, "@{tx}@{ux}", "@{ty}@{uy}");
+	-webkit-transform:	matrix(@a, @b, @c, @d, @tx, @ty);
+	-o-transform:		matrix(@a, @b, @c, @d, @tx, @ty);
+	-ms-transform:		matrix(@a, @b, @c, @d, @tx, @ty);
+	transform:			matrix(@a, @b, @c, @d, @tx, @ty);
+}
+
+/* blocks that must contain floats */
+.clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}

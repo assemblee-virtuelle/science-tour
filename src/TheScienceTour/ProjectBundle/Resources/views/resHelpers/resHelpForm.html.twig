@@ -1,0 +1,38 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - Projet{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">Aider</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="center w400">
+	<div id="help_form_content">
+		<h2>Je veux faire un don</h2>
+		{% if error_message %}
+		<div class="error">{{ error_message }}</div>
+		{% endif %}
+		<form class="help_form" action="{{ path('tst_project_res_help', {'id' : project.id, 'idres' : res.id}) }}" method="post">
+			<div class="form-row">
+				<input type="number" id="number" name="number" required="required" min="1" max="{{ res.number - res.actualNumber }}" value="1" maxlength="2" class="w30p" />
+				<label for="number">{{ res.name }}</label>
+			</div>
+			<div class="form-row">
+				<textarea placeholder="Ajouter un message" class="w97" rows="5" name="message"></textarea>
+			</div>
+			<div class="form-row txtright">
+				<input type="submit" value="Envoyer" />
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}

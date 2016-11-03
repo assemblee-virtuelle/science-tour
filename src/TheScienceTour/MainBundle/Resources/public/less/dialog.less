@@ -1,0 +1,59 @@
+.ui-widget {
+	font-family: @font2;
+	
+	input,
+	select,
+	textarea,
+	button {
+		font-family: @font2;
+	}
+}
+
+.ui-widget-overlay {
+	background: #000000;
+	opacity: 0.5;
+	filter:Alpha(Opacity=50);
+}
+.ui-dialog {
+	padding: 0;
+	.ui-dialog-content {
+		padding: 20px;
+	}
+	.ui-dialog-titlebar-close {
+		padding: 2px 5px 0 0;
+		&:hover {
+			padding: 3px 4px 0 0;
+		}
+	}
+}
+.ui-widget-content {
+	border: none;
+}
+.ui-corner-all {
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+}
+.ui-widget-header {
+	border: none;
+	border-bottom: 2px solid #68A151;
+	background: #78BA5D;
+	color: @colorLight;
+	font-family: @font1;
+	font-size: 18px;
+	font-weight: normal;
+	.ui-icon {
+		background-image: url(pictos/closethick.png);
+		background-position: 0;
+	}
+}
+.ui-widget-header .ui-state-default, .ui-widget-header .ui-state-hover, .ui-widget-header .ui-state-focus, .ui-widget-header .ui-state-active, .ui-widget-header .ui-state-highlight, .ui-widget-header .ui-state-disabled, .ui-widget-header .ui-state-error { 
+	border: none;
+	background: none;
+}
+
+.popuplink {
+	margin-left: 20px;
+	display: block;
+	color: @colorGrey2;
+}

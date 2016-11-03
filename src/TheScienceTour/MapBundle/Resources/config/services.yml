@@ -1,0 +1,21 @@
+services:
+    the_science_tour_map.coordinates_setter_subscriber:
+        class: TheScienceTour\MapBundle\Listener\CoordinatesSetterSubscriber
+        arguments: ["@the_science_tour_map.map_helper"]
+        tags:
+            - { name: doctrine_mongodb.odm.event_subscriber, connection: default }
+    
+    the_science_tour_map.validator.provided_address:
+        class: TheScienceTour\MapBundle\Validator\Constraints\ProvidedAddressValidator
+        arguments: ["@the_science_tour_map.map_helper"]
+        tags:
+            - { name: validator.constraint_validator, alias: the_science_tour_map.validator.provided_address }
+    
+    the_science_tour_map.map_helper:
+        class: TheScienceTour\MapBundle\Helper\MapHelper
+
+parameters:        
+    ivory_google_map.marker_cluster.helper.default.class: TheScienceTour\MapBundle\Helper\TSTMarkerClusterHelper
+    ivory_google_map.marker.helper.class: TheScienceTour\MapBundle\Helper\TSTMarkerHelper
+    ivory_google_map.places_autocomplete.helper.class: TheScienceTour\MapBundle\Helper\TSTAutocompleteHelper
+    

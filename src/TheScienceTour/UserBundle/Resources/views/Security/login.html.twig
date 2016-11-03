@@ -1,0 +1,54 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+{{ parent() }}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Log in{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block fos_user_content %}
+<div class="center w400p">
+	<div id="login_form_content">
+	
+		{% if error %}
+		    <div class="error">{{ error|trans }}</div>
+		{% endif %}
+		
+		<form action="{{ path("fos_user_security_check") }}" method="post">
+		    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+		
+		    <div class="form-row">
+		    	<div class="w30 inbl">
+		    		<label for="username" class="label-big">{% trans %}User{% endtrans %}</label>
+		    	</div>
+		    	<div class="w70 inbl txtright">
+		    		<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{% trans %}Username{% endtrans %}" class="w80" />
+		    	</div>
+			</div>
+			<div class="form-row">
+		    	<div class="w30 inbl">
+					<label for="password" class="label-big">{% trans %}Password{% endtrans %}</label>
+				</div>
+		    	<div class="w70 inbl txtright">
+					<input type="password" id="password" name="_password" required="required" placeholder="{% trans %}Password{% endtrans %}" class="w80" />
+				</div>
+			</div>
+			<div class="form-row txtright">
+				<a href="{{ path('fos_user_resetting_request') }}">{%  trans %}I have forgotten my password{% endtrans %}</a>
+			</div>
+			<div class="form-row">
+				<div class="w50 inbl">
+				    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+				    <label for="remember_me">{% trans %}Remember me{% endtrans %}</label>
+				</div>
+				<div class="w50 inbl txtright">
+			    	<input type="submit" id="_submit" name="_submit" value="{% trans %}Log in{% endtrans %}" />
+				</div>
+			</div>
+		</form>
+	
+	</div>
+	<a href="{{ path('fos_user_registration_register') }}">{% trans %}Register{% endtrans %}</a>
+</div>
+{% endblock fos_user_content %}

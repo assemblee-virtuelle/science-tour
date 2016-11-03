@@ -1,0 +1,38 @@
+{%  extends "TheScienceTourProjectBundle::message.html.twig" %}
+
+{% block message_title %}{% trans %}They gave{% endtrans %} "{{ res.name }}"{% endblock %}
+
+{% block message_content %}
+
+<div id="reshelpshow_content">
+	<ul>
+		{% if res.creatorHelpNb and res.creatorHelpNb != 0 %}
+			<li>
+				<div>
+					{% if project.creator.avatar is null %}
+					<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+					{% else%}
+					{% thumbnail project.creator.avatar, 'small' %}
+					{% endif %}
+					<h2>{{ project.creator.username }}</h2>
+					<span>x{{ res.creatorHelpNb }}</span>
+				</div>
+			</li>
+		{% endif %}
+		{% for help in res.helps %}
+			<li>
+				<div>
+					{% if help.helper.avatar is null %}
+					<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+					{% else%}
+					{% thumbnail help.helper.avatar, 'small' %}
+					{% endif %}
+					<h2>{{ help.helper.username }}</h2>
+					<span>x{{ help.nbReceived }}</span>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}

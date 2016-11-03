@@ -1,0 +1,10 @@
+services:
+    tst.form.type.purified_textarea:
+        class: TheScienceTour\MainBundle\Form\Type\PurifiedTextareaType
+        arguments: ["@tst.form.transformer.html_purifier"]
+        tags : 
+            - { name: form.type, alias: purified_textarea }
+
+    tst.form.transformer.html_purifier:
+        class: Exercise\HTMLPurifierBundle\Form\HTMLPurifierTransformer
+        arguments: ["@exercise_html_purifier.default"] 

@@ -1,0 +1,11 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+{{ parent() }}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Reset your password{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block fos_user_content %}
+{% endblock fos_user_content %}

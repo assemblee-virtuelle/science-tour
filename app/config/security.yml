@@ -1,0 +1,67 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        TheScienceTour\UserBundle\Document\User: sha512
+
+    role_hierarchy:
+        ROLE_RESEARCHER:
+          - ROLE_USER   
+        ROLE_ANIM:
+          - ROLE_USER
+        ROLE_PROJECT_MOD: 
+          - ROLE_USER
+        ROLE_SUPER_ANIM:
+          - ROLE_USER
+          - ROLE_ANIM
+        ROLE_ADMIN:
+          - ROLE_USER
+          - ROLE_ANIM
+          - ROLE_PROJECT_MOD
+          - ROLE_SUPER_ANIM
+          - ROLE_SONATA_ADMIN
+          - ROLE_SONATA_ADMIN_EVENT_EDIT
+          - ROLE_SONATA_ADMIN_EVENT_LIST
+          - ROLE_SONATA_ADMIN_EVENT_CREATE
+          - ROLE_SONATA_ADMIN_EVENT_VIEW
+          - ROLE_SONATA_ADMIN_EVENT_DELETE
+          - ROLE_SONATA_ADMIN_LABEL_EDIT
+          - ROLE_SONATA_ADMIN_LABEL_LIST
+          - ROLE_SONATA_ADMIN_LABEL_CREATE
+          - ROLE_SONATA_ADMIN_LABEL_VIEW
+          - ROLE_SONATA_ADMIN_LABEL_DELETE
+          - ROLE_SONATA_MEDIA_ADMIN_MEDIA_CREATE
+        ROLE_SUPER_ADMIN: 
+          - ROLE_USER
+          - ROLE_ANIM
+          - ROLE_PROJECT_MOD
+          - ROLE_SUPER_ANIM
+          - ROLE_ADMIN
+          - ROLE_ALLOWED_TO_SWITCH
+
+    providers:
+        main:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern:    ^/
+            anonymous:  true
+            provider:   main
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+            logout:
+                path: fos_user_security_logout
+                target: /
+            remember_me:
+                key:  %secret%
+
+    access_control:
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/projects/add, role: ROLE_USER }

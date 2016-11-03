@@ -1,0 +1,9 @@
+Bonjour {{ project.creator.username|raw }} !
+
+L'utilisateur {{ user.username|raw }} propose son aide pour la compétence "{{ skill.name|raw }}" de votre projet "{{ project.title|raw }}".
+
+Pour accepter, veuillez suivre le lien suivant :
+{{ url('tst_project_activate_skill_helper', {'id': project.id, 'idskill': skill.id, 'idhelper': user.id}) }}
+
+
+L'équipe du Science Tour.

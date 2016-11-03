@@ -1,0 +1,9 @@
+Bonjour {{ help.helper.username|raw }} !
+
+Votre don de {{ help.nbReceived }} x "{{ res.name|raw }}" pour le projet "{{ project.title|raw }}" a bien été reçu.
+
+{{ project.creator.username|raw }} vous remercie pour votre aide.
+
+{{ url('tst_project', {'id' : project.id, 'tab' : "news"}) }}
+
+L'équipe du Science Tour.

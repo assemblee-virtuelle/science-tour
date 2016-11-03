@@ -1,0 +1,24 @@
+{%  extends "TheScienceTourMainBundle::main-bigcontent.html.twig" %}
+
+{% block title %}{{ parent() }} - Recherche{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Search{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2>{{ request }}</h2>
+{% if result|length > 0 %}
+	{{ render(controller('TheScienceTourProjectBundle:Project:draftPanels', { 'projectList': result , 'search': true })) }}
+{% else %}
+	<p>{% trans %}No results{% endtrans %}</p>
+{% endif %}
+{% endblock %}
+
+
+
+
