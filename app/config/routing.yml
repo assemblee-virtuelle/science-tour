@@ -10,6 +10,10 @@ the_science_tour_main:
     resource: "@TheScienceTourProjectBundle/Resources/config/routing.yml"
     prefix:   /
 
+erasmus_challenge:
+    resource: "@ErasmusChallengeBundle/Resources/config/routing.yml"
+    prefix:   /
+
 the_science_tour_project:
     resource: "@TheScienceTourMainBundle/Resources/config/routing.yml"
     prefix:   /

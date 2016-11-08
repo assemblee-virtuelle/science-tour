@@ -1,6 +1,6 @@
 tst_home:
     pattern:    /{_locale}
-    defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:fr }
+    defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:{% languages %} }
 
 tst_about:
     path: /about
