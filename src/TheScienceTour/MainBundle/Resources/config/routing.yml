@@ -2,7 +2,7 @@ tst_home:
     pattern:    /{_locale}
     defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:fr }
     requirements:
-        _locale: {% languages %}
+        _locale: en|fr
 
 tst_about:
     path: /about
