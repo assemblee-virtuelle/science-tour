@@ -298,7 +298,12 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-  
+    app.request_listener:
+        class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+        arguments: ['@router']
+
 parameters:
     sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
     tst_version: 'V1.2'

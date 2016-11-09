@@ -8,6 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 class MainController extends Controller {
 
   public function homeAction() {
+    $session = $this->get('session');
+    // If we are on Erasmus website.
+    if ($session->get('isErasmus', FALSE)) {
+      // TODO
+    }
+
     // Ensure indexes
     // TODO: Find a better place to run this
     $dm = $this->get('doctrine_mongodb')->getManager();
