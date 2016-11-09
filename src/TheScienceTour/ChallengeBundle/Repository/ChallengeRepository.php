@@ -5,7 +5,7 @@ namespace TheScienceTour\ChallengeBundle\Repository;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 class ChallengeRepository extends DocumentRepository {
-
+	
 	public function findAll() {
 		return $this->createQueryBuilder()
 			->sort('finishedAt', 'desc')
