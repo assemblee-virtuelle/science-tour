@@ -16,7 +16,7 @@
 
 		{%  block stylesheets %}{% endblock %}
 
-		{% if isErasmus %}
+		{% if isErasmus() %}
             <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/erasmus.css') }}">
         {% endif %}
 

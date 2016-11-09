@@ -298,6 +298,11 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
+    app.is_erasmus:
+        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
+        tags:
+          - { name: twig.extension }
+        arguments: ['@session']
     app.request_listener:
         class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
         tags:
