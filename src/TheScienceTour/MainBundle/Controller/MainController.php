@@ -12,7 +12,7 @@ class MainController extends Controller {
 		// TODO: Find a better place to run this
 		$dm = $this->get('doctrine_mongodb')->getManager();
 		$dm->getSchemaManager()->ensureIndexes();
-		
+
     	$projectRepo = $dm->getRepository('TheScienceTourProjectBundle:Project');
 		
 		// Projects sticked on the front page

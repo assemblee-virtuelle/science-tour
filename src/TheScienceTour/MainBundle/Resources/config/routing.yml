@@ -1,6 +1,8 @@
 tst_home:
     pattern:    /{_locale}
     defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:fr }
+    requirements:
+        _locale: {% languages %}
 
 tst_about:
     path: /about
@@ -17,6 +19,11 @@ tst_cgu:
 tst_search_noreq:
     pattern: /search
     defaults: { _controller: "TheScienceTourMainBundle:Main:search", request: '' }
+
 tst_search:
     pattern: /search/{request}
     defaults: { _controller: "TheScienceTourMainBundle:Main:search" }
+
+erasmus_home:
+    pattern:    /erasmus/{_locale}
+    defaults: { _controller: "ErasmusMainBundle:Main:home", _locale:fr }
