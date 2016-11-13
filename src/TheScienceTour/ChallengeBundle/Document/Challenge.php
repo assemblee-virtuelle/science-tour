@@ -134,17 +134,18 @@ class Challenge {
 	/**
 	 * @MongoDB\Boolean
 	 */
-	protected $isErasmus
+	protected $isErasmus; // Le contenu est-il lié à un projet Erasmus ?
 
 	/**
 	 * @MongoDB\String
 	 */
-	protected $language
+	protected $language; // La langue du document
 
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge")
 	 */
-	protected $principal
+	protected $principal; // Le document original
+
 
 	public function __construct() {
 		$this->tools = new \Doctrine\Common\Collections\ArrayCollection();
