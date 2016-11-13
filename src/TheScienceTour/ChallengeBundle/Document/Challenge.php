@@ -149,7 +149,7 @@ class Challenge {
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", mappedBy="principal")
 	 */
-	protected $translations // Ensemble des traductions
+	protected $translations; // Ensemble des traductions
 
 	public function __construct() {
 		$this->tools = new \Doctrine\Common\Collections\ArrayCollection();
