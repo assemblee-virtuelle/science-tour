@@ -16,7 +16,8 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
  *   @MongoDB\Index(keys={"updatedAt"="asc"}),
  *   @MongoDB\Index(keys={"startedAt"="asc"}),
  *   @MongoDB\Index(keys={"finishedAt"="asc"}),
- *   @MongoDB\Index(keys={"publishedAt"="asc"})
+ *   @MongoDB\Index(keys={"publishedAt"="asc"}),
+ *   @MongoDB\Index(keys={"isErasmus"="asc"})
  * })
  */
 
