@@ -142,10 +142,14 @@ class Challenge {
 	protected $language; // La langue du document
 
 	/**
-	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge")
+	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="translations")
 	 */
 	protected $principal; // Le document original
 
+	/**
+	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", mappedBy="principal")
+	 */
+	protected $translations // Ensemble des traductions
 
 	public function __construct() {
 		$this->tools = new \Doctrine\Common\Collections\ArrayCollection();
@@ -434,9 +438,20 @@ class Challenge {
 		return $this;
 	}
 
-	public function setPrincipal($principal) {
+	public function setPrincipal(TheScienceTour\ChallengeBundle\Document\Challenge $principal) {
 		$this->principal = $principal;
 		return $this;
 	}
 
+	public function getTranslations() {
+		return $this->translations;
+    }
+
+	public function addTranslation(TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+		$this->translations[] = $translation;
+	}
+
+	public function removeTranslation(TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+		$this->translations->removeElement($translation);
+	}
 }
