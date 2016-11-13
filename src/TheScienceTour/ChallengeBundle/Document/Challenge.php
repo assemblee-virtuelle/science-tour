@@ -438,7 +438,7 @@ class Challenge {
 		return $this;
 	}
 
-	public function setPrincipal(TheScienceTour\ChallengeBundle\Document\Challenge $principal) {
+	public function setPrincipal(\TheScienceTour\ChallengeBundle\Document\Challenge $principal) {
 		$this->principal = $principal;
 		return $this;
 	}
@@ -447,11 +447,11 @@ class Challenge {
 		return $this->translations;
     }
 
-	public function addTranslation(TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+	public function addTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
 		$this->translations[] = $translation;
 	}
 
-	public function removeTranslation(TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+	public function removeTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
 		$this->translations->removeElement($translation);
 	}
 }
