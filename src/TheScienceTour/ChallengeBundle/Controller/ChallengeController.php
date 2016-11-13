@@ -134,7 +134,7 @@ class ChallengeController extends Controller {
 			$challenge->setStartedAt(new \DateTime("tomorrow"));
 			$challenge->setIsErasmus($isErasmus);
 			// TODO : Confirmer le choix de la langue pour le Science Tour
-			if (!isErasmus) {
+			if (!$isErasmus) {
 				$challenge->setLanguage($this->getLocale());
 			}
 		} else {
@@ -159,9 +159,11 @@ class ChallengeController extends Controller {
 			->add('premises', 'collection', array('type' => new ChallengeResType(), 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false))
 			->add('skills', 'collection', array('type' => new ChallengeResType(), 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false));
 		if ($isErasmus) {
+			//var_dump($this->container->getParameter('erasmusLanguages')); die;
 			$form->add('language', 'choice',
-						['choices' => $this->container->getParameters('erasmusLanguages'),
-						 'preferres_choices' => $this->getLocale(),
+						['choices' => $this->container->getParameter('erasmusLanguages'),
+ 						//['choices' => ['fr' => "Français", 'en' => "English"],
+						 'preferred_choices' => [$this->get('request')->getLocale()],
 						 'multiple' => false,
 						 'expanded' => false]);
 		}
