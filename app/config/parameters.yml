@@ -17,3 +17,7 @@ parameters:
         fr: Français
         en: English
         de: Deutsch
+    erasmusDomains :
+        - youthcommittedforclimate.org
+        - ycfc.org
+        - erasmus.wexample.com

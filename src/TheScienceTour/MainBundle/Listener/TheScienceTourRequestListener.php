@@ -11,17 +11,19 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class TheScienceTourRequestListener {
   private $router;
+  private $earsmusDomains;
 
-  public function __construct(Router $router) {
-    $this->router = $router;
+  public function __construct(Router $router, $earsmusDomains) {
+    $this->router         = $router;
+    $this->earsmusDomains = $earsmusDomains;
   }
 
   public function onKernelRequest(GetResponseEvent $event) {
     // We are on the Erasmus website.
-    if (TRUE) {
-      /** @var \Symfony\Component\HttpFoundation\Request $request  */
+    if (in_array($_SERVER['HTTP_HOST'], $this->earsmusDomains)) {
+      /** @var \Symfony\Component\HttpFoundation\Request $request */
       $request = $event->getRequest();
-      /** @var \Symfony\Component\HttpFoundation\Session $session  */
+      /** @var \Symfony\Component\HttpFoundation\Session $session */
       $session = $request->getSession();
       // Save for further usage.
       $session->set('isErasmus', TRUE);
