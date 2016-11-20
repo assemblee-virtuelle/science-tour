@@ -24,7 +24,7 @@ class ChallengeRepository extends DocumentRepository {
 			->field('finishedAt')->gt($now)
 			->sort('finishedAt', 'asc');
 		if (isErasmus) {
-			$query->field('isErasmus')->equals(true)
+			$query->field('isErasmus')->equals(true);
 		}
 		$query->getQuery();
 	}
@@ -34,7 +34,7 @@ class ChallengeRepository extends DocumentRepository {
 			->field('finishedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
 			if (isErasmus) {
-				$query->field('isErasmus')->equals(true)
+				$query->field('isErasmus')->equals(true);
 			}
 			$query->getQuery();
 	}
@@ -44,7 +44,7 @@ class ChallengeRepository extends DocumentRepository {
 			->field('startedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
 			if (isErasmus) {
-				$query->field('isErasmus')->equals(true)
+				$query->field('isErasmus')->equals(true);
 			}
 			$query->getQuery();
 	}
