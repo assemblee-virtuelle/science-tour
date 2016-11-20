@@ -1,6 +1,12 @@
 <?php
 namespace TheScienceTour\DocumentBundle\Document;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
+
 abstract class Document {
 
     /**
