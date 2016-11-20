@@ -15,13 +15,19 @@ class ChallengeRepository extends DocumentRepository {
 	/**
 	 * findInProgress Recherche les défis en cours de réalisation
 	 * @param  boolean 			$isErasmus	Les projets Erasmus ou simplement du Science Tour ?
-	 * @return ArrayCollection  		  	La liste des résultats de recherche
+	 * @param  string			$locale		La langue par défaut de l'application
+	 * @return ArrayCollection  		  	La liste des défis en cours
 	 */
-	public function findInProgress($isErasmus = false) {
+	public function findInProgress($isErasmus = false, $locale) {
 		$now = new \DateTime();
-		$query = $this->createQueryBuilder()
+		$builder = $this->createQueryBuilder();
+		$query = $builder
 			->field('startedAt')->lt($now)
 			->field('finishedAt')->gt($now)
+			// ->field('language')->like(':language')
+			->addOr($builder->expr()->field('language')->like(':language'))
+			->addOr($builder->expr()->field('language')->equals(null))
+			->setParameter('language', $locale)
 			->sort('finishedAt', 'asc');
 		if ($isErasmus) {
 			$query->field('isErasmus')->equals(true);
@@ -30,7 +36,13 @@ class ChallengeRepository extends DocumentRepository {
 		return $query->getQuery();
 	}
 
-	public function findPast($isErasmus = false) {
+	/**
+	 * findPast Recherche des défis terminés
+	 * @param  boolean 			$isErasmus	Les projets Erasmus ou simplement du Science Tour ?
+	 * @param  string			$locale		La langue par défaut de l'application
+	 * @return ArrayCollection  		  	La liste des défis terminés
+	 */
+	public function findPast($isErasmus = false, $locale) {
 		$query = $this->createQueryBuilder()
 			->field('finishedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
@@ -41,7 +53,13 @@ class ChallengeRepository extends DocumentRepository {
 		return $query->getQuery();
 	}
 
-	public function findNonfuture($isErasmus = false) {
+	/**
+	 * findNonfuture Recherche des défis à venir
+	 * @param  boolean 			$isErasmus	Les projets Erasmus ou simplement du Science Tour ?
+	 * @param  string			$locale		La langue par défaut de l'application
+	 * @return ArrayCollection  		  	La liste des défis à venir
+	 */
+	public function findNonfuture($isErasmus = false, $locale) {
 		$query = $this->createQueryBuilder()
 			->field('startedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
