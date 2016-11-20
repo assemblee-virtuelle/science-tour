@@ -18,6 +18,8 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  *   @MongoDB\Index(keys={"startedAt"="asc"}),
  *   @MongoDB\Index(keys={"finishedAt"="asc"}),
  *   @MongoDB\Index(keys={"publishedAt"="asc"}),
+ *   @MongoDB\Index(keys={"isErasmus"="asc"}),
+ *   @MongoDB\Index(keys=("language"="asc"))
  * })
  */
 

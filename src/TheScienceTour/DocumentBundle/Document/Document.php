@@ -10,12 +10,6 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
 abstract class Document {
 
     /**
-     * @MongoDB\Indexes({
-     *   @MongoDB\Index(keys={"isErasmus"="asc"}),
-     *   @MongoDB\Index(keys=("language"="asc"))
-     * })
-     */
-    /**
      * @MongoDB\Boolean
      */
     protected $isErasmus; // Le contenu est-il lié à un projet Erasmus ?
