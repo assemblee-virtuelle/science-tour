@@ -19,36 +19,37 @@ class ChallengeRepository extends DocumentRepository {
 	 */
 	public function findInProgress($isErasmus = false) {
 		$now = new \DateTime();
-		$query = $this->createQueryBuilder()
+		$prepare = $this->createQueryBuilder()
 			->field('startedAt')->lt($now)
 			->field('finishedAt')->gt($now)
 			->sort('finishedAt', 'asc');
 		if ($isErasmus) {
-			$query->field('isErasmus')->equals(true);
+			$prepare->field('isErasmus')->equals(true);
 		}
-		$query->getQuery();
+		$query = $prepare->getQuery();
 
 		return $query->getResult();
 	}
 
 	public function findPast($isErasmus = false) {
-		return $this->createQueryBuilder()
+		$prepare = $this->createQueryBuilder()
 			->field('finishedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
-			if ($isErasmus) {
-				$query->field('isErasmus')->equals(true);
-			}
-			$query->getQuery();
+		if ($isErasmus) {
+			$prepare->field('isErasmus')->equals(true);
+		}
+
+		return $prepare->getQuery();
 	}
 
 	public function findNonfuture($isErasmus = false) {
-		return $this->createQueryBuilder()
+		$prepare = $this->createQueryBuilder()
 			->field('startedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
-			if ($isErasmus) {
-				$query->field('isErasmus')->equals(true);
-			}
-			$query->getQuery();
+		if ($isErasmus) {
+			$prepare->field('isErasmus')->equals(true);
+		}
+		prepare->getQuery();
 	}
 
 }
