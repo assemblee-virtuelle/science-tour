@@ -25,9 +25,9 @@
 
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-	
+
 <script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
-	
+
 <script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
 {% endblock %}
 
@@ -46,7 +46,7 @@
 			<p>{% trans %}To challenge, contact the Science Tour moderator.{% endtrans %}</p>
 		</div>
 	</div>
-{% endblock %}	
+{% endblock %}
 
 {% block content %}
 <h1>{% trans %}In progress challenges{% endtrans %}</h1>
@@ -98,7 +98,7 @@
 {% if pastChallenges|length > 0 %}
 <h1>{% trans %}Past challenges{% endtrans %}</h1>
 <div id="paginationDiv">
-	{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': pastChallenges, 'nbByRow': 3, 'mgr': 10 })) }}
+	{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': pastChallenges, 'nbByRow': 3, 'mgr': 10, 'language': askedForTranslation })) }}
 	<div class="navigation">
     {{ knp_pagination_render(pastChallenges) }}
 	</div>

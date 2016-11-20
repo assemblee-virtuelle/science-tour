@@ -18,11 +18,15 @@ class ChallengeController extends Controller {
 	 * Render challenge panels
 	 */
 
-	public function challengePanelsAction($challengeList, $nbByRow, $mgr) {
+	public function challengePanelsAction($challengeList, $nbByRow, $mgr, $language = NULL) {
+		if (is_null($language)) {
+			$language = $yhis->container->getParameter('locale');
+		}
 		return $this->render('TheScienceTourChallengeBundle::challengePanels.html.twig', array(
 			'challengeList' => $challengeList,
 			'nbByRow' => $nbByRow,
-			'mgr' => $mgr
+			'mgr' => $mgr,
+			'askedForTranslation' => $language
 		));
 	}
 
@@ -68,7 +72,8 @@ class ChallengeController extends Controller {
 		return $this->render('TheScienceTourChallengeBundle::challenges.html.twig', array(
 			'inProgressChallenges' => $inProgressChallenges,
 			'pastChallenges' => $pastChallenges,
-			'inProgressProjects' => $inProgressProjects
+			'inProgressProjects' => $inProgressProjects,
+			'askedForTranslation' => $locale
 		));
 
 	}
