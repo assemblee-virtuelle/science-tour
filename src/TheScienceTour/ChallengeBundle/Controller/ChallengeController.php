@@ -47,6 +47,7 @@ class ChallengeController extends Controller {
 		$pastChallengesQuery = $challengeRepo->findPast($isErasmus, $defaultLocale);
 		$pastChallengesTranslated = [];
 		foreach($pastChallengesQuery as $past) {
+var_dump($past->getTitle());
 			$availableTranslation = $past->getTranslations()->filter(function ($document) use ($locale) {
 				return $document->getLanguage() == $locale;
 			});

@@ -43,6 +43,7 @@ class ChallengeRepository extends DocumentRepository {
 	 * @return ArrayCollection  		  	La liste des défis terminés
 	 */
 	public function findPast($isErasmus = false, $locale) {
+$isErasmus = false;
 		$query = $this->createQueryBuilder()
 			->field('finishedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');

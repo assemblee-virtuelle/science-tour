@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
 
+/** @MongoDB\MappedSuperclass */
 abstract class Document {
 
     /**
@@ -20,12 +21,12 @@ abstract class Document {
     protected $language; // La langue du document
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="translations")
+     * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\DocumentBundle\Document\Document", inversedBy="translations")
      */
     protected $principal; // Le document original
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", mappedBy="principal")
+     * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\DocumentBundle\Document\Document", mappedBy="principal")
      */
     protected $translations; // Ensemble des traductions
 
