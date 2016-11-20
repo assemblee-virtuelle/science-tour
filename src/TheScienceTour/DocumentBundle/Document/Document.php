@@ -1,5 +1,5 @@
 <?php
-
+namespace TheScienceTour\DocumentBundle\Document;
 
 abstract class Document {
 
