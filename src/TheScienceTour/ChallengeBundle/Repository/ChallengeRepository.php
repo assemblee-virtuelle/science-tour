@@ -23,17 +23,19 @@ class ChallengeRepository extends DocumentRepository {
 			->field('startedAt')->lt($now)
 			->field('finishedAt')->gt($now)
 			->sort('finishedAt', 'asc');
-		if (isErasmus) {
+		if ($isErasmus) {
 			$query->field('isErasmus')->equals(true);
 		}
 		$query->getQuery();
+
+		return $query->getResults();
 	}
 
 	public function findPast($isErasmus = false) {
 		return $this->createQueryBuilder()
 			->field('finishedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
-			if (isErasmus) {
+			if ($isErasmus) {
 				$query->field('isErasmus')->equals(true);
 			}
 			$query->getQuery();
@@ -43,7 +45,7 @@ class ChallengeRepository extends DocumentRepository {
 		return $this->createQueryBuilder()
 			->field('startedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
-			if (isErasmus) {
+			if ($isErasmus) {
 				$query->field('isErasmus')->equals(true);
 			}
 			$query->getQuery();
