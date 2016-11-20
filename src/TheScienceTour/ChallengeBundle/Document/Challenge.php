@@ -6,6 +6,7 @@ use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
+use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
 
 /**
  * @MongoDB\Document(repositoryClass="TheScienceTour\ChallengeBundle\Repository\ChallengeRepository", requireIndexes=true)
@@ -21,7 +22,7 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
  * })
  */
 
-class Challenge {
+class Challenge extends BaseDocument {
 
 	/**
 	 * @MongoDB\Id
@@ -132,25 +133,25 @@ class Challenge {
 	 */
 	protected $projects;
 
-	/**
-	 * @MongoDB\Boolean
-	 */
-	protected $isErasmus; // Le contenu est-il lié à un projet Erasmus ?
-
-	/**
-	 * @MongoDB\String
-	 */
-	protected $language; // La langue du document
-
-	/**
-	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="translations")
-	 */
-	protected $principal; // Le document original
-
-	/**
-	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", mappedBy="principal")
-	 */
-	protected $translations; // Ensemble des traductions
+	// /**
+	//  * @MongoDB\Boolean
+	//  */
+	// protected $isErasmus; // Le contenu est-il lié à un projet Erasmus ?
+	//
+	// /**
+	//  * @MongoDB\String
+	//  */
+	// protected $language; // La langue du document
+	//
+	// /**
+	//  * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="translations")
+	//  */
+	// protected $principal; // Le document original
+	//
+	// /**
+	//  * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", mappedBy="principal")
+	//  */
+	// protected $translations; // Ensemble des traductions
 
 	public function __construct() {
 		$this->tools = new \Doctrine\Common\Collections\ArrayCollection();
@@ -417,42 +418,42 @@ class Challenge {
     	}
     }
 
-	public function getIsErasmus() {
-		return $this->isErasmus;
-	}
-
-	public function getLanguage() {
-		return $this->isErasmus;
-	}
-
-	public function getPrincipal() {
-		return $this->isErasmus;
-	}
-
-	public function setIsErasmus($isErasmus) {
-		$this->isErasmus = $isErasmus;
-		return $this;
-	}
-
-	public function setLanguage($language) {
-		$this->language = $language;
-		return $this;
-	}
-
-	public function setPrincipal(\TheScienceTour\ChallengeBundle\Document\Challenge $principal) {
-		$this->principal = $principal;
-		return $this;
-	}
-
-	public function getTranslations() {
-		return $this->translations;
-    }
-
-	public function addTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
-		$this->translations[] = $translation;
-	}
-
-	public function removeTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
-		$this->translations->removeElement($translation);
-	}
+	// public function getIsErasmus() {
+	// 	return $this->isErasmus;
+	// }
+	//
+	// public function getLanguage() {
+	// 	return $this->isErasmus;
+	// }
+	//
+	// public function getPrincipal() {
+	// 	return $this->isErasmus;
+	// }
+	//
+	// public function setIsErasmus($isErasmus) {
+	// 	$this->isErasmus = $isErasmus;
+	// 	return $this;
+	// }
+	//
+	// public function setLanguage($language) {
+	// 	$this->language = $language;
+	// 	return $this;
+	// }
+	//
+	// public function setPrincipal(\TheScienceTour\ChallengeBundle\Document\Challenge $principal) {
+	// 	$this->principal = $principal;
+	// 	return $this;
+	// }
+	//
+	// public function getTranslations() {
+	// 	return $this->translations;
+    // }
+	//
+	// public function addTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+	// 	$this->translations[] = $translation;
+	// }
+	//
+	// public function removeTranslation(\TheScienceTour\ChallengeBundle\Document\Challenge $translation) {
+	// 	$this->translations->removeElement($translation);
+	// }
 }
