@@ -28,7 +28,7 @@ class ChallengeRepository extends DocumentRepository {
 		}
 		$query = $prepare->getQuery();
 
-		return $query->getResult();
+		return $query;
 	}
 
 	public function findPast($isErasmus = false) {
