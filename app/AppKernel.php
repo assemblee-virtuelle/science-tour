@@ -45,6 +45,7 @@ class AppKernel extends Kernel {
       new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
 
       new Erasmus\MainBundle\ErasmusMainBundle(),
+            new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
     );
 
     if (in_array($this->getEnvironment(), array('dev', 'test'))) {

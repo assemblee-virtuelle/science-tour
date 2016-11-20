@@ -1,3 +1,7 @@
+the_science_tour_document:
+    resource: "@TheScienceTourDocumentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 the_science_tour_challenge:
     resource: "@TheScienceTourChallengeBundle/Resources/config/routing.yml"
     prefix:   /
