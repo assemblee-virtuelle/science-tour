@@ -49,7 +49,8 @@ class ChallengeRepository extends DocumentRepository {
 		if ($isErasmus) {
 			$prepare->field('isErasmus')->equals(true);
 		}
-		prepare->getQuery();
+
+		return $prepare->getQuery();
 	}
 
 }
