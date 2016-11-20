@@ -19,10 +19,10 @@ class TheScienceTourRequestListener {
   }
 
   public function onKernelRequest(GetResponseEvent $event) {
+    /** @var \Symfony\Component\HttpFoundation\Request $request */
+    $request = $event->getRequest();
     // We are on the Erasmus website.
-    if (in_array($_SERVER['HTTP_HOST'], $this->earsmusDomains)) {
-      /** @var \Symfony\Component\HttpFoundation\Request $request */
-      $request = $event->getRequest();
+    if (in_array($request->getHttpHost(), $this->earsmusDomains)) {
       /** @var \Symfony\Component\HttpFoundation\Session $session */
       $session = $request->getSession();
       // Save for further usage.
