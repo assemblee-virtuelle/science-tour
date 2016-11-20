@@ -44,7 +44,8 @@ class ChallengeRepository extends DocumentRepository {
 	 */
 	public function findPast($isErasmus = false, $locale) {
 $isErasmus = false;
-		$query = $this->createQueryBuilder()
+		$builder = $this->createQueryBuilder();
+		$query = $builder
 			->field('finishedAt')->lt(new \DateTime())
 			->addOr($builder->expr()->field('language')->equals($locale))
 			->addOr($builder->expr()->field('language')->equals(null))
