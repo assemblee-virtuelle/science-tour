@@ -45,17 +45,15 @@ class ChallengeController extends Controller {
 		$inProgressChallenges = $challengeRepo->findInProgress($isErasmus, $defaultLocale);
 
 		$pastChallengesQuery = $challengeRepo->findPast($isErasmus, $defaultLocale);
-		$pastChallengesTranslated = [];
-		foreach($pastChallengesQuery as $past) {
-var_dump($past->getTitle());
-			$availableTranslation = $past->getTranslations()->filter(function ($document) use ($locale) {
-				return $document->getLanguage() == $locale;
-			});
-			$pastChallengesTranslated[] = empty($availableTranslation) ? $past : $availableTranslation;
-		}
+		// foreach($pastChallengesQuery as $past) {
+		// 	$availableTranslation = $past->getTranslations()->filter(function ($document) use ($locale) {
+		// 		return $document->getLanguage() == $locale;
+		// 	});
+		// 	$pastChallengesTranslated[] = empty($availableTranslation) ? $past : $availableTranslation;
+		// }
 		$paginator = $this->get('knp_paginator');
 		$pastChallenges = $paginator->paginate(
-			$pastChallengesTranslated,
+			$pastChallengesQuery,
 			$this->get('request')->query->get('page', 1),
 			6
 		);
