@@ -46,6 +46,8 @@ class ChallengeRepository extends DocumentRepository {
 $isErasmus = false;
 		$query = $this->createQueryBuilder()
 			->field('finishedAt')->lt(new \DateTime())
+			->addOr($builder->expr()->field('language')->equals($locale))
+			->addOr($builder->expr()->field('language')->equals(null))
 			->sort('finishedAt', 'desc');
 		if ($isErasmus) {
 			$query->field('isErasmus')->equals(true);
