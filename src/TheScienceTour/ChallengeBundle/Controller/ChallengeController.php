@@ -38,7 +38,7 @@ class ChallengeController extends Controller {
 		$dm = $this->get('doctrine_mongodb')->getManager();
 		$isErasmus = $this->get('session')->get('isErasmus');
 		$defaultLocale = $this->container->getParameter('locale');
-		$locale = $this->getLocale();
+		$locale = $defaultLocale;;
 
 		$challengeRepo = $dm->getRepository('TheScienceTourChallengeBundle:Challenge');
 
@@ -50,7 +50,7 @@ class ChallengeController extends Controller {
 			$availableTranslation = $past->getTranslations()->filter(function ($document) use ($locale) {
 				return $document->getLanguage() == $locale;
 			});
-			$pastChallengesTranslated[] = empty($availableTranslation)) ? $past : $availableTranslation;
+			$pastChallengesTranslated[] = empty($availableTranslation) ? $past : $availableTranslation;
 		}
 		$paginator = $this->get('knp_paginator');
 		$pastChallenges = $paginator->paginate(

@@ -11,7 +11,8 @@ abstract class Document {
 
     /**
      * @MongoDB\Indexes({
-     *   @MongoDB\Index(keys={"isErasmus"="asc"})
+     *   @MongoDB\Index(keys={"isErasmus"="asc"}),
+     *   @MongoDB\Index(keys=("language"="asc"))
      * })
      */
     /**
