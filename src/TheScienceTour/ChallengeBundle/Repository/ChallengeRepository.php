@@ -63,7 +63,7 @@ $isErasmus = false;
 	 * @param  string			$locale		La langue par défaut de l'application
 	 * @return ArrayCollection  		  	La liste des défis à venir
 	 */
-	public function findNonfuture($isErasmus = false, $locale) {
+	public function findNonfuture($isErasmus = false) {
 		$query = $this->createQueryBuilder()
 			->field('startedAt')->lt(new \DateTime())
 			->sort('finishedAt', 'desc');
