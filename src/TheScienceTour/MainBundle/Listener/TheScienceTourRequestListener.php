@@ -19,14 +19,20 @@ class TheScienceTourRequestListener {
   }
 
   public function onKernelRequest(GetResponseEvent $event) {
-    /** @var \Symfony\Component\HttpFoundation\Request $request */
-    $request = $event->getRequest();
-    // We are on the Erasmus website.
-    if (in_array($request->getHttpHost(), $this->earsmusDomains)) {
-      /** @var \Symfony\Component\HttpFoundation\Session $session */
-      $session = $request->getSession();
-      // Save for further usage.
-      $session->set('isErasmus', TRUE);
+    static $isErasmus = NULL;
+    // Prevent multiple calls.
+    if ($isErasmus === NULL) {
+      /** @var \Symfony\Component\HttpFoundation\Request $request */
+      $request = $event->getRequest();
+      // We are on the Erasmus website.
+      if (in_array($request->getHttpHost(), $this->earsmusDomains)) {
+        /** @var \Symfony\Component\HttpFoundation\Session $session */
+        $session = $request->getSession();
+        // Save for further usage.
+        $session->set('isErasmus', TRUE);
+        $isErasmus = TRUE;
+      }
+      $isErasmus = FALSE;
     }
   }
 }
