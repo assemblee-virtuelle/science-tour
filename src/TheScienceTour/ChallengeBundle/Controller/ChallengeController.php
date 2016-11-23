@@ -12,15 +12,13 @@ use TheScienceTour\MessageBundle\Document\Message;
 
 class ChallengeController extends Controller {
 
-
-
 	/**
 	 * Render challenge panels
 	 */
 
 	public function challengePanelsAction($challengeList, $nbByRow, $mgr, $language = NULL) {
 		if (is_null($language)) {
-			$language = $yhis->container->getParameter('locale');
+			$language = $this->container->getParameter('locale');
 		}
 		return $this->render('TheScienceTourChallengeBundle::challengePanels.html.twig', array(
 			'challengeList' => $challengeList,
@@ -469,5 +467,4 @@ class ChallengeController extends Controller {
 		return $this->redirect($this->generateUrl('tst_challenge', array('id' => $challenge->getId(), 'tab' => "chats")));
 
 	}
-
 }
