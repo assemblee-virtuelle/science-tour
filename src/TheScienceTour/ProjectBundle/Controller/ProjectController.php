@@ -164,28 +164,32 @@ class ProjectController extends Controller {
         $listTitle        = 'In progress';
         $projectListQuery = $inProgressProjectsQuery;
         $projectList      = $inProgressProjects;
-        $mapProjectList   = $projectRepo->findInProgress(NULL, $isErasmus)->execute();
+        $mapProjectList   = $projectRepo->findInProgress(NULL, $isErasmus)
+          ->execute();
         break;
 
       case 'finished-soon':
         $listTitle        = 'Finished soon';
         $projectListQuery = $finishedSoonProjectsQuery;
         $projectList      = $finishedSoonProjects;
-        $mapProjectList   = $projectRepo->findFinishedSoon(NULL, $isErasmus)->execute();
+        $mapProjectList   = $projectRepo->findFinishedSoon(NULL, $isErasmus)
+          ->execute();
         break;
 
       case 'finished':
         $listTitle        = 'Finished';
         $projectListQuery = $finishedProjectsQuery;
         $projectList      = $finishedProjects;
-        $mapProjectList   = $projectRepo->findFinished(NULL, $isErasmus)->execute();
+        $mapProjectList   = $projectRepo->findFinished(NULL, $isErasmus)
+          ->execute();
         break;
 
       default:
         $listTitle        = 'The youngest';
         $projectListQuery = $youngestProjectsQuery;
         $projectList      = $youngestProjects;
-        $mapProjectList   = $projectRepo->findLastUpdated(NULL, $isErasmus)->execute();
+        $mapProjectList   = $projectRepo->findLastUpdated(NULL, $isErasmus)
+          ->execute();
 
     }
 
