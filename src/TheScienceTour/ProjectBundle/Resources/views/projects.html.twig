@@ -1,22 +1,22 @@
-{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
 
 {% block scripts %}
-<script>
-	function handlePaginatorNavLinks() {
-		$('#paginationDiv .navigation a').click(function() {
-			var url = $(this).attr('href');
-			$('#paginationDiv').load(url+' #paginationDiv', function() {
-				handlePaginatorNavLinks();
-			});
-			return false;
-		});
-	}
+    <script>
+        function handlePaginatorNavLinks() {
+            $('#paginationDiv .navigation a').click(function () {
+                var url = $(this).attr('href');
+                $('#paginationDiv').load(url + ' #paginationDiv', function () {
+                    handlePaginatorNavLinks();
+                });
+                return false;
+            });
+        }
 
-	$(document).ready(function() {
-		handlePaginatorNavLinks();
-	});
-</script>
-	
+        $(document).ready(function () {
+            handlePaginatorNavLinks();
+        });
+    </script>
+
 {% endblock %}
 
 {% block title %}{{ parent() }} - {% trans %}Projects{% endtrans %}{% endblock %}
@@ -24,40 +24,46 @@
 {% block nav_projects %}id="nav_projects"{% endblock %}
 
 {% block banner %}
-	{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-	{{ render(controller('TheScienceTourMapBundle:Map:map',
-		{ 'documentList': mapProjectList, 'route': route, 'menus': menus, 'centerCoordinates': centerCoordinates, 'defaultMap': (listTitle == 'The youngest') })) }}
+    {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+    {{ render(controller('TheScienceTourMapBundle:Map:map',
+    { 'documentList': mapProjectList, 'route': route, 'menus': menus, 'centerCoordinates': centerCoordinates, 'defaultMap': (listTitle == 'The youngest') })) }}
 {% endblock %}
 
 {% block content %}
-<h1>{{ listTitle|trans }}</h1>
-<div id="paginationDiv">
-	{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': pagination, 'nbByRow': 3, 'mgr': 10 })) }}
-	<div class="navigation">
-    {{ knp_pagination_render(pagination) }}
-	</div>
-</div>
+    <h1>{{ listTitle|trans }}</h1>
+    <div id="paginationDiv">
+        {{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': pagination, 'nbByRow': 3, 'mgr': 10 })) }}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block aside %}
 
-<h1>{% trans %}Set up a project{% endtrans %}</h1>
-<div class="create_project">
-	<ul class="ol-icon-circle ol-icon-circle-green1">
-		<li><span>1</span>{% trans %}Define an objective{% endtrans %}</li>
-		<li><span>2</span>{% trans %}Build a team{% endtrans %}</li>
-		<li><span>3</span>{% trans %}Gather resoures{% endtrans %}</li>
-		<li><span>4</span>{% trans %}Write documentation{% endtrans %}</li>
-	</ul>
-	<div class="create"><a href="{{ path('tst_project_add') }}" alt="">{% trans %}Create a project{% endtrans %}</a></div>
-</div>
-<h1>{% trans %}Annotate an idea{% endtrans %}</h1>
-<div class="annotate_idea">
-	<div class="bulb"><i class="icon-lightbulb"></i></div>
-	<p>
-		<b>{% trans %}You just want to annotate a project idea without publishing?{% endtrans %}</b><br />
-		{% trans %}Start filling the form and save is as a draft.{% endtrans %}
-	</p>
-	<div class="draft"><a href="{{ path('tst_project_add') }}" alt="">{% trans %}Create a draft{% endtrans %}</a></div>
-</div>
+    <h1>{% trans %}Set up a project{% endtrans %}</h1>
+    <div class="create_project">
+        <ul class="ol-icon-circle ol-icon-circle-green1">
+            <li><span>1</span>{% trans %}Define an objective{% endtrans %}</li>
+            <li><span>2</span>{% trans %}Build a team{% endtrans %}</li>
+            <li><span>3</span>{% trans %}Gather resoures{% endtrans %}</li>
+            <li><span>4</span>{% trans %}Write documentation{% endtrans %}</li>
+        </ul>
+        <div class="create"><a href="{{ path('tst_project_add') }}"
+                               alt="">{% trans %}Create a
+                project{% endtrans %}</a></div>
+    </div>
+    <h1>{% trans %}Annotate an idea{% endtrans %}</h1>
+    <div class="annotate_idea">
+        <div class="bulb"><i class="icon-lightbulb"></i></div>
+        <p>
+            <b>{% trans %}You just want to annotate a project idea without
+                publishing?{% endtrans %}</b><br/>
+            {% trans %}Start filling the form and save is as a
+            draft.{% endtrans %}
+        </p>
+        <div class="draft"><a href="{{ path('tst_project_add') }}"
+                              alt="">{% trans %}Create a draft{% endtrans %}</a>
+        </div>
+    </div>
 {% endblock %}
