@@ -80,18 +80,20 @@ class ProjectController extends Controller {
       );
     }
 
+    $session   = $this->get('session');
+    $isErasmus = $session->get('isErasmus', FALSE);
 
     // In progress
-    $inProgressProjectsQuery = $projectRepo->findInProgress($geoNear);
+    $inProgressProjectsQuery = $projectRepo->findInProgress($geoNear, $isErasmus);
     $inProgressProjects      = $inProgressProjectsQuery->execute();
     // Youngest projects
-    $youngestProjectsQuery = $projectRepo->findLastUpdated($geoNear);
+    $youngestProjectsQuery = $projectRepo->findLastUpdated($geoNear, $isErasmus);
     $youngestProjects      = $youngestProjectsQuery->execute();
     // Finished
-    $finishedProjectsQuery = $projectRepo->findFinished($geoNear);
+    $finishedProjectsQuery = $projectRepo->findFinished($geoNear, $isErasmus);
     $finishedProjects      = $finishedProjectsQuery->execute();
     // Finished soon
-    $finishedSoonProjectsQuery = $projectRepo->findFinishedSoon($geoNear);
+    $finishedSoonProjectsQuery = $projectRepo->findFinishedSoon($geoNear, $isErasmus);
     $finishedSoonProjects      = $finishedSoonProjectsQuery->execute();
 
     $route           = array(
@@ -162,28 +164,28 @@ class ProjectController extends Controller {
         $listTitle        = 'In progress';
         $projectListQuery = $inProgressProjectsQuery;
         $projectList      = $inProgressProjects;
-        $mapProjectList   = $projectRepo->findInProgress()->execute();
+        $mapProjectList   = $projectRepo->findInProgress(NULL, $isErasmus)->execute();
         break;
 
       case 'finished-soon':
         $listTitle        = 'Finished soon';
         $projectListQuery = $finishedSoonProjectsQuery;
         $projectList      = $finishedSoonProjects;
-        $mapProjectList   = $projectRepo->findFinishedSoon()->execute();
+        $mapProjectList   = $projectRepo->findFinishedSoon(NULL, $isErasmus)->execute();
         break;
 
       case 'finished':
         $listTitle        = 'Finished';
         $projectListQuery = $finishedProjectsQuery;
         $projectList      = $finishedProjects;
-        $mapProjectList   = $projectRepo->findFinished()->execute();
+        $mapProjectList   = $projectRepo->findFinished(NULL, $isErasmus)->execute();
         break;
 
       default:
         $listTitle        = 'The youngest';
         $projectListQuery = $youngestProjectsQuery;
         $projectList      = $youngestProjects;
-        $mapProjectList   = $projectRepo->findLastUpdated()->execute();
+        $mapProjectList   = $projectRepo->findLastUpdated(NULL, $isErasmus)->execute();
 
     }
 
