@@ -4,12 +4,13 @@ namespace TheScienceTour\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller {
 
   public function homeAction() {
     // Use session.
-    $session = $this->get('session');
+    $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
 
     // Ensure indexes.
@@ -28,10 +29,11 @@ class MainController extends Controller {
     $mapHelper        = $this->get('the_science_tour_map.map_helper');
     $aroundMeProjects = NULL;
 
-    $trucksList = $dm->getRepository('TheScienceTourEventBundle:Event')->findTrucks();
+    $trucksList = $dm->getRepository('TheScienceTourEventBundle:Event')
+      ->findTrucks();
 
     try {
-      $userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+      $userGeocode           = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
       $aroundMeProjectsQuery = $projectRepo->findGeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
       $aroundMeProjects      = $aroundMeProjectsQuery->execute();
     } catch (Exception $e) {
@@ -47,8 +49,12 @@ class MainController extends Controller {
   }
 
   public function searchAction($request) {
+    // Disabled in dev mode.
+    if ($this->get('kernel')->getEnvironment() === 'dev') {
+      return new Response('La recherche est désactivée en environnement de dev');
+    }
 
-    /*$finder        = $this->container->get('fos_elastica.finder.tst.project');
+    $finder        = $this->container->get('fos_elastica.finder.tst.project');
     $query         = new \Elastica\Query\QueryString($request);
     $term          = new \Elastica\Filter\Term(array('status' => 1));
     $filteredQuery = new \Elastica\Query\Filtered($query, $term);
@@ -57,7 +63,6 @@ class MainController extends Controller {
     return $this->render('TheScienceTourMainBundle::search.html.twig', array(
       'request' => urldecode($request),
       'result'  => $result
-    ));*/
+    ));
   }
-
 }
