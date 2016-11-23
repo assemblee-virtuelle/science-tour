@@ -32,6 +32,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  *   @MongoDB\Index(keys={"frontPage"="desc"}),
  *   @MongoDB\Index(keys={"coordinates"="2d"}),
  *   @MongoDB\Index(keys={"challenge.id"="asc"}),
+ *   @MongoDB\Index(keys={"isErasmus"="asc"}),
  *   @MongoDB\Index(keys={"language"="asc"})
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
@@ -95,7 +96,6 @@ class Project extends BaseDocument {
 
 	/**
 	 * @MongoDB\String
-	 * @Assert\NotBlank(groups={"publish"})
 	 * @TSTMapAssert\ProvidedAddress(groups={"publish"})
 	 */
 	protected $place;
