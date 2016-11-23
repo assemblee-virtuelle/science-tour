@@ -5,11 +5,11 @@
 {%  block scripts %}
 <script>
 	function show(id) {
-	
+
 		var tabsul = document.getElementById('tabs');
 		var containers = document.getElementsByClassName('tab-container');
 		var asideContainers = document.getElementsByClassName('aside-container');
-		
+
 		for (var i=0; i<tabsul.children.length; i++) {
 			if (i==id) {
 				tabsul.children[i].className = 'active';
@@ -23,24 +23,32 @@
 		}
 	}
 </script>
-		
+
 <script type="text/javascript">
 			$(document).ready(function() {
+				//
+				$('#form_language').change(function() {
+					alert('Changement de langue pour ' + $(this).val());
+					window.location.href = window.location.pathname+"?"+$.param({
+								'lang':$(this).val()
+							});
+				});
+
 				var $toolsContainer = $('div#form_tools');
 				var $materialsContainer = $('div#form_materials');
 				var $premisesContainer = $('div#form_premises');
 				var $skillsContainer = $('div#form_skills');
-				
+
 				var $addToolLink = $('<a href="#" class="add_res"><span>{% trans %}Add a tool{% endtrans %}</span></a>');
 				var $addMaterialLink = $('<a href="#" class="add_res"><span>{% trans %}Add a material{% endtrans %}</span></a>');
 				var $addPremiseLink = $('<a href="#" class="add_res"><span>{% trans %}Add premises{% endtrans %}</span></a>');
 				var $addSkillLink = $('<a href="#" class="add_res"><span>{% trans %}Add a skill{% endtrans %}</span></a>');
-				
+
 				$toolsContainer.parent().append($addToolLink);
 				$materialsContainer.parent().append($addMaterialLink);
 				$premisesContainer.parent().append($addPremiseLink);
 				$skillsContainer.parent().append($addSkillLink);
-	 
+
 				$addToolLink.click(function(e) {
 					addTool($toolsContainer);
 					e.preventDefault();
@@ -63,7 +71,7 @@
 				});
 
 				{% block form_js %}{% endblock %}
- 
+
 				function addTool($toolsContainer) {
 					var index = $toolsContainer.children().length;
 					var $protoTools = $($toolsContainer.attr('data-prototype').replace(/__name__label__/g, '').replace(/__name__/g, index).replace('placeholder=""', 'placeholder="Ex : Marteau, fer à souder, caméra..."').replace('][number]"', '][number]" value="1"').replace('][creatorHelpNb]"', '][creatorHelpNb]" value="0"'));
@@ -88,7 +96,7 @@
 					addDeleteSkillLink($protoSkills, $skillsContainer);
 					$skillsContainer.append($protoSkills);
 				}
-	 
+
 				function addDeleteToolLink($protoTools, $toolsContainer) {
 					$deleteToolLink = $('<a class="delete_res" href="#"></a>');
 					$protoTools.prepend($deleteToolLink);
@@ -129,7 +137,7 @@
 						return false;
 					});
 				}
-				
+
 				function updateTools($toolsContainer) {
 					$toolsContainer.children().each(function(index) {
 						$(this).children()[2].id = "form_tools_" + index;
@@ -183,7 +191,7 @@
 				{% if form.goal.vars.errors|length > 0 or form.description.vars.errors|length > 0 %}
 					show(1);
 				{% endif %}
-				
+
 			});
 </script>
 <script>
@@ -212,7 +220,7 @@ var myFile = document.getElementById('form_picture_binaryContent');
 <form class="project_form" method="post" {{ form_enctype(form) }}>
 
 	{{ form_errors(form) }}
-	
+
 	{% if form.publish is defined %}
 	{{ form_widget(form.publish) }}
 	{% endif %}
@@ -222,7 +230,7 @@ var myFile = document.getElementById('form_picture_binaryContent');
 	{% if form.save is defined %}
 	{{ form_widget(form.save) }}
 	{% endif %}
-	
+
 	<ul id="tabs" class="tabs">
 		<li class="active"><a href="javascript:show(0);"><h1>{% trans %}Basic info{% endtrans %}</h1></a></li>
 		<li><a href="javascript:show(1);"><h1>{% trans %}The project{% endtrans %}</h1></a></li>
@@ -237,11 +245,16 @@ var myFile = document.getElementById('form_picture_binaryContent');
 				{{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
 			</div>
 			<div>
+				{{ form_label(form.language, "Project language") }}
+				{{ form_errors(form.language) }}
+				{{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+			</div>
+			<div>
 				{{ form_label(form.challenge, "Challenge") }}
 				<div class="pb14">{% trans %}Is this project rising a challenge? If yes, which one?{% endtrans %}</div>
 				{{ form_errors(form.challenge) }}
 				{{ form_widget(form.challenge) }}
-			</div>		
+			</div>
 			<div>
 				<div class="start_form">
 					{{ form_label(form.startedAt, "Starting date") }}
@@ -259,7 +272,7 @@ var myFile = document.getElementById('form_picture_binaryContent');
 					{{ form_label(form.price, "Estimated price") }}
 					{{ form_errors(form.price) }}
 					{{ form_widget(form.price, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }} €
-				</div>			
+				</div>
 			</div>
 			<div class="place_form">
 				{{ form_label(form.place, "Place", { 'label_attr': {'class': 'orange-asterisk'} }) }}
@@ -273,7 +286,7 @@ var myFile = document.getElementById('form_picture_binaryContent');
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="tab-container" style="display: none;">
 		<div class="tab-container-inner">
 			<div>
@@ -288,7 +301,7 @@ var myFile = document.getElementById('form_picture_binaryContent');
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="tab-container" style="display: none;">
 		<div class="tab-container-inner">
 			<div>
@@ -318,9 +331,9 @@ var myFile = document.getElementById('form_picture_binaryContent');
 			</div>
 		</div>
 	</div>
-	
+
 	{{ form_rest(form) }}
-	
+
 </form>
 {{ tinymce_init() }}
 {% endblock %}

@@ -10,9 +10,8 @@ class MainController extends Controller {
   public function homeAction() {
     // Use session.
     $session = $this->get('session');
-    $isErasmus = $session->get('isErasmus', FALSE);
 
-    // Ensure indexes.
+    // Ensure indexes
     // TODO: Find a better place to run this
     $dm = $this->get('doctrine_mongodb')->getManager();
     $dm->getSchemaManager()->ensureIndexes();
@@ -28,10 +27,12 @@ class MainController extends Controller {
     $mapHelper        = $this->get('the_science_tour_map.map_helper');
     $aroundMeProjects = NULL;
 
-    $trucksList = $dm->getRepository('TheScienceTourEventBundle:Event')->findTrucks();
+    $trucksList = $dm->getRepository('TheScienceTourEventBundle:Event')
+      ->findTrucks();
 
     try {
       $userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+
       $aroundMeProjectsQuery = $projectRepo->findGeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
       $aroundMeProjects      = $aroundMeProjectsQuery->execute();
     } catch (Exception $e) {
@@ -42,12 +43,13 @@ class MainController extends Controller {
       'projectList'      => $projectList,
       'aroundMeProjects' => $aroundMeProjects,
       'trucksList'       => $trucksList,
-      'isErasmus'        => $isErasmus
+      'isErasmus'        => $session->get('isErasmus', FALSE)
     ));
   }
 
   public function searchAction($request) {
-    $finder        = $this->container->get('fos_elastica.finder.tst.project');
+
+    /*$finder        = $this->container->get('fos_elastica.finder.tst.project');
     $query         = new \Elastica\Query\QueryString($request);
     $term          = new \Elastica\Filter\Term(array('status' => 1));
     $filteredQuery = new \Elastica\Query\Filtered($query, $term);
@@ -56,6 +58,7 @@ class MainController extends Controller {
     return $this->render('TheScienceTourMainBundle::search.html.twig', array(
       'request' => urldecode($request),
       'result'  => $result
-    ));
+    ));*/
   }
+
 }

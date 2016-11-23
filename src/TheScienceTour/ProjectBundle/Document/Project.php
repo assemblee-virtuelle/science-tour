@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace TheScienceTour\ProjectBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use TheScienceTour\MapBundle\Validator\Constraints as TSTMapAssert;
 use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
 use TheScienceTour\ProjectBundle\Validator\Constraints as TSTProjectAssert;
+use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
 
 /**
  * @MongoDB\Document(repositoryClass="TheScienceTour\ProjectBundle\Repository\ProjectRepository", requireIndexes=true)
@@ -30,33 +31,34 @@ use TheScienceTour\ProjectBundle\Validator\Constraints as TSTProjectAssert;
  *   @MongoDB\Index(keys={"price"="asc"}),
  *   @MongoDB\Index(keys={"frontPage"="desc"}),
  *   @MongoDB\Index(keys={"coordinates"="2d"}),
- *   @MongoDB\Index(keys={"challenge.id"="asc"})
+ *   @MongoDB\Index(keys={"challenge.id"="asc"}),
+ *   @MongoDB\Index(keys={"language"="asc"})
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
  */
 
-class Project {
-	
+class Project extends BaseDocument {
+
 	/**
 	 * @MongoDB\Id
 	 */
 	protected $id;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $creator;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $delegate;
-	
+
 	/**
 	 * @MongoDB\Int
 	 */
 	protected $status; // 0: draft, 1: published
-	
+
 	/**
 	 * @Gedmo\Timestampable(on="create")
 	 * @MongoDB\Date
@@ -68,7 +70,7 @@ class Project {
 	 * @MongoDB\Date
 	 */
 	protected $updatedAt;
-	
+
 	/**
 	 * @MongoDB\Date
 	 */
@@ -83,7 +85,7 @@ class Project {
 	 * @MongoDB\Date
 	 */
 	protected $finishedAt;
-	
+
 	/**
 	 * @MongoDB\String
 	 * @Assert\NotBlank()
@@ -97,7 +99,7 @@ class Project {
 	 * @TSTMapAssert\ProvidedAddress(groups={"publish"})
 	 */
 	protected $place;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\MediaBundle\Document\Media", cascade={"persist", "remove"})
 	 * @Assert\NotNull()
@@ -105,19 +107,19 @@ class Project {
 	 * @TSTMediaAssert\ValidImgSize()
 	 */
 	protected $picture;
-	
+
 	/**
 	 * @MongoDB\String
 	 * @Assert\NotBlank(groups={"publish"})
 	 */
 	protected $goal; // Goal of the game
-	
+
 	/**
 	 * @MongoDB\String
 	 * @Assert\NotBlank(groups={"publish"})
 	 */
 	protected $description; // Rules of the game
-	
+
 	/**
 	 * @MongoDB\Int
 	 * @Assert\Type(type="integer", groups={"publish"})
@@ -132,80 +134,80 @@ class Project {
      * @Assert\Choice({"day", "week", "month"})
 	 */
 	protected $durationUnit;
-	
+
 	/**
 	 * @MongoDB\Int
 	 * @Assert\Type(type="integer", groups={"publish"})
 	 * @Assert\Range(min=0, groups={"publish"})
 	 */
 	protected $price;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ProjectBundle\Document\Resource", cascade={"persist", "remove"})
      */
 	protected $tools;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ProjectBundle\Document\Resource", cascade={"persist", "remove"})
 	 */
 	protected $materials;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ProjectBundle\Document\Resource", cascade={"persist", "remove"})
 	 */
 	protected $premises;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\ProjectBundle\Document\Skill", cascade={"persist", "remove"})
 	 */
 	protected $skills;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $contributors;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $supporters;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $subscribers;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\UserBundle\Document\User")
 	 */
 	protected $sponsors;
-	
+
 	/**
 	 * @MongoDB\EmbedOne(targetDocument="TheScienceTour\MapBundle\Document\Coordinates")
 	 */
 	protected $coordinates;
-	
+
 	/**
 	 * @MongoDB\Distance
 	 */
 	protected $distance;
-	
+
 	/**
 	 * @MongoDB\Boolean
 	 */
 	protected $frontPage;
-	
+
 	/**
 	 * @MongoDB\ReferenceMany(targetDocument="TheScienceTour\MessageBundle\Document\Chat", cascade={"persist", "remove"})
 	 */
 	protected $chats;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="projects")
 	 */
 	protected $challenge;
-	
-		
+
+
 	public function __construct() {
 		$this->frontPage = false;
 		$this->tools = new \Doctrine\Common\Collections\ArrayCollection();
@@ -213,52 +215,52 @@ class Project {
 		$this->premises = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->skills = new \Doctrine\Common\Collections\ArrayCollection();
 	}
-	
-	
+
+
     public function getId() {
         return $this->id;
     }
-    
+
     public function getCreator() {
     	return $this->creator;
     }
-    
+
     public function getDelegate() {
     	return $this->delegate;
     }
-    
+
     public function getTitle() {
     	return $this->title;
     }
-    
+
     public function getStatus() {
     	return $this->status;
     }
-    
+
     public function getPlace() {
     	return $this->place;
     }
-    
+
     public function getPicture() {
     	return $this->picture;
     }
-    
+
     public function getGoal() {
     	return $this->goal;
-    }  
-    
+    }
+
     public function getDescription() {
     	return $this->description;
     }
-    
+
     public function getDuration() {
     	return $this->duration;
     }
-    
+
     public function getDurationUnit() {
     	return $this->durationUnit;
     }
-    
+
     public function getPrice() {
     	return $this->price;
     }
@@ -266,43 +268,43 @@ class Project {
     public function getTools() {
     	return $this->tools;
     }
-    
+
     public function getMaterials() {
     	return $this->materials;
     }
-    
+
     public function getPremises() {
     	return $this->premises;
     }
-    
+
     public function getSkills() {
     	return $this->skills;
     }
-    
+
     public function getContributors() {
     	return $this->contributors;
     }
-    
+
     public function getSupporters() {
     	return $this->supporters;
     }
-    
+
     public function getSubscribers() {
     	return $this->subscribers;
     }
-    
+
     public function getSponsors() {
     	return $this->sponsors;
     }
-    
+
     public function getChats() {
     	return $this->chats;
     }
-    
+
     public function getChallenge() {
     	return $this->challenge;
     }
-    
+
     public function getSkillFraction() {
     	$actualNumber = 0;
     	$totalNumber = 0;
@@ -312,7 +314,7 @@ class Project {
     	}
     	return $actualNumber.' / '.$totalNumber;
     }
-    
+
     public function getTeam() {
     	$team = new \Doctrine\Common\Collections\ArrayCollection();
     	$team[] = $this->creator;
@@ -335,7 +337,7 @@ class Project {
     	}
     	return $team;
     }
-    
+
     public function getEverybody() {
     	$everybody = $this->getTeam();
     	foreach ($this->supporters as $supporter) {
@@ -350,23 +352,23 @@ class Project {
     	}
     	return $everybody;
     }
-    
+
     public function setTitle($title) {
         $this->title = $title;
     }
-    
+
     public function setCreator($creator) {
     	$this->creator = $creator;
     }
-    
+
     public function setDelegate($delegate) {
     	$this->delegate = $delegate;
     }
-    
+
     public function setStatus($status) {
     	$this->status = $status;
     }
-    
+
     public function setPlace($place) {
     	$this->place = $place;
     }
@@ -377,7 +379,7 @@ class Project {
     		$this->picture->setName($this->title);
     	}
     }
-    
+
     public function setGoal($goal) {
         $this->goal = $goal;
     }
@@ -385,23 +387,23 @@ class Project {
     public function setDescription($description) {
         $this->description = $description;
     }
-    
+
     public function setDuration($duration) {
     	$this->duration = $duration;
     }
-    
+
     public function setDurationUnit($durationUnit) {
     	$this->durationUnit = $durationUnit;
     }
-    
+
     public function setPrice($price) {
     	$this->price = $price;
     }
-    
+
     public function setChallenge($challenge) {
     	$this->challenge = $challenge;
     }
-    
+
     public function setSupporters() {
     	$supporters = new \Doctrine\Common\Collections\ArrayCollection();
     	foreach ($this->tools as $tool) {
@@ -427,77 +429,77 @@ class Project {
     	}
     	$this->supporters = $supporters;
     }
-    
+
     public function addTool($tool) {
     	$this->tools[] = $tool;
     }
-    
+
     public function addMaterial($material) {
     	$this->materials[] = $material;
     }
-    
+
     public function addPremise($premise) {
     	$this->premises[] = $premise;
     }
-    
+
     public function addSkill($skill) {
     	$this->skills[] = $skill;
     }
-    
+
     public function addContributor($contributor) {
     	if (!$this->contributors->contains($contributor)) {
     		$this->contributors[] = $contributor;
     	}
     }
-    
+
     public function addSubscriber($subscriber) {
     	if (!$this->subscribers->contains($subscriber)) {
     		$this->subscribers[] = $subscriber;
     	}
     }
-    
+
     public function addSponsor($sponsor) {
     	if (!$this->sponsors->contains($sponsor)) {
     		$this->sponsors[] = $sponsor;
     	}
     }
-    
+
     public function addChat($chat) {
     	$this->chats[] = $chat;
     }
-    
+
     public function removeTool($tool) {
     	$this->tools->removeElement($tool);
     }
-    
+
     public function removeMaterial($material) {
     	$this->materials->removeElement($material);
     }
-    
+
     public function removePremise($premise) {
     	$this->premises->removeElement($premise);
     }
-    
+
     public function removeSkill($skill) {
     	$this->skills->removeElement($skill);
     }
-    
+
     public function removeContributor($contributor) {
     	$this->contributors->removeElement($contributor);
     }
-    
+
     public function removeSubscriber($subscriber) {
     	$this->subscribers->removeElement($subscriber);
     }
-    
+
     public function removeSponsor($sponsor) {
     	$this->sponsors->removeElement($sponsor);
     }
-    
+
     public function eraseSponsors() {
     	$this->sponsors = null;
     }
-    
+
     public function removeChat($chat) {
     	$this->chats->removeElement($chat);
     }
@@ -513,7 +515,7 @@ class Project {
     	$this->coordinates = $coordinates;
     	return $this;
     }
-    
+
     /**
      * Get coordinates
      *
@@ -523,12 +525,12 @@ class Project {
     {
     	return $this->coordinates;
     }
-    
+
     public function unsetCoordinates()
     {
     	unset($this->coordinates);
     }
-    
+
     /**
      * Set distance
      *
@@ -540,7 +542,7 @@ class Project {
     	$this->distance = $distance;
     	return $this;
     }
-    
+
     /**
      * Get distance
      *
@@ -650,7 +652,7 @@ class Project {
         $this->finishedAt = $finishedAt;
         return $this;
     }
-    
+
     public function updateFinishedAt() {
     	if ($this->startedAt != null) {
 	    	$date = clone $this->startedAt;

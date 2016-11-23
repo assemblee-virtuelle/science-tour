@@ -7,7 +7,7 @@ use Ivory\GoogleMap\Places\AutocompleteType;
 use Symfony\Component\CssSelector\XPath\Translator;
 
 class MapFilterGeoNearController extends Controller {
-	
+
 	public function defaultAction($route) {
 		$form = $this->createFormBuilder()
 			->add('center', 'places_autocomplete', array(
@@ -23,11 +23,11 @@ class MapFilterGeoNearController extends Controller {
 				)
 			))
 			->getForm();
-		
+
 		return $this->render('TheScienceTourMapBundle::mapFilterGeoNear.html.twig', array(
 				'route' => $route,
 				'form' => $form->createView()
 		));
 	}
-	
+
 }
