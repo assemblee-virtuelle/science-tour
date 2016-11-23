@@ -356,6 +356,8 @@ class ProjectController extends Controller {
 		if ($request->getMethod() == 'POST') {
 			$form->bind($request);
 			if ($form->isValid()) {
+				// Save erasmus project.
+				$project->setIsErasmus($this->get('session')->get('isErasmus'));
 				if (!$project->getPicture()->getSize()) {
 					$project->setPicture(null);
 				}
@@ -378,6 +380,9 @@ class ProjectController extends Controller {
 				$news->setProjectId($project->getId());
 				$news->setAuthor($user);
 				$news->setTitle("{% publishProject %}");
+
+
+
 				$dm->persist($news);
 				foreach ($project->getTools() as $tool) {
 					if ($tool->getCreatorHelpNb() < 0 || $tool->getCreatorHelpNb() > $tool->getNumber()) {$tool->setCreatorHelpNb(0);}
