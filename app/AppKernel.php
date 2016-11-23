@@ -33,8 +33,7 @@ class AppKernel extends Kernel {
       new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
       new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
       new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
-      new FOS\ElasticaBundle\FOSElasticaBundle(),
-
+      // Custom.
       new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
       new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
       new TheScienceTour\MediaBundle\TheScienceTourMediaBundle(),
@@ -43,10 +42,15 @@ class AppKernel extends Kernel {
       new TheScienceTour\MapBundle\TheScienceTourMapBundle(),
       new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
       new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
-
+      new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
+      // Erasmus.
       new Erasmus\MainBundle\ErasmusMainBundle(),
-            new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
     );
+
+    if (!$this->getEnvironment() === 'dev') {
+      // Disable elastic search in dev mode.
+      $bundles[] = new FOS\ElasticaBundle\FOSElasticaBundle();
+    }
 
     if (in_array($this->getEnvironment(), array('dev', 'test'))) {
       $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
