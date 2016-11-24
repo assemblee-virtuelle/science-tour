@@ -1,6 +1,6 @@
 <ul class="project_items challenge_items">
     {% for challenge in challengeList %}
-        {% set tranlations = challenge.translations %}
+        {% set translations = challenge.translations %}
         {% for t in translations %}
             {% if t.language == askedForTranslation %}
                 {% set challenge = t %}
