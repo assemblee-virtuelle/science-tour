@@ -300,6 +300,10 @@ class ProjectController extends Controller {
     if (!$user) {
       throw new AccessDeniedException();
     }
+    // Get erasmus site status.
+    $session   = $this->get('session');
+    $isErasmus = $session->get('isErasmus', FALSE);
+
     $project = new Project();
     $project->setCreator($user);
     if ($idchallenge) {
@@ -492,7 +496,8 @@ class ProjectController extends Controller {
     }
 
     return $this->render('TheScienceTourProjectBundle::add.html.twig', array(
-      'form' => $form->createView()
+      'isErasmus' => $isErasmus,
+      'form'      => $form->createView()
     ));
 
   }
@@ -502,6 +507,10 @@ class ProjectController extends Controller {
     if (!$user) {
       throw new AccessDeniedException();
     }
+    // Get erasmus site status.
+    $session   = $this->get('session');
+    $isErasmus = $session->get('isErasmus', FALSE);
+
     $project = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourProjectBundle:Project')
       ->find($id);
@@ -932,11 +941,10 @@ class ProjectController extends Controller {
     }
 
     return $this->render('TheScienceTourProjectBundle::edit.html.twig', array(
-      'project' => $project,
-      'form'    => $form->createView()
-
+      'project'   => $project,
+      'form'      => $form->createView(),
+      'isErasmus' => $isErasmus
     ));
-
   }
 
   public function adminProjectAction($id, $tab) {

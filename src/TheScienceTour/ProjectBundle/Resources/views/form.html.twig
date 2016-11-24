@@ -244,11 +244,13 @@ var myFile = document.getElementById('form_picture_binaryContent');
 				{{ form_errors(form.title) }}
 				{{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
 			</div>
-			<div>
-				{{ form_label(form.language, "Project language") }}
-				{{ form_errors(form.language) }}
-				{{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
-			</div>
+			{% if isErasmus %}
+				<div>
+					{{ form_label(form.language, "Project language") }}
+					{{ form_errors(form.language) }}
+					{{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+				</div>
+			{% endif %}
 			<div>
 				{{ form_label(form.challenge, "Challenge") }}
 				<div class="pb14">{% trans %}Is this project rising a challenge? If yes, which one?{% endtrans %}</div>
