@@ -27,6 +27,14 @@
 		<header id="overall-header">
 			<div id="overall-header-login">
 				<ul>
+
+				{# Lang selection #}
+				{% for key,lang in erasmusLanguages %}
+				  <li class="{% if key == app.request.getLocale() %}active{% endif %}">
+					  <a href="{{ path('tst_home',{ _locale:key }) }}">{{ lang }}</a>
+				  </li>
+				{% endfor %}
+
 				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 					{% if is_granted("ROLE_ADMIN") %}
 					<li><a class="separator" href="{{ path('sonata_admin_dashboard') }}">{% trans %}ADMIN{% endtrans %}</a></li>

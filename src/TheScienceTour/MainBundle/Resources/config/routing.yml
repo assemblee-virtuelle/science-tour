@@ -2,7 +2,7 @@ tst_home:
     pattern:    /{_locale}
     defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:fr }
     requirements:
-        _locale: en|fr
+        _locale: en|fr|pl
 
 tst_about:
     path: /about
@@ -15,7 +15,7 @@ tst_cgu:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'TheScienceTourMainBundle:Static:cgu.html.twig'
-        
+
 tst_search_noreq:
     pattern: /search
     defaults: { _controller: "TheScienceTourMainBundle:Main:search", request: '' }

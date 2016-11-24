@@ -16,7 +16,7 @@ parameters:
     erasmusLanguages :
         fr: Français
         en: English
-        de: Deutsch
+        pl: Polski
     erasmusDomains :
         - youthcommittedforclimate.org
         - ycfc.org

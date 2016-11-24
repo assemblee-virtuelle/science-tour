@@ -28,6 +28,7 @@ twig:
             - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
     globals:
         tst_version: %tst_version%
+        erasmusLanguages: %erasmusLanguages%
 
 # Assetic Configuration
 assetic:
