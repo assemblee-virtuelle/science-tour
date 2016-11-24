@@ -4,15 +4,18 @@ namespace TheScienceTour\ProjectBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use TheScienceTour\MainBundle\Model\GeoNear;
+use Doctrine\MongoDB\Query\Builder;
 
 class ProjectRepository extends DocumentRepository {
 
-  private function erasmusQueryFilter($query, $isErasmus) {
+  private function erasmusQueryFilter(Builder $queryBuilder, $isErasmus) {
     // For erasmus version.
     if ($isErasmus) {
       // Only erasmus projects.
-      $query->field('isErasmus')->equals(TRUE);
+      $queryBuilder->field('isErasmus')->equals(TRUE);
     }
+    // Can be used by reference or not.
+    return $queryBuilder;
   }
 
   public function findFrontPage($isErasmus) {
@@ -31,8 +34,8 @@ class ProjectRepository extends DocumentRepository {
   }
 
   public function findInProgress(GeoNear $geoNear = NULL, $isErasmus) {
-    $now = new \DateTime();
-    $query  = $this->createQueryBuilder()
+    $now   = new \DateTime();
+    $query = $this->createQueryBuilder()
       ->field('status')->notEqual(0)
       ->field('startedAt')->lt($now)
       ->field('finishedAt')->gt($now);
@@ -107,75 +110,72 @@ class ProjectRepository extends DocumentRepository {
       ->getQuery();
   }
 
-  public function findProjectsCreatedBy($iduser) {
-    return $this->createQueryBuilder()
+  public function findProjectsCreatedBy($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter($this->createQueryBuilder()
       ->field('status')->notEqual(0)
-      ->field('creator.id')->equals($iduser)
-      ->sort('publishedAt', 'desc')
-      ->getQuery();
+      ->field('creator.id')->equals($idUser)
+      ->sort('publishedAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findDraftsCreatedBy($iduser) {
-    return $this->createQueryBuilder()
+  public function findDraftsCreatedBy($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter($this->createQueryBuilder()
       ->field('status')->equals(0)
-      ->field('creator.id')->equals($iduser)
-      ->sort('createdAt', 'desc')
-      ->getQuery();
+      ->field('creator.id')->equals($idUser)
+      ->sort('createdAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findProjectsWithContributor($iduser) {
-    return $this->createQueryBuilder()
+  public function findProjectsWithContributor($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter($this->createQueryBuilder()
       ->field('status')->notEqual(0)
-      ->field('contributors.id')->equals($iduser)
-      ->sort('publishedAt', 'desc')
-      ->getQuery();
+      ->field('contributors.id')->equals($idUser)
+      ->sort('publishedAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findProjectsWithContributorOrSkills($iduser, $idskills) {
+  public function findProjectsWithContributorOrSkills($idUser, $idskills, $isErasmus) {
     $qb = $this->createQueryBuilder();
     $qb->field('status')->notEqual(0)
-      ->addOr($qb->expr()->field('contributors.id')->equals($iduser))
+      ->addOr($qb->expr()->field('contributors.id')->equals($idUser))
       ->addOr($qb->expr()->field('skills.id')->in($idskills))
       ->sort('publishedAt', 'desc');
-    return $qb->getQuery();
+    return $this->erasmusQueryFilter($qb, $isErasmus)->getQuery();
   }
 
-  public function findProjectsWithSubscriber($iduser) {
-    return $this->createQueryBuilder()
-      ->field('status')->notEqual(0)
-      ->field('subscribers.id')->equals($iduser)
-      ->sort('publishedAt', 'desc')
-      ->getQuery();
+  public function findProjectsWithSubscriber($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter(
+      $this->createQueryBuilder()
+        ->field('status')->notEqual(0)
+        ->field('subscribers.id')->equals($idUser)
+        ->sort('publishedAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findProjectsWithSupporter($iduser) {
-    return $this->createQueryBuilder()
-      ->field('status')->notEqual(0)
-      ->field('supporters.id')->equals($iduser)
-      ->sort('publishedAt', 'desc')
-      ->getQuery();
+  public function findProjectsWithSupporter($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter(
+      $this->createQueryBuilder()
+        ->field('status')->notEqual(0)
+        ->field('supporters.id')->equals($idUser)
+        ->sort('publishedAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findProjectsWithSponsor($iduser) {
-    return $this->createQueryBuilder()
-      ->field('status')->notEqual(0)
-      ->field('challenge.id')->exists(TRUE)
-      ->field('sponsors.id')->equals($iduser)
-      ->sort('publishedAt', 'desc')
-      ->getQuery();
+  public function findProjectsWithSponsor($idUser, $isErasmus) {
+    return $this->erasmusQueryFilter(
+      $this->createQueryBuilder()
+        ->field('status')->notEqual(0)
+        ->field('challenge.id')->exists(TRUE)
+        ->field('sponsors.id')->equals($idUser)
+        ->sort('publishedAt', 'desc'), $isErasmus)->getQuery();
   }
 
-  public function findGeoNear($latitude, $longitude, $maxDistance = 50) {
+  public function findGeoNear($latitude, $longitude, $maxDistance = 50, $isErasmus) {
     // Convert from/to radians with 6378.137 for km and 3963.192 miles
     $radius      = 6378.137;
     $maxDistance = $maxDistance / $radius;
 
-    return $this->createQueryBuilder()
+    return $this->erasmusQueryFilter($this->createQueryBuilder()
       ->field('status')->notEqual(0)
       ->field('coordinates')->geoNear($longitude, $latitude)
       ->maxDistance($maxDistance)
       ->spherical(TRUE)
-      ->distanceMultiplier($radius)
+      ->distanceMultiplier($radius), $isErasmus)
       ->getQuery();
   }
 }

@@ -2,14 +2,14 @@
 
 namespace TheScienceTour\UserBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use TheScienceTour\UserBundle\Document\UserRole;
 
-class ProfileController extends ContainerAware {
+class ProfileController extends Controller {
 
   public function chatAction($id) {
     $user = $this->container->get('security.context')->getToken()->getUser();
@@ -44,11 +44,15 @@ class ProfileController extends ContainerAware {
   }
 
   public function showAction($tab) {
+    /* @var $user \TheScienceTour\UserBundle\Document\User */
     $user = $this->container->get('security.context')->getToken()->getUser();
     if (!is_object($user) || !$user instanceof UserInterface) {
       throw new AccessDeniedException('This user does not have access to this section.');
     }
 
+    $isErasmus = $this->get('session')->get('isErasmus');
+
+    /* @var $dm \Doctrine\Common\Persistence\ObjectManager */
     $dm = $this->container->get('doctrine_mongodb')->getManager();
 
     $chatRepo = $dm->getRepository('TheScienceTourMessageBundle:Chat');
@@ -60,8 +64,9 @@ class ProfileController extends ContainerAware {
     }
     $user->removeUselessNotifications("chat", $myChatsId);
 
+    /* @var $projectRepo \TheScienceTour\ProjectBundle\Repository\ProjectRepository */
     $projectRepo     = $dm->getRepository('TheScienceTourProjectBundle:Project');
-    $createdProjects = $projectRepo->findProjectsCreatedBy($user->getId())
+    $createdProjects = $projectRepo->findProjectsCreatedBy($user->getId(), $isErasmus)
       ->execute();
     //$contribProjects = $projectRepo->findProjectsWithContributor($user->getId())->execute();
     $userskills = $dm->getRepository('TheScienceTourProjectBundle:Skill')
@@ -71,12 +76,12 @@ class ProfileController extends ContainerAware {
     foreach ($userskills as $skill) {
       $idskills[] = $skill->getId();
     }
-    $contribProjects = $projectRepo->findProjectsWithContributorOrSkills($user->getId(), $idskills)
+    $contribProjects = $projectRepo->findProjectsWithContributorOrSkills($user->getId(), $idskills, $isErasmus)
       ->execute();
 
-    $supportedProjects = $projectRepo->findProjectsWithSupporter($user->getId())
+    $supportedProjects = $projectRepo->findProjectsWithSupporter($user->getId(), $isErasmus)
       ->execute();
-    $followedProjects  = $projectRepo->findProjectsWithSubscriber($user->getId())
+    $followedProjects  = $projectRepo->findProjectsWithSubscriber($user->getId(), $isErasmus)
       ->execute();
     $sponsoredProjects = NULL;
     if ($this->container->get('security.context')
@@ -85,7 +90,7 @@ class ProfileController extends ContainerAware {
       $sponsoredProjects = $projectRepo->findProjectsWithSponsor($user->getId())
         ->execute();
     }
-    elseif ($tab == "mypublicinfo") {
+    elseif ($tab === "mypublicinfo") {
       $tab = "myprojects";
     }
 
@@ -106,7 +111,8 @@ class ProfileController extends ContainerAware {
     $dm->persist($user);
     $dm->flush();
 
-    $drafts = $projectRepo->findDraftsCreatedBy($user->getId())->execute();
+    $drafts = $projectRepo->findDraftsCreatedBy($user->getId(), $isErasmus)
+      ->execute();
 
     $createdChallenges = array();
     $otherChallenges   = array();
