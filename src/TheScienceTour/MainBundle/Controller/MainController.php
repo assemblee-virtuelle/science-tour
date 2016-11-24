@@ -34,7 +34,7 @@ class MainController extends Controller {
 
     try {
       $userGeocode           = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
-      $aroundMeProjectsQuery = $projectRepo->findGeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
+      $aroundMeProjectsQuery = $projectRepo->findGeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance, $isErasmus);
       $aroundMeProjects      = $aroundMeProjectsQuery->execute();
     } catch (Exception $e) {
       $session->getFlashBag()->add('notice', $e->getMessage());
