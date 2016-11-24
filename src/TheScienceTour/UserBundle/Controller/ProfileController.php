@@ -129,18 +129,20 @@ class ProfileController extends ContainerAware {
     }
 
     return $this->container->get('templating')
-      ->renderResponse('FOSUserBundle:Profile:show.html.' . $this->container->getParameter('fos_user.template.engine'), array('user'              => $user,
-                                                                                                                              'myChats'           => $myChats,
-                                                                                                                              'createdProjects'   => $createdProjects,
-                                                                                                                              'contribProjects'   => $contribProjects,
-                                                                                                                              'supportedProjects' => $supportedProjects,
-                                                                                                                              'followedProjects'  => $followedProjects,
-                                                                                                                              'sponsoredProjects' => $sponsoredProjects,
-                                                                                                                              'drafts'            => $drafts,
-                                                                                                                              'createdChallenges' => $createdChallenges,
-                                                                                                                              'otherChallenges'   => $otherChallenges,
-                                                                                                                              'tab'               => $tab
-      ));
+      ->renderResponse('FOSUserBundle:Profile:show.html.' . $this->container->getParameter('fos_user.template.engine'),
+        array(
+          'user'              => $user,
+          'myChats'           => $myChats,
+          'createdProjects'   => $createdProjects,
+          'contribProjects'   => $contribProjects,
+          'supportedProjects' => $supportedProjects,
+          'followedProjects'  => $followedProjects,
+          'sponsoredProjects' => $sponsoredProjects,
+          'drafts'            => $drafts,
+          'createdChallenges' => $createdChallenges,
+          'otherChallenges'   => $otherChallenges,
+          'tab'               => $tab
+        ));
   }
 
   public function editAction() {
