@@ -144,7 +144,7 @@ class ChallengeController extends Controller {
       $challenge->setIsErasmus($isErasmus);
       // TODO : Confirmer le choix de la langue pour le Science Tour
       if (!$isErasmus) {
-        $challenge->setLanguage($this->getLocale());
+        $challenge->setLanguage($this->get('request')->getLocale());
       }
     }
     else {
