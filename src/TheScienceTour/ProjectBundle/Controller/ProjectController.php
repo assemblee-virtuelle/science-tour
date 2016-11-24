@@ -318,7 +318,7 @@ class ProjectController extends Controller {
 
     $challengeList = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourChallengeBundle:Challenge')
-      ->findNonfuture();
+      ->findNonFuture($isErasmus);
 
     $form    = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
       ->add('title', 'text')
@@ -526,7 +526,7 @@ class ProjectController extends Controller {
 
     $challengeList = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourChallengeBundle:Challenge')
-      ->findNonfuture();
+      ->findNonFuture($isErasmus);
 
     $originalChallenge = $project->getChallenge();
 

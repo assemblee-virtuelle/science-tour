@@ -217,6 +217,8 @@ class ChallengeController extends Controller {
       $challenge->removeRes();
       $form->bind($request);
       if ($form->isValid()) {
+        // Save erasmus challenge.
+        $challenge->setIsErasmus($this->get('session')->get('isErasmus'));
         if (!$challenge->getPicture()->getSize()) {
           $challenge->setPicture(NULL);
         }

@@ -20,7 +20,7 @@ class ChallengeRepository extends DocumentRepository {
    *
    * @return ArrayCollection          La liste des défis en cours
    */
-  public function findInProgress($isErasmus = FALSE, $locale) {
+  public function findInProgress($isErasmus, $locale) {
     $now     = new \DateTime();
     $builder = $this->createQueryBuilder();
     $query   = $builder
@@ -46,8 +46,7 @@ class ChallengeRepository extends DocumentRepository {
    *
    * @return ArrayCollection          La liste des défis terminés
    */
-  public function findPast($isErasmus = FALSE, $locale) {
-    $isErasmus = FALSE;
+  public function findPast($isErasmus, $locale) {
     $builder   = $this->createQueryBuilder();
     $query     = $builder
       ->field('finishedAt')->lt(new \DateTime())
@@ -62,14 +61,14 @@ class ChallengeRepository extends DocumentRepository {
   }
 
   /**
-   * findNonfuture Recherche des défis à venir
+   * findNonFuture Recherche des défis à venir
    *
    * @param  boolean $isErasmus Les projets Erasmus ou simplement du Science Tour ?
    * @param  string  $locale La langue par défaut de l'application
    *
    * @return ArrayCollection          La liste des défis à venir
    */
-  public function findNonfuture($isErasmus = FALSE) {
+  public function findNonFuture($isErasmus) {
     $query = $this->createQueryBuilder()
       ->field('startedAt')->lt(new \DateTime())
       ->sort('finishedAt', 'desc');
