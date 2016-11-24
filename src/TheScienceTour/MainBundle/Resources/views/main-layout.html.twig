@@ -64,7 +64,13 @@
 						<a href="http://www.lespetitsdebrouillards.org" target="_blank"><img id="logopdeb" src="{{ asset('img/pdeb.png') }}" alt="" /></a>
 						{% else %}
 						<a href="{{ path('tst_home') }}"><img id="logobadge" src="{{ asset('img/sciencetour.png') }}" alt="Logo de The Science Tour" /></a>
-						<h1>AUX SCIENCES<br />CITOYENS !</h1>
+                            <h1>
+                                {% if not app.session.get('isErasmus') %}
+							        AUX SCIENCES<br />CITOYENS !
+							    {% else %}
+                                    Youth Committed<br />for Climate
+						        {% endif %}
+                            </h1>
 						<a href="http://www.lespetitsdebrouillards.org" target="_blank"><img id="logopdeb" src="{{ asset('img/pdeb.png') }}" alt="" /></a>
 						{% endif %}
 					</div>
@@ -72,10 +78,16 @@
 						<ul>
 							<li {% block nav_home %}{% endblock %}><a href="{{ path('tst_home') }}">{% trans %}Home{% endtrans %}</a></li>
 							<li{% block nav_about %}{% endblock %}><a href="{{ path('tst_about') }}">{% trans %}About{% endtrans %}</a></li>
-							<li{% block nav_trucks %}{% endblock %}><a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}Trucks{% endtrans %}</a></li>
+							{# Not available for Erasmus #}
+							{% if not app.session.get('isErasmus') %}
+								<li{% block nav_trucks %}{% endblock %}><a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}Trucks{% endtrans %}</a></li>
+							{% endif %}
 							<li {% block nav_projects %}{% endblock %}><a href="{{ path('tst_projects') }}">{% trans %}Projects{% endtrans %}</a></li>
-							<li{% block nav_challenges %}{% endblock %}><a href="{{ path('tst_challenges') }}">{% trans %}Challenges{% endtrans %}</a>
-							<li{% block nav_agenda %}{% endblock %}><a href="{{ path('tst_agenda') }}">{% trans %}Agenda{% endtrans %}</a></li>
+							{# Not available for Erasmus #}
+							{% if not app.session.get('isErasmus') %}
+								<li{% block nav_challenges %}{% endblock %}><a href="{{ path('tst_challenges') }}">{% trans %}Challenges{% endtrans %}</a>
+								<li{% block nav_agenda %}{% endblock %}><a href="{{ path('tst_agenda') }}">{% trans %}Agenda{% endtrans %}</a></li>
+							{% endif %}
 							<li>
 								<form id="searchbar" method="get" action="{{ url('tst_search_noreq') }}">
 									<input type="text" id="searchbar_query" name="query"/>
