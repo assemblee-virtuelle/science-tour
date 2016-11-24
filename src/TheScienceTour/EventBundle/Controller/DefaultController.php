@@ -10,15 +10,15 @@ use Geocoder\Geocoder;
 use TheScienceTour\MainBundle\Model\GeoNear;
 
 /**
- * 
+ *
  * @author glouton aka Charles Rozier <charles.rozier@web2com.fr> <charles@guide2com.fr>
  *
  */
 class DefaultController extends Controller
 {
-	
+
     /**
-     * 
+     *
      * @param string $filter
      * @param string $date
      * @return \Symfony\Component\HttpFoundation\Response
@@ -34,31 +34,32 @@ class DefaultController extends Controller
     			}
     		}
     	}
-    	
+
     	$user = $this->getUser();
     	if ($filter == "favorite" && !$user) {
     		throw new AccessDeniedException();
     	}
-    	
+
     	// + Get Document Manager and repositories
     	// + --------------------------------------------------
     	$dm = $this->get('doctrine_mongodb')->getManager();
+			/* @var $eventRepo \TheScienceTour\EventBundle\Repository\EventRepository */
     	$eventRepo = $dm->getRepository('TheScienceTourEventBundle:Event');
-    	
+
 		//$user = $this->getUser();
     	// + --------------------------------------------------
 
     	// + Geocoders
     	// + --------------------------------------------------
     	$mapHelper = $this->get('the_science_tour_map.map_helper');
-    	
+
     	// + Fetch events
     	// + --------------------------------------------------
     	$geoNear = null;
     	$centerCoordinates = array();
     	$maxDistance = 50; // km
     	$userGeocode = null;
-    	
+
     	if ($center == 'around-me') {
 	    	// For local testing put in your public IP.
 	    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
@@ -75,7 +76,7 @@ class DefaultController extends Controller
 	    			'longitude' => $geocode->getLongitude()
 	    	);
 		}
-    	
+
     	// Front page
     	$frontPageEvents = $eventRepo->findFrontPage($geoNear);
     	// Favorite
@@ -94,39 +95,39 @@ class DefaultController extends Controller
     	$nextEvents = $eventRepo->findNext($geoNear);
     	// Trucks
     	$trucksEvents = $eventRepo->findTrucks($geoNear);
-    	 
+
     	switch ($filter) {
     		case 'favorite':
     			$listTitle = 'Favorite events';
     			$eventList = $favoriteEvents;
     			$mapEventList = $allFavoriteEvents;
     			break;
-    		
+
     		case 'next':
     			$listTitle = 'The next events';
     			$eventList = $nextEvents;
     			$mapEventList = $eventRepo->findNext();
     			break;
-    		
+
     		case 'past':
     			$listTitle = 'The past events';
     			$eventList = $pastEvents;
     			$mapEventList = $eventRepo->findPast();
     			break;
-    		
+
     		case 'day':
     			$listTitle = $this->get('translator')->trans('Events for %day%', array('%day%' => $date
     			));
     			$eventList = $eventRepo->findDay($date, $geoNear);
     			$mapEventList = $eventRepo->findDay($date);
     			break;
-    			
+
     		case 'trucks':
     			$listTitle = 'Trucks';
     			$eventList = $trucksEvents;
     			$mapEventList = $eventRepo->findTrucks();
     			break;
-    		
+
     		default:
 		    	$listTitle = 'Front page events';
 		    	$eventList = $frontPageEvents;
@@ -137,7 +138,7 @@ class DefaultController extends Controller
     	} else {
     		$route = array('routeName' => 'tst_agenda', 'parameters' => array('filter' => $filter, 'center' => $center));
     	}
-    	
+
     	// Map menus
     	$menus = array(
     			array(
@@ -201,42 +202,42 @@ class DefaultController extends Controller
     					)
     			)
     	);
-    	
+
     	if ($allFavoriteEvents && $allFavoriteEvents->count() > 0) {
 	    	$asideMapTitle = 'My favorites';
     		$asideMapDocumentList = $allFavoriteEvents;
     	} else {
 	    	$asideMapTitle = 'Around me';
-    		
+
     		if (!$userGeocode) {
 		    	// For local testing put in your public IP.
 		    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
 	    	}
-	    	
+
 	    	$aroundMeGeoNear = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
-	    	
+
     	    switch ($filter) {
 	    		case 'next':
 	    			$asideMapDocumentList = $eventRepo->findNext($aroundMeGeoNear);
 	    			break;
-	    		
+
 	    		case 'past':
 	    			$asideMapDocumentList = $eventRepo->findPast($aroundMeGeoNear);
 	    			break;
-	    		
+
 	    		case 'day':
 	    			$asideMapDocumentList = $eventRepo->findDay($date, $aroundMeGeoNear);
 	    			break;
-	    			
+
 	    		case 'trucks':
 	    			$asideMapDocumentList = $eventRepo->findTrucks($aroundMeGeoNear);
 	    			break;
-	    		
+
 	    		default:
 			    	$asideMapDocumentList = $eventRepo->findFrontPage($aroundMeGeoNear);
 	    	}
     	}
-    	
+
 		return $this->render('TheScienceTourEventBundle::agenda.html.twig', array(
 				'mapEventList' => $mapEventList,
 				'eventList' => $eventList,
@@ -249,7 +250,7 @@ class DefaultController extends Controller
 				'asideMapDocumentList' => $asideMapDocumentList
 		));
     }
-    
+
     /**
      * List event regarding the given filter
      * @param unknown $filter
@@ -267,39 +268,39 @@ class DefaultController extends Controller
     {
     	return $this->_agendaAction('day', $center, $date);
     }
-    
+
 	/**
-	 * 
+	 *
 	 * @param string $id
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function showAction($id) {
     	$user = $this->getUser();
-    	
+
     	if (!$user) {
     		$userFavoriteEvents = array();
     	} else {
     		$userFavoriteEvents = $user->getFavoriteEvents();
     	}
-    	
-		
+
+
 		$event = $this->get('doctrine_mongodb')
 			->getRepository('TheScienceTourEventBundle:Event')
 			->find($id);
-		
+
 	    if (!$event) {
         	throw $this->createNotFoundException('Aucun évènement trouvé avec l\'id '.$id);
     	}
-    	
+
     	return $this->render('TheScienceTourEventBundle::event.html.twig', array(
     			'event' => $event,
     			'userFavoriteEvents' => $userFavoriteEvents
     	));
 	}
-	
+
 	public function favoritesAction($id, $action) {
 		$user = $this->getUser();
-		
+
 		if (!$user) {
 			throw new AccessDeniedException();
 		}
@@ -307,14 +308,14 @@ class DefaultController extends Controller
 		$event = $this->get('doctrine_mongodb')
 		->getRepository('TheScienceTourEventBundle:Event')
 		->find($id);
-		
+
 		if (!$event) {
 			throw $this->createNotFoundException('Aucun évènement trouvé avec l\'id '.$id);
 		}
-		
+
 		// Update and persist user's favorite events collection
 		$dm = $this->get('doctrine_mongodb')->getManager();
-		
+
 		if ($action == 'add') {
 			$flashMsg = 'The event has been added to your favorites';
 			$user->addFavoriteEvent($event);
@@ -322,16 +323,16 @@ class DefaultController extends Controller
 			$flashMsg = 'The event has been removed from your favorites';
 			$user->removeFavoriteEvent($event);
 		}
-		
+
 		$dm->persist($user);
 		$dm->flush();
-		
+
 		/** @var \Symfony\Component\HttpFoundation\Session $session  */
 		$session = $this->get('session');
-		
+
 		$session->getFlashBag()->add('notice', $this->get('translator')->trans($flashMsg));
-		
+
 		return $this->redirect($this->generateUrl('tst_event', array('id' => $id)));
 	}
-	
+
 }
