@@ -39,7 +39,7 @@
 
             {# Lang selection #}
             {% for key,lang in erasmusLanguages %}
-                <li class="{% if key == app.request.getLocale() %}active{% endif %}">
+                <li class="lang {% if key == app.request.getLocale() %}active{% endif %}">
                     <a href="{{ path('tst_home',{ _locale:key }) }}">{{ lang }}</a>
                 </li>
             {% endfor %}
