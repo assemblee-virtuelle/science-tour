@@ -547,6 +547,13 @@ class ProjectController extends Controller {
 
     $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
       ->add('title', 'text')
+      ->add('language', 'choice',
+        [
+          'choices'           => $this->container->getParameter('erasmusLanguages'),
+          'preferred_choices' => [$this->get('request')->getLocale()],
+          'multiple'          => FALSE,
+          'expanded'          => FALSE
+        ])
       ->add('place', 'places_autocomplete', array(
         'prefix'   => 'js_tst_place_',
         'types'    => array(AutocompleteType::CITIES),
