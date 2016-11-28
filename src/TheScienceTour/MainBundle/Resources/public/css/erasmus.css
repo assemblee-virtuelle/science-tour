@@ -1,3 +1,11 @@
 #overall-header-main {
-    background: #d96d00;
+  background: #d96d00;
+}
+
+#overall-header #overall-header-main #header_main_container div {
+  width: 450px;
+}
+
+#overall-header #overall-header-main #header_main_container nav {
+  width: 500px;
 }
