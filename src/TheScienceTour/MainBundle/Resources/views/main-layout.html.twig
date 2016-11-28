@@ -68,9 +68,9 @@
                                 class="icon-plus"></i>{% trans %}
                         CHALLENGE{% endtrans %}</a></li>{% endif %}
                 <li class="addproject"><a
-                        href="{{ path('tst_project_add') }}"><i
-                            class="icon-plus"></i>{% trans %}
-                    PROJECT{% endtrans %}</a></li>
+                            href="{{ path('tst_project_add') }}"><i
+                                class="icon-plus"></i>{% trans %}
+                        PROJECT{% endtrans %}</a></li>
                 <li><a href="{{ path('fos_user_security_logout') }}"
                        title="{% trans %}Log out{% endtrans %}"><i
                                 class="icon-off"></i></a></li>
@@ -109,7 +109,8 @@
                         {% if not app.session.get('isErasmus') %}
                             AUX SCIENCES<br/>CITOYENS !
                         {% else %}
-                            Youth Committed<br/>for Climate
+                            {% trans %}Youth Committed{% endtrans %}
+                            <br/>{% trans %}for Climate{% endtrans %}
                         {% endif %}
                     </h1>
                     <a href="http://www.lespetitsdebrouillards.org"
