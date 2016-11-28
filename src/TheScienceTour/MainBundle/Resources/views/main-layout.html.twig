@@ -36,13 +36,16 @@
 <header id="overall-header">
     <div id="overall-header-login">
         <ul>
-
             {# Lang selection #}
-            {% for key,lang in erasmusLanguages %}
-                <li class="lang {% if key == app.request.getLocale() %}active{% endif %}">
-                    <a href="{{ path('tst_home',{ _locale:key }) }}">{{ lang }}</a>
-                </li>
-            {% endfor %}
+            <li>
+                <select id="lang_switcher">
+                    {% for key,lang in erasmusLanguages %}
+                        <option {% if key == app.request.getLocale() %}selected="selected"{% endif %}
+                                value="{{ path('tst_home',{ _locale:key }) }}">{{ lang }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </li>
 
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {% if is_granted("ROLE_ADMIN") %}
@@ -322,6 +325,10 @@
         $("#searchbar").submit(function (event) {
             event.preventDefault();
             window.location = '{{ url('tst_search_noreq') }}/' + encodeURIComponent($('#searchbar_query').val());
+        });
+
+        $('#lang_switcher').change(function (e) {
+            window.location.href = $(e.currentTarget).val();
         });
     });
 </script>
