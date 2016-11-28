@@ -230,17 +230,19 @@
         <li{% if tab == "about" %} class="active"{% endif %}><a
                     href="javascript:show(0);"><h1>{% trans %}The
                     project{% endtrans %}</h1></a></li>
-        {% if app.user and app.user.numberOf("project-resources", project.id) %}
-            <li>
-                <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "resources"}) }}">
-                    <h1>{% trans %}Resources{% endtrans %}
-                        <div class="notif bgLightGrey">{{ app.user.numberOf("project-resources", project.id) }}</div>
-                    </h1>
-                </a></li>
-        {% else %}
-            <li{% if tab == "resources" %} class="active"{% endif %}><a
-                        href="javascript:show(1);"><h1>{% trans %}
-                        Resources{% endtrans %}</h1></a></li>
+        {% if not isErasmus() %}
+            {% if app.user and app.user.numberOf("project-resources", project.id) %}
+                <li>
+                    <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "resources"}) }}">
+                        <h1>{% trans %}Resources{% endtrans %}
+                            <div class="notif bgLightGrey">{{ app.user.numberOf("project-resources", project.id) }}</div>
+                        </h1>
+                    </a></li>
+            {% else %}
+                <li{% if tab == "resources" %} class="active"{% endif %}><a
+                            href="javascript:show(1);"><h1>{% trans %}
+                            Resources{% endtrans %}</h1></a></li>
+            {% endif %}
         {% endif %}
         {% if app.user and app.user.numberOf("project-news", project.id) %}
             <li>
