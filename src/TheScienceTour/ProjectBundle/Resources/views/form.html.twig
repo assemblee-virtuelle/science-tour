@@ -24,15 +24,20 @@
         }
     </script>
 
-    <script type="text/javascript">
-        $(function () {
-            //
+    {% if isEditing %}
+        <script type="text/javascript">
             $('#form_language').change(function () {
                 alert('Changement de langue pour ' + $(this).val());
                 window.location.href = window.location.pathname + "?" + $.param({
                             'lang': $(this).val()
                         });
             });
+        </script>
+    {% endif %}
+
+    <script type="text/javascript">
+        $(function () {
+            //
 
             var $toolsContainer = $('div#form_tools');
             var $materialsContainer = $('div#form_materials');
