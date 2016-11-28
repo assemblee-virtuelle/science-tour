@@ -295,6 +295,129 @@ class ProjectController extends Controller {
     ));
   }
 
+  private function _formProjectAction($project, $edit = FALSE) {
+    // Get erasmus site status.
+    $session   = $this->get('session');
+    $isErasmus = $session->get('isErasmus', FALSE);
+
+    $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
+      ->add('title', 'text')
+      ->add('language', 'choice',
+        [
+          'choices'           => $this->container->getParameter('erasmusLanguages'),
+          'preferred_choices' => [$this->get('request')->getLocale()],
+          'multiple'          => FALSE,
+          'expanded'          => FALSE
+        ])
+      ->add('place', 'places_autocomplete', array(
+        'prefix'   => 'js_tst_place_',
+        'types'    => array(AutocompleteType::CITIES),
+        'async'    => FALSE,
+        'language' => 'fr',
+        'attr'     => array(
+          'placeholder' => '',
+          'oninvalid'   => 'javascript:show(0);',
+          'required'    => 'required'
+        )
+      ));
+
+    // No challenge for Erasmus.
+    if (!$isErasmus) {
+      $challengeList = $this->get('doctrine_mongodb')
+        ->getRepository('TheScienceTourChallengeBundle:Challenge')
+        ->findNonFuture($isErasmus);
+
+      $form->add('challenge', 'document', array(
+        'class'       => 'TheScienceTour\ChallengeBundle\Document\Challenge',
+        'property'    => 'titleForChoiceList',
+        'empty_value' => 'Aucun',
+        'empty_data'  => NULL,
+        'choices'     => $challengeList,
+        'required'    => FALSE
+      ));
+    }
+
+    $form->add('picture', 'sonata_media_type', array(
+      'provider' => 'sonata.media.provider.image',
+      'context'  => 'project',
+      'required' => $edit && $project->getPicture()
+    ));
+
+    $form->add('goal', 'purified_textarea')
+      ->add('description', 'purified_textarea')
+      ->add('duration', 'integer', array('attr' => array('min' => 1)))
+      ->add('durationUnit', 'choice', array(
+        'choices' => array(
+          'day'   => 'Jours',
+          'week'  => 'Semaines',
+          'month' => "Mois"
+        )
+      ))
+      ->add('price', 'integer', array(
+        'attr'     => array('min' => 0),
+        'required' => FALSE
+      ))
+      ->add('startedAt', 'date', array(
+        'empty_value' => '',
+        'required'    => FALSE
+      ));
+
+    // No resources for Erasmus.
+    if (!$isErasmus) {
+      $form->add('tools', 'collection', array(
+        'type'         => new ResourceType(),
+        'allow_add'    => TRUE,
+        'allow_delete' => TRUE,
+        'by_reference' => FALSE,
+      ))
+        ->add('materials', 'collection', array(
+          'type'         => new ResourceType(),
+          'allow_add'    => TRUE,
+          'allow_delete' => TRUE,
+          'by_reference' => FALSE,
+        ))
+        ->add('premises', 'collection', array(
+          'type'         => new ResourceType(),
+          'allow_add'    => TRUE,
+          'allow_delete' => TRUE,
+          'by_reference' => FALSE,
+        ))
+        ->add('skills', 'collection', array(
+          'type'         => new SkillType(),
+          'allow_add'    => TRUE,
+          'allow_delete' => TRUE,
+          'by_reference' => FALSE,
+        ));
+    }
+
+    if (!$edit || $project->getStatus() == 0) {
+      $form->add('draft', 'submit', array(
+        'attr' => array(
+          'formnovalidate' => 'formnovalidate',
+          'class'          => 'button white_button'
+        )
+      ))
+        ->add('publish', 'submit', array(
+          'attr'              => array('class' => 'button orange_button'),
+          'validation_groups' => array(
+            'Default',
+            'publish'
+          )
+        ));
+    }
+    else {
+      $form->add('save', 'submit', array(
+        'attr'              => array('class' => 'button orange_button'),
+        'validation_groups' => array(
+          'Default',
+          'publish'
+        )
+      ));
+    }
+
+    return $form;
+  }
+
   public function addProjectAction($idchallenge) {
     $user = $this->getUser();
     if (!$user) {
@@ -316,108 +439,18 @@ class ProjectController extends Controller {
       $project->setChallenge($challenge);
     }
 
-    $challengeList = $this->get('doctrine_mongodb')
-      ->getRepository('TheScienceTourChallengeBundle:Challenge')
-      ->findNonFuture($isErasmus);
+    $form = $this->_formProjectAction($project);
 
-    $form    = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
-      ->add('title', 'text')
-      ->add('language', 'choice',
-        [
-          'choices'           => $this->container->getParameter('erasmusLanguages'),
-          'preferred_choices' => [$this->get('request')->getLocale()],
-          'multiple'          => FALSE,
-          'expanded'          => FALSE
-        ])
-      ->add('place', 'places_autocomplete', array(
-        'prefix'   => 'js_tst_place_',
-        'types'    => array(AutocompleteType::CITIES),
-        'async'    => FALSE,
-        'language' => 'fr',
-        'attr'     => array(
-          'placeholder' => '',
-          'oninvalid'   => 'javascript:show(0);',
-          'required'    => 'required'
-        )
-      ))
-      ->add('picture', 'sonata_media_type', array(
-        'provider' => 'sonata.media.provider.image',
-        'context'  => 'project'
-      ))
-      ->add('challenge', 'document', array(
-        'class'       => 'TheScienceTour\ChallengeBundle\Document\Challenge',
-        'property'    => 'titleForChoiceList',
-        'empty_value' => 'Aucun',
-        'empty_data'  => NULL,
-        'choices'     => $challengeList,
-        'required'    => FALSE
-      ))
-      ->add('goal', 'purified_textarea')
-      ->add('description', 'purified_textarea')
-      ->add('duration', 'integer', array('attr' => array('min' => 1)))
-      ->add('durationUnit', 'choice', array(
-        'choices' => array(
-          'day'   => 'Jours',
-          'week'  => 'Semaines',
-          'month' => "Mois"
-        )
-      ))
-      ->add('price', 'integer', array(
-        'attr'     => array('min' => 0),
-        'required' => FALSE
-      ))
-      ->add('startedAt', 'date', array(
-        'empty_value' => '',
-        'required'    => FALSE
-      ))
-      ->add('tools', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-        'required'     => FALSE,
-        'attr'         => array(
-          'required' => FALSE
-        )
-      ))
-      ->add('materials', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('premises', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('skills', 'collection', array(
-        'type'         => new SkillType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('draft', 'submit', array(
-        'attr' => array(
-          'formnovalidate' => 'formnovalidate',
-          'class'          => 'button white_button'
-        )
-      ))
-      ->add('publish', 'submit', array(
-        'attr'              => array('class' => 'button orange_button'),
-        'validation_groups' => array(
-          'Default',
-          'publish'
-        )
-      ))
-      ->getForm();
+    // Build form.
+    $form    = $form->getForm();
     $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
+      // Save erasmus project.
+      $project->setIsErasmus($this->get('session')->get('isErasmus'));
+
       $form->bind($request);
       if ($form->isValid()) {
-        // Save erasmus project.
-        $project->setIsErasmus($this->get('session')->get('isErasmus'));
+
         if (!$project->getPicture()->getSize()) {
           $project->setPicture(NULL);
         }
@@ -524,10 +557,6 @@ class ProjectController extends Controller {
       throw new AccessDeniedException();
     }
 
-    $challengeList = $this->get('doctrine_mongodb')
-      ->getRepository('TheScienceTourChallengeBundle:Challenge')
-      ->findNonFuture($isErasmus);
-
     $originalChallenge = $project->getChallenge();
 
     $originalTools                  = array();
@@ -554,113 +583,8 @@ class ProjectController extends Controller {
       $originalSkills[] = $skill;
     }
 
-    $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
-      ->add('title', 'text')
-      ->add('language', 'choice',
-        [
-          'choices'           => $this->container->getParameter('erasmusLanguages'),
-          'preferred_choices' => [$this->get('request')->getLocale()],
-          'multiple'          => FALSE,
-          'expanded'          => FALSE
-        ])
-      ->add('place', 'places_autocomplete', array(
-        'prefix'   => 'js_tst_place_',
-        'types'    => array(AutocompleteType::CITIES),
-        'async'    => FALSE,
-        'language' => 'fr',
-        'attr'     => array(
-          'placeholder' => '',
-          'oninvalid'   => 'javascript:show(0);',
-          'required'    => 'required'
-        )
-      ))
-      ->add('challenge', 'document', array(
-        'class'       => 'TheScienceTour\ChallengeBundle\Document\Challenge',
-        'property'    => 'titleForChoiceList',
-        'empty_value' => 'Aucun',
-        'empty_data'  => NULL,
-        'choices'     => $challengeList,
-        'required'    => FALSE
-      ))
-      ->add('goal', 'purified_textarea')
-      ->add('description', 'purified_textarea')
-      ->add('duration', 'integer', array('attr' => array('min' => 1)))
-      ->add('durationUnit', 'choice', array(
-        'choices' => array(
-          'day'   => 'Jours',
-          'week'  => 'Semaines',
-          'month' => "Mois"
-        )
-      ))
-      ->add('price', 'integer', array(
-        'attr'     => array('min' => 0),
-        'required' => FALSE
-      ))
-      ->add('startedAt', 'date', array(
-        'empty_value' => '',
-        'required'    => FALSE
-      ))
-      ->add('tools', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('materials', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('premises', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-      ->add('skills', 'collection', array(
-        'type'         => new SkillType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ));
-    if (!$project->getPicture()) {
-      $form->add('picture', 'sonata_media_type', array(
-        'provider' => 'sonata.media.provider.image',
-        'context'  => 'project'
-      ));
-    }
-    else {
-      $form->add('picture', 'sonata_media_type', array(
-        'provider' => 'sonata.media.provider.image',
-        'context'  => 'project',
-        'required' => FALSE
-      ));
-    }
-    if ($project->getStatus() == 0) {
-      $form->add('draft', 'submit', array(
-        'attr' => array(
-          'formnovalidate' => 'formnovalidate',
-          'class'          => 'button white_button'
-        )
-      ))
-        ->add('publish', 'submit', array(
-          'attr'              => array('class' => 'button orange_button'),
-          'validation_groups' => array(
-            'Default',
-            'publish'
-          )
-        ));
-    }
-    else {
-      $form->add('save', 'submit', array(
-        'attr'              => array('class' => 'button orange_button'),
-        'validation_groups' => array(
-          'Default',
-          'publish'
-        )
-      ));
-    }
+    $form = $this->_formProjectAction($project, TRUE);
+
     $form = $form->getForm();
 
     $request = $this->get('request');

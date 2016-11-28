@@ -248,8 +248,10 @@
                         Basic info{% endtrans %}</h1></a></li>
             <li><a href="javascript:show(1);"><h1>{% trans %}The
                         project{% endtrans %}</h1></a></li>
-            <li><a href="javascript:show(2);"><h1>{% trans %}
-                        Resources{% endtrans %}</h1></a></li>
+            {% if not isErasmus() %}
+                <li><a href="javascript:show(2);"><h1>{% trans %}
+                            Resources{% endtrans %}</h1></a></li>
+            {% endif %}
         </ul>
 
         <div class="tab-container">
@@ -264,13 +266,15 @@
                     {{ form_errors(form.title) }}
                     {{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                 </div>
-                <div>
-                    {{ form_label(form.challenge, "Challenge") }}
-                    <div class="pb14">{% trans %}Is this project rising a
-                        challenge? If yes, which one?{% endtrans %}</div>
-                    {{ form_errors(form.challenge) }}
-                    {{ form_widget(form.challenge) }}
-                </div>
+                {% if not isErasmus() %}
+                    <div>
+                        {{ form_label(form.challenge, "Challenge") }}
+                        <div class="pb14">{% trans %}Is this project rising a
+                            challenge? If yes, which one?{% endtrans %}</div>
+                        {{ form_errors(form.challenge) }}
+                        {{ form_widget(form.challenge) }}
+                    </div>
+                {% endif %}
                 <div>
                     <div class="start_form">
                         {{ form_label(form.startedAt, "Starting date") }}
@@ -318,39 +322,39 @@
                 </div>
             </div>
         </div>
-
-        <div class="tab-container" style="display: none;">
-            <div class="tab-container-inner">
-                <div>
-                    <span class="tools">{{ form_label(form.tools, "Tools", { 'label_attr': {'class': 'orange-asterisk'} }) }}</span>
-                    <div class="right_labels">
-                        <div>{% trans %}Required{% endtrans %}</div>
-                        <div>{% trans %}I have{% endtrans %}</div>
+        {% if not isErasmus() %}
+            <div class="tab-container" style="display: none;">
+                <div class="tab-container-inner">
+                    <div>
+                        <span class="tools">{{ form_label(form.tools, "Tools", { 'label_attr': {'class': 'orange-asterisk'} }) }}</span>
+                        <div class="right_labels">
+                            <div>{% trans %}Required{% endtrans %}</div>
+                            <div>{% trans %}I have{% endtrans %}</div>
+                        </div>
+                        {{ form_errors(form.tools) }}
+                        {{ form_widget(form.tools) }}
                     </div>
-                    {{ form_errors(form.tools) }}
-                    {{ form_widget(form.tools) }}
-                </div>
-                <div>
-                    <span class="material">{{ form_label(form.materials, "Materials", { 'label_attr': {'class': 'orange-asterisk'} }) }}</span>
-                    {{ form_errors(form.materials) }}
-                    {{ form_widget(form.materials) }}
-                </div>
-                <div><span class="orange-asterisk"></span> {% trans %}The
-                    project requires at least one tool or one material to be
-                    published.{% endtrans %}</div>
-                <div>
-                    <span class="premises">{{ form_label(form.premises, "Premises") }}</span>
-                    {{ form_errors(form.premises) }}
-                    {{ form_widget(form.premises) }}
-                </div>
-                <div>
-                    <span class="skills">{{ form_label(form.skills, "Skills") }}</span>
-                    {{ form_errors(form.skills) }}
-                    {{ form_widget(form.skills) }}
+                    <div>
+                        <span class="material">{{ form_label(form.materials, "Materials", { 'label_attr': {'class': 'orange-asterisk'} }) }}</span>
+                        {{ form_errors(form.materials) }}
+                        {{ form_widget(form.materials) }}
+                    </div>
+                    <div><span class="orange-asterisk"></span> {% trans %}The
+                        project requires at least one tool or one material to be
+                        published.{% endtrans %}</div>
+                    <div>
+                        <span class="premises">{{ form_label(form.premises, "Premises") }}</span>
+                        {{ form_errors(form.premises) }}
+                        {{ form_widget(form.premises) }}
+                    </div>
+                    <div>
+                        <span class="skills">{{ form_label(form.skills, "Skills") }}</span>
+                        {{ form_errors(form.skills) }}
+                        {{ form_widget(form.skills) }}
+                    </div>
                 </div>
             </div>
-        </div>
-
+        {% endif %}
         {{ form_rest(form) }}
 
     </form>

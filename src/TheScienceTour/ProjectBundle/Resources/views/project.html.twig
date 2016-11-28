@@ -243,6 +243,9 @@
                             href="javascript:show(1);"><h1>{% trans %}
                             Resources{% endtrans %}</h1></a></li>
             {% endif %}
+        {% else %}
+            {# We need to keep tabs order. #}
+            <li style="display: none"></li>
         {% endif %}
         {% if app.user and app.user.numberOf("project-news", project.id) %}
             <li>
