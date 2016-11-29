@@ -1,29 +1,42 @@
 tst_home:
     pattern:    /{_locale}
-    defaults: { _controller: "TheScienceTourMainBundle:Main:home", _locale:fr }
+    defaults:
+        _controller: "TheScienceTourMainBundle:Main:home"
+        _locale: fr
     requirements:
-        _locale: en|fr|pl
+        _locale: en|fr
 
 tst_about:
-    path: /about
+    path: /{_locale}/about
     defaults:
         _controller: FrameworkBundle:Template:template
+        _locale: fr
         template: 'TheScienceTourMainBundle:Static:about.html.twig'
+    requirements:
+        _locale: en|fr
 
 tst_cgu:
-    path: /cgu
+    path: /{_locale}/cgu
     defaults:
         _controller: FrameworkBundle:Template:template
+        _locale: fr
         template: 'TheScienceTourMainBundle:Static:cgu.html.twig'
+    requirements:
+        _locale: en|fr
 
 tst_search_noreq:
-    pattern: /search
-    defaults: { _controller: "TheScienceTourMainBundle:Main:search", request: '' }
+    pattern: /{_locale}/search
+    defaults:
+         _controller: "TheScienceTourMainBundle:Main:search"
+         _locale: fr
+         request: ''
+    requirements:
+        _locale: en|fr
 
 tst_search:
-    pattern: /search/{request}
-    defaults: { _controller: "TheScienceTourMainBundle:Main:search" }
-
-erasmus_home:
-    pattern:    /erasmus/{_locale}
-    defaults: { _controller: "ErasmusMainBundle:Main:home", _locale:fr }
+    pattern: /{_locale}/search/{request}
+    defaults:
+         _controller: "TheScienceTourMainBundle:Main:search"
+         _locale: fr
+    requirements:
+        _locale: en|fr
