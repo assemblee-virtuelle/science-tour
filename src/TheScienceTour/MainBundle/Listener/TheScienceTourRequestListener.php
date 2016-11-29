@@ -3,6 +3,7 @@ namespace TheScienceTour\MainBundle\Listener;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  *
@@ -19,6 +20,10 @@ class TheScienceTourRequestListener {
   }
 
   public function onKernelRequest(GetResponseEvent $event) {
+    if (HttpKernelInterface::MASTER_REQUEST != $event->getRequestType()) {
+      // don't do anything if it's not the master request
+      return;
+    }
     static $isErasmus = NULL;
     // Prevent multiple calls.
     if ($isErasmus === NULL) {
