@@ -17,14 +17,10 @@
 
     {% block stylesheets %}{% endblock %}
 
-    {% if isErasmus() %}
-        <link rel="stylesheet"
-              href="{{ asset('bundles/thesciencetourmain/css/erasmus.css') }}">
-    {% endif %}
-
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
-<body id="{% block bodyid %}default-body-id{% endblock %}">
+<body id="{% block bodyid %}default-body-id{% endblock %}"
+      class=" {% if isErasmus() %}is-erasmus{% endif %}">
 <noscript>
     <div class="main_noscript">
         <div><i class="icon-warning-sign"></i>Pour profiter du Science Tour, il
@@ -109,7 +105,11 @@
                                             alt=""/></a>
                 {% else %}
                     <a href="{{ path('tst_home') }}"><img id="logobadge"
-                                                          src="{{ asset('img/sciencetour.png') }}"
+                                                          src="{% if app.session.get('isErasmus') %}
+                                                          {{ asset('img/erasmus.png') }}
+                                                          {% else %}
+                                                          {{ asset('img/sciencetour.png') }}
+                                                          {% endif %}"
                                                           alt="Logo de The Science Tour"/></a>
                     <h1>
                         {% if not app.session.get('isErasmus') %}
@@ -121,7 +121,11 @@
                     </h1>
                     <a href="http://www.lespetitsdebrouillards.org"
                        target="_blank"><img id="logopdeb"
-                                            src="{{ asset('img/pdeb.png') }}"
+                                            src="{% if app.session.get('isErasmus') %}
+                                                          {{ asset('img/pdeb-erasmus.png') }}
+                                                          {% else %}
+                                                          {{ asset('img/pdeb.png') }}
+                                                          {% endif %}"
                                             alt=""/></a>
                 {% endif %}
             </div>
