@@ -40,8 +40,11 @@
             <li>
                 <select id="lang_switcher">
                     {% for key,lang in erasmusLanguages %}
+                        {# We need to reuse whole current page parameters #}
+                        {# We adjust only _locale on it. #}
+                        {% set finalParams = app.request.attributes.get('_route_params')|merge({_locale: key}) %}
                         <option {% if key == app.request.getLocale() %}selected="selected"{% endif %}
-                                value="{{ path('tst_home',{ _locale:key }) }}">{{ lang }}
+                                value="{{ path(app.request.attributes.get('_route'), finalParams) }}">{{ lang }}
                         </option>
                     {% endfor %}
                 </select>
