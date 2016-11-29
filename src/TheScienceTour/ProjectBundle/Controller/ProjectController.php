@@ -301,25 +301,32 @@ class ProjectController extends Controller {
     $isErasmus = $session->get('isErasmus', FALSE);
 
     $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
-      ->add('title', 'text')
-      ->add('language', 'choice',
-        [
-          'choices'           => $this->container->getParameter('erasmusLanguages'),
-          'preferred_choices' => [$this->get('request')->getLocale()],
-          'multiple'          => FALSE,
-          'expanded'          => FALSE
-        ])
-      ->add('place', 'places_autocomplete', array(
-        'prefix'   => 'js_tst_place_',
-        'types'    => array(AutocompleteType::CITIES),
-        'async'    => FALSE,
-        'language' => 'fr',
-        'attr'     => array(
-          'placeholder' => '',
-          'oninvalid'   => 'javascript:show(0);',
-          'required'    => 'required'
-        )
-      ));
+      ->add('title', 'text');
+
+    if ($edit) {
+      $lang         = $this->container->getParameter('erasmusLanguages');
+      $lang['none'] = '-- ' . $this->get('translator')
+          ->trans('Translate to...') . ' --';
+
+      $form->add('language', 'choice', [
+        'choices'           => $lang,
+        'preferred_choices' => ['none'],
+        'multiple'          => FALSE,
+        'expanded'          => FALSE
+      ]);
+    }
+
+    $form->add('place', 'places_autocomplete', array(
+      'prefix'   => 'js_tst_place_',
+      'types'    => array(AutocompleteType::CITIES),
+      'async'    => FALSE,
+      'language' => 'fr',
+      'attr'     => array(
+        'placeholder' => '',
+        'oninvalid'   => 'javascript:show(0);',
+        'required'    => 'required'
+      )
+    ));
 
     // No challenge for Erasmus.
     if (!$isErasmus) {
@@ -529,8 +536,12 @@ class ProjectController extends Controller {
     }
 
     return $this->render('TheScienceTourProjectBundle::add.html.twig', array(
-      'isErasmus' => $isErasmus,
-      'form'      => $form->createView()
+      'message'    => $this->get('translator')
+        ->trans('All texts must be written in English. You can then translate the project into several languages.'),
+      'isErasmus'  => $isErasmus,
+      'form'       => $form->createView(),
+      'isEditForm' => FALSE,
+      'isAddForm'  => TRUE
     ));
 
   }
@@ -865,9 +876,12 @@ class ProjectController extends Controller {
     }
 
     return $this->render('TheScienceTourProjectBundle::edit.html.twig', array(
-      'project'   => $project,
-      'form'      => $form->createView(),
-      'isErasmus' => $isErasmus
+      'message'    => '',
+      'project'    => $project,
+      'form'       => $form->createView(),
+      'isErasmus'  => $isErasmus,
+      'isEditForm' => TRUE,
+      'isAddForm'  => FALSE
     ));
   }
 
