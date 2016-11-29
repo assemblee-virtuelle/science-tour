@@ -280,7 +280,7 @@ services:
         class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-        arguments: ['@router','%erasmusDomains%']
+        arguments: ['@router', '%erasmusDomains%', '%erasmusLanguages%']
 
 parameters:
     sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
