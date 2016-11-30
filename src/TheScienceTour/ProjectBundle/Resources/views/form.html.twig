@@ -29,8 +29,8 @@
         $(function () {
 
             $('#form_language').change(function () {
-                alert('Changement de langue pour ' + $(this).val());
-                window.location.href = window.location.pathname + "?" + $.param({
+                var loc = window.location;
+                loc.href = loc.pathname + "?" + $.param({
                             'lang': $(this).val()
                         });
             });
