@@ -874,9 +874,9 @@ class ProjectController extends Controller {
         return $this->redirect($this->generateUrl('tst_project', array('id' => $project->getId())));
       }
     }
-
+    $lang         = $this->container->getParameter('erasmusLanguages');
     return $this->render('TheScienceTourProjectBundle::edit.html.twig', array(
-      'message'    => '',
+      'message'    => (isset($_GET['lang']) && isset($lang[$_GET['lang']]) ? $this->get('translator')->trans('You are currently editing content in:') . ' ' . $lang[$_GET['lang']] : ''),
       'project'    => $project,
       'form'       => $form->createView(),
       'isErasmus'  => $isErasmus,
