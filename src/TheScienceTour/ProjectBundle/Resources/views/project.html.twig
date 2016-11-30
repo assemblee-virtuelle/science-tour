@@ -230,7 +230,7 @@
         <li{% if tab == "about" %} class="active"{% endif %}><a
                     href="javascript:show(0);"><h1>{% trans %}The
                     project{% endtrans %}</h1></a></li>
-        {% if not isErasmus() %}
+        {% if not isErasmus() and not project.isErasmus %}
             {% if app.user and app.user.numberOf("project-resources", project.id) %}
                 <li>
                     <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "resources"}) }}">
