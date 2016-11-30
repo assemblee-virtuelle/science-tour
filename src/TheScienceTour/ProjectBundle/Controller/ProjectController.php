@@ -355,9 +355,9 @@ class ProjectController extends Controller {
       ->add('duration', 'integer', array('attr' => array('min' => 1)))
       ->add('durationUnit', 'choice', array(
         'choices' => array(
-          'day'   => 'Jours',
-          'week'  => 'Semaines',
-          'month' => "Mois"
+          'day'   => $this->get('translator')->trans('Days'),
+          'week'  => $this->get('translator')->trans('Weeks'),
+          'month' => $this->get('translator')->trans('Months')
         )
       ))
       ->add('price', 'integer', array(
