@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace TheScienceTour\UserBundle\Form\Type;
 
@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Ivory\GoogleMap\Places\AutocompleteType;
 
 class ProfileFormType extends BaseType {
-	
+
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
 			->add('email', 'email')
@@ -31,7 +31,7 @@ class ProfileFormType extends BaseType {
 			))
 		;
 	}
-	
+
 	public function getName() {
 		return 'tst_user_profile';
 	}

@@ -28,6 +28,7 @@ twig:
             - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
     globals:
         tst_version: %tst_version%
+        erasmusLanguages: %erasmusLanguages%
 
 # Assetic Configuration
 assetic:
@@ -261,34 +262,6 @@ exercise_html_purifier:
     no_html:
         HTML.Allowed: ''
 
-fos_elastica:
-    clients:
-        default: { host: "%elastica_host%", port: "%elastica_port%" }
-    indexes:
-        tst:
-            types:
-                project:
-                    mappings:
-                        title:
-                            type: string
-                            boost: 5
-                        place:
-                            type: string
-                        goal:
-                            type: string
-                            boost: 2
-                        description:
-                            type: string
-                            boost: 3
-                        status:
-                            type: integer
-                    persistence:
-                        driver: mongodb
-                        model: TheScienceTour\ProjectBundle\Document\Project
-                        finder: ~
-                        provider: ~
-                        listener: ~
-
 services:
     twig.extension.intl:
        class: Twig_Extensions_Extension_Intl
@@ -307,8 +280,9 @@ services:
         class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-        arguments: ['@router','%erasmusDomains%']
+        arguments: ['@router', '%erasmusDomains%', '%erasmusLanguages%']
 
 parameters:
     sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
     tst_version: 'V1.2'
+

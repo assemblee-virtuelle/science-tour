@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace TheScienceTour\ProjectBundle\Admin;
 
@@ -16,7 +16,7 @@ class ProjectAdmin extends Admin {
 			->remove('create')
 		;
 	}
-	
+
 	protected function configureFormFields(FormMapper $formMapper) {
 		$formMapper
 			->add('title')
@@ -41,7 +41,7 @@ class ProjectAdmin extends Admin {
 		;
 
 	}
-	
+
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper)
 	{
 		$datagridMapper
@@ -49,7 +49,7 @@ class ProjectAdmin extends Admin {
 			->add('creator')
 		;
 	}
-	
+
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 			->addIdentifier('title')
@@ -68,11 +68,11 @@ class ProjectAdmin extends Admin {
 			->add('frontPage')
 		;
 	}
-	
+
 	public function preUpdate($project) {
 		$project->updateFinishedAt();
 	}
-	
+
 	public function getExportFields() {
 		return array(
 				'title',
@@ -90,5 +90,5 @@ class ProjectAdmin extends Admin {
 				'frontPage'
 		);
 	}
-	
+
 }

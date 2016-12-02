@@ -21,3 +21,31 @@ assetic:
         yui_js:
             jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
             apply_to: "\.js$"
+
+fos_elastica:
+    clients:
+        default: { host: "%elastica_host%", port: "%elastica_port%" }
+    indexes:
+        tst:
+            types:
+                project:
+                    mappings:
+                        title:
+                            type: string
+                            boost: 5
+                        place:
+                            type: string
+                        goal:
+                            type: string
+                            boost: 2
+                        description:
+                            type: string
+                            boost: 3
+                        status:
+                            type: integer
+                    persistence:
+                        driver: mongodb
+                        model: TheScienceTour\ProjectBundle\Document\Project
+                        finder: ~
+                        provider: ~
+                        listener: ~

@@ -4,20 +4,20 @@
 	position: relative;
 	z-index: 1;
 	background-color: @mainBgColor;
-	
+
 	#overall-header-login {
 		background-color: #BBBBBB;
-		
+
 		ul {
 			margin: 0 auto;
 			width: @pageWidth;
 			text-align: right;
-			
+
 			li {
 				display: inline-block;
 				padding-bottom: 2px;
 				vertical-align: top;
-				
+
 				a {
 					padding: 0 9px 0 5px;
 					height: 25px;
@@ -26,21 +26,21 @@
 					font-weight: bold;
 					text-decoration: none;
 					line-height: 25px;
-					
+
 					&:hover {
 						color: @linkColor;
 					}
-					
+
 					i {
 						margin: 0 7px 0 2px;
 					}
-					
+
 					img {
 						vertical-align: middle;
 						margin-right: 5px;
 					}
 				}
-				
+
 				&:last-child {
 					a {
 						padding-right: 0;
@@ -50,11 +50,20 @@
 					}
 				}
 			}
+			#lang_switcher {
+				margin: 4px;
+				padding: 2px;
+				border-radius: 4px;
+				background: rgba(255,255,255,.3);
+				font-size: 12px;
+				border: 0;
+				cursor:pointer;
+			}
 			.addchallenge {
 				background-color: #AAAAAA;
 			}
 			.addproject {
-				background-color: #9A9A9A;
+				background-color: rgba(255,255,255,.2);
 				a {
 					font-size: 12px;
 				}
@@ -64,11 +73,11 @@
 			}
 		}
 	}
-	
+
 	#overall-header-main {
 		height: 90px;
 		font-family: @font1;
-		
+
 		#header_main_container {
 			width: @pageWidth;
 			margin: auto;
@@ -82,7 +91,7 @@
 				h1 {
 					font-size: @font1Big;
 					line-height: 30px;
-					
+
 					display: inline-block;
 					vertical-align: middle;
 					margin: 18px 18px 0 84px;
@@ -96,7 +105,7 @@
 					display: inline-block;
 					vertical-align: bottom;
 				}
-				
+
 			}
 			nav {
 				float: right;
@@ -137,7 +146,7 @@
 								background: transparent url('pictos/search.png') no-repeat left center;
 							}
 						}
-						
+
 					}
 					#nav_home {
 						border-bottom: 3px solid #36B0E3;

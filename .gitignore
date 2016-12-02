@@ -41,3 +41,5 @@
 .vagrant
 .DS_Store
 Vagrantfile
+
+app/config/parameters.yml*
