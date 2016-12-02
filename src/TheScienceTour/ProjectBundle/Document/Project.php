@@ -37,7 +37,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
  */
-class Project extends BaseDocument {
+class Project /* extends BaseDocument */ {
 
   /**
    * @MongoDB\Id
@@ -205,6 +205,11 @@ class Project extends BaseDocument {
    * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\ChallengeBundle\Document\Challenge", inversedBy="projects")
    */
   protected $challenge;
+
+  /**
+   * @MongoDB\ReferenceMany(targetDocument="ProjectTranslation", inversedBy="original")
+   */
+  protected $translations; // Ensemble des traductions
 
 
   public function __construct() {
@@ -710,4 +715,22 @@ class Project extends BaseDocument {
     }
     return $nb;
   }
+
+  /**
+   * getTranslations Liste des traductions du projet
+   *
+   * @return ArrayCollection Liste des traductions du projet
+   */
+  public function getTranslations() {
+      return $this->translations;
+    }
+
+  public function addTranslation(\TheScienceTour\DocumentBundle\Document\Document $translation) {
+      $this->translations[] = $translation;
+  }
+
+  public function removeTranslation(\TheScienceTour\DocumentBundle\Document\Document $translation) {
+      $this->translations->removeElement($translation);
+  }
+
 }
