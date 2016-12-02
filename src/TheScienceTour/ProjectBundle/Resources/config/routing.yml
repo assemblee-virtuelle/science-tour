@@ -9,7 +9,7 @@ tst_project_add:
     defaults: { _controller: "TheScienceTourProjectBundle:Project:addProject", idchallenge: null, _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_add_challengeproject:
     pattern: /{_locale}/project/add/{idchallenge}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:addProject", _locale: fr }
@@ -28,7 +28,7 @@ tst_project_admin:
     requirements:
         _locale: en|fr
         tab: proposals|team
-        
+
 tst_project_admin_chat:
     pattern: /{ _locale}/project/{id}/adminchat/{idres}/{idhelp}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:adminProjectChat", _locale: fr }
@@ -46,7 +46,7 @@ tst_project_add_news:
     defaults: { _controller: "TheScienceTourProjectBundle:Project:addNews", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_delete_news:
     pattern: /{_locale}/project/{id}/deletenews/{idnews}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:deleteNews", _locale: fr }
@@ -59,7 +59,7 @@ tst_project:
     requirements:
         _locale: en|fr
         tab: about|resources|news|chats
-   
+
 
 tst_project_contribute:
     pattern: /{_locale}/project/{id}/contribute
@@ -90,31 +90,31 @@ tst_project_unsubscribe:
     defaults: { _controller: "TheScienceTourProjectBundle:Project:unsubscribe", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_skill_help:
     pattern: /{_locale}/project/{id}/skillhelp/{idskill}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:skillHelp", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_activate_skill_helper:
     pattern: /{_locale}/project/{id}/shactivation/{idskill}/{idhelper}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:activateSkillHelper", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_skill_unhelp:
     pattern: /{_locale}/project/{id}/skillunhelp/{idskill}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:skillUnhelp", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_res_help:
     pattern: /{_locale}/project/{id}/reshelp/{idres}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:resHelp", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_res_unhelp:
     pattern: /{_locale}/project/{id}/resunhelp/{idres}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:resUnhelp", _locale: fr }
@@ -132,31 +132,31 @@ tst_project_delegate:
     defaults: { _controller: "TheScienceTourProjectBundle:Project:delegate", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_activate_delegate:
     pattern: /{_locale}/project/{id}/activatedelegate
     defaults: { _controller: "TheScienceTourProjectBundle:Project:activateDelegate", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_add_chat:
     pattern: /{_locale}/project/{id}/addchat
     defaults: { _controller: "TheScienceTourProjectBundle:Project:addChat", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_add_message:
     pattern: /{_locale}/project/{id}/addmessage/{idchat}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:addMessage", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_delete_chat:
     pattern: /{_locale}/project/{id}/deletechat/{idchat}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:deleteChat", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_project_sponsor:
     pattern: /{_locale}/project/{id}/sponsor
     defaults: { _controller: "TheScienceTourProjectBundle:Project:sponsor", _locale: fr }
@@ -168,3 +168,26 @@ tst_project_unsponsor:
     defaults: { _controller: "TheScienceTourProjectBundle:Project:unsponsor", _locale: fr }
     requirements:
         _locale: en|fr
+
+# Gestion des traductions
+
+tst_project_add_translation:
+    pattern: /{_locale}/project/translation/add/{original}/{language}
+    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:addProjectTranslation"}
+    requirements:
+        _locale: en|fr
+        original: \d+
+
+tst_project_edit_translation:
+    pattern: /{_locale}/project/translation/edit/{id}
+    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:editProjectTranslation"}
+    requirements:
+        _locale: en|fr
+        id: \d+
+
+tst_project_persist_translation:
+    pattern: /{_locale}/project/translation/persist
+    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:persistProjectTranslation", _locale: fr}
+    requirements:
+        _locale: en|fr
+        original: \d+
