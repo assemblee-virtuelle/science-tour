@@ -15,7 +15,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  * @MongoDBUnique(fields="title", message="There is already a project with that title.")
  * @MongoDB\Indexes({
  *   @MongoDB\UniqueIndex(keys={"title"="asc"}),
- *   @MongoDB\Index(keys={"creator.id"="asc"}),
+ *   @MongoDB\Index(keys={"translator.id"="asc"}),
  *   @MongoDB\Index(keys={"status"="asc"}),
  *   @MongoDB\Index(keys={"createdAt"="asc"}),
  *   @MongoDB\Index(keys={"updatedAt"="asc"}),
@@ -23,7 +23,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  *   @MongoDB\Index(keys={"finishedAt"="asc"}),
  *   @MongoDB\Index(keys={"publishedAt"="asc"}),
  *   @MongoDB\Index(keys={"language"="asc"})
- *   @MongoDB\Index(keys={"original"="asc"})
+ *   @MongoDB\Index(keys={"original.id"="asc"})
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
  */
@@ -37,12 +37,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   /**
    * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\UserBundle\Document\User")
    */
-  protected $creator;
-
-  /**
-   * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\UserBundle\Document\User")
-   */
-  protected $delegate;
+  protected $translator;
 
   /**
    * @MongoDB\Int
@@ -108,12 +103,8 @@ class ProjectTranslation /* extends BaseDocument */ {
     return $this->id;
   }
 
-  public function getCreator() {
-    return $this->creator;
-  }
-
-  public function getDelegate() {
-    return $this->delegate;
+  public function getTranslator() {
+    return $this->translator;
   }
 
   public function getOriginal() {
@@ -148,12 +139,8 @@ class ProjectTranslation /* extends BaseDocument */ {
     $this->title = $title;
   }
 
-  public function setCreator($creator) {
-    $this->creator = $creator;
-  }
-
-  public function setDelegate($delegate) {
-    $this->delegate = $delegate;
+  public function setTranslator($translator) {
+    $this->creator = translator;
   }
 
   public function setStatus($status) {
