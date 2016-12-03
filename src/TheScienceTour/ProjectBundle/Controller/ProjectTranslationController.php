@@ -428,11 +428,11 @@ class ProjectTranslationController extends Controller {
   /**
    * addProjectTranslationAction Affichage du formulaire pour l'ajout d'une traduction de projet
    *
-   * @param Project $project projet à traduire
+   * @param Int $original clef primaire du document original à traduire
    * @param String $language langue cible de la traduction
    * @return Response formulaire de saisie de la traduction
    */
-  public function addProjectTranslationAction(Project $project, $language) {
+  public function addProjectTranslationAction($original, $language) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -440,6 +440,10 @@ class ProjectTranslationController extends Controller {
     // Get erasmus site status.
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
+
+    $project = $this->get('doctrine_mongodb')
+      ->getRepository('TheScienceTourProjectBundle:Project')
+      ->find($original);
 
     $translated = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
