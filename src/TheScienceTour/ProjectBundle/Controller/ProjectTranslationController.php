@@ -296,12 +296,12 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  private function _formProjectAction($project, $edit = FALSE) {
+  private function _formProjectTranslationAction($translation, $edit = FALSE) {
     // Get erasmus site status.
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
 
-    $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
+    $form = $this->createFormBuilder($translation, array('cascade_validation' => TRUE))
       ->add('title', 'text');
 
     if ($edit) {
@@ -317,109 +317,30 @@ class ProjectTranslationController extends Controller {
       ]);
     }
 
-    $form->add('place', 'places_autocomplete', array(
-      'prefix'   => 'js_tst_place_',
-      'types'    => array(AutocompleteType::CITIES),
-      'async'    => FALSE,
-      'language' => 'fr',
-      'attr'     => array(
-        'placeholder' => '',
-        'oninvalid'   => 'javascript:show(0);',
-        'required'    => 'required'
-      )
-    ));
-
-    // No challenge for Erasmus.
-    if (!$isErasmus) {
-      $challengeList = $this->get('doctrine_mongodb')
-        ->getRepository('TheScienceTourChallengeBundle:Challenge')
-        ->findNonFuture($isErasmus);
-
-      $form->add('challenge', 'document', array(
-        'class'       => 'TheScienceTour\ChallengeBundle\Document\Challenge',
-        'property'    => 'titleForChoiceList',
-        'empty_value' => 'Aucun',
-        'empty_data'  => NULL,
-        'choices'     => $challengeList,
-        'required'    => FALSE
-      ));
-    }
-
-    $form->add('picture', 'sonata_media_type', array(
-      'provider' => 'sonata.media.provider.image',
-      'context'  => 'project',
-      'required' => $edit && $project->getPicture()
-    ));
+    // $form->add('picture', 'sonata_media_type', array(
+    //   'provider' => 'sonata.media.provider.image',
+    //   'context'  => 'project',
+    //   'required' => $edit && $project->getPicture()
+    // ));
 
     $form->add('goal', 'purified_textarea')
-      ->add('description', 'purified_textarea')
-      ->add('duration', 'integer', array('attr' => array('min' => 1)))
-      ->add('durationUnit', 'choice', array(
-        'choices' => array(
-          'day'   => 'Jours',
-          'week'  => 'Semaines',
-          'month' => "Mois"
-        )
-      ))
-      ->add('price', 'integer', array(
-        'attr'     => array('min' => 0),
-        'required' => FALSE
-      ))
-      ->add('startedAt', 'date', array(
-        'empty_value' => '',
-        'required'    => FALSE
-      ));
-
-    // No resources for Erasmus.
-    if (!$isErasmus) {
-      $form->add('tools', 'collection', array(
-        'type'         => new ResourceType(),
-        'allow_add'    => TRUE,
-        'allow_delete' => TRUE,
-        'by_reference' => FALSE,
-      ))
-        ->add('materials', 'collection', array(
-          'type'         => new ResourceType(),
-          'allow_add'    => TRUE,
-          'allow_delete' => TRUE,
-          'by_reference' => FALSE,
-        ))
-        ->add('premises', 'collection', array(
-          'type'         => new ResourceType(),
-          'allow_add'    => TRUE,
-          'allow_delete' => TRUE,
-          'by_reference' => FALSE,
-        ))
-        ->add('skills', 'collection', array(
-          'type'         => new SkillType(),
-          'allow_add'    => TRUE,
-          'allow_delete' => TRUE,
-          'by_reference' => FALSE,
-        ));
-    }
+         ->add('description', 'purified_textarea')
 
     if (!$edit || $project->getStatus() == 0) {
       $form->add('draft', 'submit', array(
-        'attr' => array(
-          'formnovalidate' => 'formnovalidate',
-          'class'          => 'button white_button'
-        )
-      ))
-        ->add('publish', 'submit', array(
-          'attr'              => array('class' => 'button orange_button'),
-          'validation_groups' => array(
-            'Default',
-            'publish'
-          )
-        ));
+        'attr' => [
+            'formnovalidate' => 'formnovalidate',
+            'class'          => 'button white_button'
+        ]))
+           ->add('publish', 'submit', [
+               'attr'              => ['class' => 'button orange_button'],
+               'validation_groups' => ['Default', 'publish']
+           ]);
     }
     else {
       $form->add('save', 'submit', array(
-        'attr'              => array('class' => 'button orange_button'),
-        'validation_groups' => array(
-          'Default',
-          'publish'
-        )
+        'attr'              => ['class' => 'button orange_button'],
+        'validation_groups' => ['Default', 'publish']
       ));
     }
 
@@ -454,7 +375,7 @@ class ProjectTranslationController extends Controller {
         $translation = new ProjectTranslation();
         $translation->setLanguage($language);
 
-        $form = $this->_formProjectTranslationAction($project);
+        $form = $this->_formProjectTranslationAction($translated);
 
         // Build form.
         $form    = $form->getForm();
@@ -466,7 +387,7 @@ class ProjectTranslationController extends Controller {
             'isErasmus'  => $isErasmus,
             'form'       => $form->createView(),
             'language'   => $language,
-            'project'    => $project,
+            'project'    => $translation,
             'isEditForm' => FALSE,
             'isAddForm'  => TRUE
         ));
