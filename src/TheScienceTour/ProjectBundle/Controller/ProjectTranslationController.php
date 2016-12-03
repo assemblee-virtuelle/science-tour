@@ -467,7 +467,7 @@ class ProjectTranslationController extends Controller {
         ));
     } else {
         $translation = $translated->getId();
-        return $this->editProjectTranslationAction($)
+        return $this->editProjectTranslationAction($translation);
     }
 
 
