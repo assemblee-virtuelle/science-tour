@@ -296,7 +296,7 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  private function _formProjectTranslationAction($translation, $edit = FALSE) {
+  private function _formProjectTranslation($translation, $edit = FALSE) {
     // Get erasmus site status.
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
@@ -375,7 +375,7 @@ class ProjectTranslationController extends Controller {
         $translation = new ProjectTranslation();
         $translation->setLanguage($language);
 
-        $form = $this->_formProjectTranslationAction($translated);
+        $form = $this->_formProjectTranslation($translated);
 
         // Build form.
         $form    = $form->getForm();
