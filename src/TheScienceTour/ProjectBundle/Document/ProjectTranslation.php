@@ -22,7 +22,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  *   @MongoDB\Index(keys={"startedAt"="asc"}),
  *   @MongoDB\Index(keys={"finishedAt"="asc"}),
  *   @MongoDB\Index(keys={"publishedAt"="asc"}),
- *   @MongoDB\Index(keys={"language"="asc"})
+ *   @MongoDB\Index(keys={"language"="asc"}),
  *   @MongoDB\Index(keys={"original.id"="asc"})
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
