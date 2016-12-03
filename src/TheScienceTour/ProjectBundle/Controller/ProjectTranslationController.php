@@ -14,6 +14,7 @@ use TheScienceTour\MessageBundle\Document\Chat;
 use TheScienceTour\MessageBundle\Document\Message;
 use Ivory\GoogleMap\Places\AutocompleteType;
 use TheScienceTour\MainBundle\Model\GeoNear;
+use TheScienceTour\projectBundle\Document\ProjectTranslation;
 
 
 class ProjectTranslationController extends Controller {
@@ -435,7 +436,7 @@ class ProjectTranslationController extends Controller {
   public function addProjectTranslationAction($original, $language) {
     $user = $this->getUser();
     if (!$user) {
-      throw new AccessDeniedException();
+    //  throw new AccessDeniedException();
     }
     // Get erasmus site status.
     $session   = $this->get('session');
@@ -449,7 +450,7 @@ class ProjectTranslationController extends Controller {
       ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
       ->findOneBy(['original' => $project->getId(), 'language' => $language]);
 
-    if (empty($project)) {
+    if (empty($translated)) {
         $translation = new ProjectTranslation();
         $translation->setLanguage($language);
 

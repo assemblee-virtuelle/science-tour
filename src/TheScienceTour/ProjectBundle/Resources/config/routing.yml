@@ -176,7 +176,7 @@ tst_project_add_translation:
     defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:addProjectTranslation"}
     requirements:
         _locale: en|fr
-        original: \d+
+        original: \w+
 
 tst_project_edit_translation:
     pattern: /{_locale}/project/translation/edit/{id}
