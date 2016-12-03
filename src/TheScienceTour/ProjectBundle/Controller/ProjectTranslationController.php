@@ -324,7 +324,7 @@ class ProjectTranslationController extends Controller {
     // ));
 
     $form->add('goal', 'purified_textarea')
-         ->add('description', 'purified_textarea')
+         ->add('description', 'purified_textarea');
 
     if (!$edit || $project->getStatus() == 0) {
       $form->add('draft', 'submit', array(
