@@ -88,7 +88,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   /**
    * @MongoDB\String
    */
-  protected language;
+  protected $language;
 
   public function __construct() {
     $this->frontPage = FALSE;

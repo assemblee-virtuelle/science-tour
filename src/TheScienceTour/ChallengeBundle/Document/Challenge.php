@@ -23,7 +23,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  * })
  */
 
-class Challenge extends BaseDocument {
+class Challenge /* extends BaseDocument */ {
 
 	/**
 	 * @MongoDB\Id
