@@ -377,7 +377,8 @@ class ProjectTranslationController extends Controller {
         $translated->setOriginal($project->getId());
         $translated->setLanguage($language);
         $translated->setTitle($project->getTitle());
-        $translated->setRules($project->getRules());
+        $translated->setGoal($project->getGoal());
+        $translated->setDescription($project->getDescription());
 
         $form = $this->_formProjectTranslation($translated);
 
