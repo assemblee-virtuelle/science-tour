@@ -100,9 +100,7 @@
                     </div>
                 </div>
                 <div class="place_data">
-                    {{ form_label(form.place, "Place", { 'label_attr': {'class': 'orange-asterisk'} }) }}
-                    {{ form_errors(form.place) }}
-                    {{ form_widget(form.place, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                    {{ original.getPlace() }}
                 </div>
                 <div class="picture_data">
                     <img src="{{ original.getPicture() }}" />
