@@ -93,7 +93,7 @@
                 </div>
                 <div>
                     <div class="start_data">
-                        {{ original.getStartedAt() }}
+                        {{ original.getStartedAt()|date('d/m/Y') }}
                     </div>
                     <div class="duration_data">
                         {{ original.getDuration() ~ " " ~ translated.getDurationUnit() }}
