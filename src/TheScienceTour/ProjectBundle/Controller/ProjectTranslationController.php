@@ -381,9 +381,9 @@ class ProjectTranslationController extends Controller {
         $form    = $form->getForm();
         $request = $this->get('request');
 
-        return $this->render('TheScienceTourProjectBundle:translations:addTranslation.html.twig', array(
-            'message'    => $this->get('translator')
-            ->trans('You are about to translate the project in : '),
+
+        return $this->render('TheScienceTourProjectBundle:translations:form.html.twig', array(
+            'message'    => $this->get('translator')->trans('You are about to translate the project : '),
             'isErasmus'  => $isErasmus,
             'form'       => $form->createView(),
             'language'   => $language,

@@ -1,0 +1,157 @@
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
+
+{% block scripts %}
+    <script>
+        function show(id) {
+
+            var tabsul = document.getElementById('tabs');
+            var containers = document.getElementsByClassName('tab-container');
+            var asideContainers = document.getElementsByClassName('aside-container');
+
+            for (var i = 0; i < tabsul.children.length; i++) {
+                if (i == id) {
+                    tabsul.children[i].className = 'active';
+                    containers[i].style.display = 'block';
+                    asideContainers[i].style.display = 'block';
+                } else {
+                    tabsul.children[i].className = '';
+                    containers[i].style.display = 'none';
+                    asideContainers[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+
+    <script>
+        var myFile = document.getElementById('form_picture_binaryContent');
+    </script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/thesciencetourmain/js/validImg.js') }}"></script>
+{% endblock %}
+
+{% block bodyid %}project-form{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+    <div class="banner-title">
+        <h1 class="txtshadowed">{% block form_title %}{% endblock %}</h1>
+    </div>
+    <div class="banner-little-man">
+        <img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}"
+             alt=""/>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <form action="{{ path('tst_project_persist_translation') }}" class="project_form" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+
+        {% if form.publish is defined %}
+            {{ form_widget(form.publish) }}
+        {% endif %}
+        {% if form.draft is defined %}
+            {{ form_widget(form.draft) }}
+        {% endif %}
+        {% if form.save is defined %}
+            {{ form_widget(form.save) }}
+        {% endif %}
+
+        <ul id="tabs" class="tabs">
+            <li class="active"><a href="javascript:show(0);"><h1>{% trans %}
+                        Basic info{% endtrans %}</h1></a></li>
+            <li><a href="javascript:show(1);"><h1>{% trans %}The
+                        project{% endtrans %}</h1></a></li>
+            {% if not isErasmus() %}
+                <li><a href="javascript:show(2);"><h1>{% trans %}
+                            Resources{% endtrans %}</h1></a></li>
+            {% endif %}
+        </ul>
+
+        <div class="tab-container">
+            <div class="tab-container-inner">
+                <div class="message">
+                    {{ message }}
+                </div>
+                {% if isEditForm %}
+                    <div class="translate-to-tab">
+                        {# form_label(form.language, "Project language") #}
+                        {# form_errors(form.language) #}
+                        {{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                    </div>
+                {% endif %}
+                <div>
+                    {{ form_label(form.title, "Project title", { 'label_attr': {'class': 'red-asterisk'} }) }}
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                </div>
+                <div>
+                    <div class="start_data">
+                        {{ translated.getStartedAt() }}
+                    </div>
+                    <div class="duration_data">
+                        {{ translated.getDuration() ~ " " ~ translated.getDurationUnit() }}
+                    </div>
+                </div>
+                <div class="place_data">
+                    {{ form_label(form.place, "Place", { 'label_attr': {'class': 'orange-asterisk'} }) }}
+                    {{ form_errors(form.place) }}
+                    {{ form_widget(form.place, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                </div>
+                <div class="picture_data">
+                    <img src="{{ translated.getPicture() }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-container" style="display: none;">
+            <div class="tab-container-inner">
+                <div>
+                    {{ form_label(form.goal, "Goal of the game", { 'label_attr': {'class': 'orange-asterisk'} }) }}
+                    {{ form_errors(form.goal) }}
+                    {{ form_widget(form.goal, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce'} }) }}
+                </div>
+                <div>
+                    {{ form_label(form.description, "Rules of the game", { 'label_attr': {'class': 'orange-asterisk'} }) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce', 'data-theme': 'bbcode'} }) }}
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+    {{ tinymce_init() }}
+{% endblock %}
+
+{% block aside %}
+    <div class="aside-container">
+        <h1><span>1</span>{% trans %}COMMENCER PAR LES BASES{% endtrans %}</h1>
+        <p>
+            Pour créer ton projet, il faut surtout lui donner un nom (clair et
+            pas trop long).
+            Ensuite, il faut que tout le monde sache où tu vas faire ton projet
+            et combien de temps il va durer.
+            Pour finir, il faut penser à mettre une belle image, histoire de
+            donner envie aux autres de participer à ton projet !
+        </p>
+        <p>
+            <b>Si tu veux juste annoter une idée de projet sans le publier, </b><br/>
+            commence à remplir le formulaire et garde-le dans tes brouillons.
+        </p>
+    </div>
+
+    <div class="aside-container" style="display: none;">
+        <h1><span>2</span>{% trans %}EXPLIQUER MIEUX TON PROJET{% endtrans %}</h1>
+        <p>
+            Maintenant il faut en dire plus.
+            Prends ton temps pour expliquer le contenu de ton projet et quel est
+            son objectif final.
+        </p>
+    </div>
+{% endblock %}
