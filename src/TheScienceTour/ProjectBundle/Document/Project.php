@@ -207,7 +207,7 @@ class Project /* extends BaseDocument */ {
   protected $challenge;
 
   /**
-   * @MongoDB\ReferenceMany(targetDocument="ProjectTranslation", inversedBy="original")
+   * @MongoDB\ReferenceMany(targetDocument="ProjectTranslation", mappedBy="original")
    */
   protected $translations; // Ensemble des traductions
 

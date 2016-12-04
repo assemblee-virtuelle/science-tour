@@ -62,7 +62,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   protected $publishedAt;
 
   /**
-   * @MongoDB\ReferenceOne(targetDocument="Project", mappedBy="translations")
+   * @MongoDB\ReferenceOne(targetDocument="Project", inversedBy="translations")
    */
   protected $original;
 

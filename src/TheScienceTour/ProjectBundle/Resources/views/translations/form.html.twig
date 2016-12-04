@@ -93,16 +93,17 @@
                 </div>
                 <div>
                     <div class="start_data">
-                        {{ original.getStartedAt()|date('d/m/Y') }}
+                        {% trans %}Starting date{% endtrans %} : {{ original.getStartedAt()|date('d/m/Y') }}
                     </div>
                     <div class="duration_data">
-                        {{ original.getDuration() ~ " " ~ original.getDurationUnit() }}
+                        {% trans %}Duration{% endtrans %} : {{ original.getDuration() ~ " " ~ original.getDurationUnit() }}
                     </div>
                 </div>
                 <div class="place_data">
-                    {{ original.getPlace() }}
+                    {% trans %}Place{% endtrans %} : {{ original.getPlace() }}
                 </div>
                 <div class="picture_data">
+                    <p>{% trans %}Front page image{% endtrans %} :</p>
                     <img src="{{ original.getPicture() }}" />
                 </div>
             </div>

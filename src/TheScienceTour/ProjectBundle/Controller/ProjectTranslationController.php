@@ -315,7 +315,10 @@ class ProjectTranslationController extends Controller {
         'multiple'          => FALSE,
         'expanded'          => FALSE
       ]);
+
     }
+    
+    $form->add('original', 'hidden');
 
     // $form->add('picture', 'sonata_media_type', array(
     //   'provider' => 'sonata.media.provider.image',
