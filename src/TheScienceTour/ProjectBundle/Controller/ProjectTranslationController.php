@@ -347,6 +347,7 @@ class ProjectTranslationController extends Controller {
     return $form;
   }
 
+
   /**
    * addProjectTranslationAction Affichage du formulaire pour l'ajout d'une traduction de projet
    *
@@ -372,8 +373,11 @@ class ProjectTranslationController extends Controller {
       ->findOneBy(['original' => $project->getId(), 'language' => $language]);
 
     if (empty($translated)) {
-        $translation = new ProjectTranslation();
-        $translation->setLanguage($language);
+        $translated = new ProjectTranslation();
+        $translated->setOriginal($project->getId());
+        $translated->setLanguage($language);
+        $translated->setTitle($project->getTitle());
+        $translated->setRules($project->getRules());
 
         $form = $this->_formProjectTranslation($translated);
 
@@ -387,13 +391,13 @@ class ProjectTranslationController extends Controller {
             'isErasmus'  => $isErasmus,
             'form'       => $form->createView(),
             'language'   => $language,
-            'project'    => $translation,
-            'isEditForm' => FALSE,
-            'isAddForm'  => TRUE
+            'original'   => $project,
+            'translated' => $translated,
+            'isEditForm' => false,
+            'isAddForm'  => true
         ));
     } else {
-        $translation = $translated->getId();
-        return $this->editProjectTranslationAction($translation);
+        return $this->editProjectTranslationAction($translated->getId());
     }
 
 

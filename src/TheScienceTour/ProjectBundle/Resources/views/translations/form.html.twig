@@ -93,10 +93,10 @@
                 </div>
                 <div>
                     <div class="start_data">
-                        {{ translated.getStartedAt() }}
+                        {{ original.getStartedAt() }}
                     </div>
                     <div class="duration_data">
-                        {{ translated.getDuration() ~ " " ~ translated.getDurationUnit() }}
+                        {{ original.getDuration() ~ " " ~ translated.getDurationUnit() }}
                     </div>
                 </div>
                 <div class="place_data">
@@ -105,7 +105,7 @@
                     {{ form_widget(form.place, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                 </div>
                 <div class="picture_data">
-                    <img src="{{ translated.getPicture() }}" />
+                    <img src="{{ original.getPicture() }}" />
                 </div>
             </div>
         </div>
