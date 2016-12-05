@@ -259,6 +259,16 @@
                 <div class="message">
                     {{ message }}
                 </div>
+                {% if isErasmus() %}
+                <div class="available-translations">
+                    {% if project.translations|length > 0 %}
+                        <span>{% trans %}Translations are available in{% endtrans %} :</span>
+                        {% for tr in project.translations %}
+                        <img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ language }}" alt="Drapeau de la langue {{ tr.language }}" />
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endif %}
                 {% if isEditForm %}
                     <div class="translate-to-tab">
                         {# form_label(form.language, "Project language") #}

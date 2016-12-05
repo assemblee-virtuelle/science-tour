@@ -183,11 +183,11 @@ tst_project_edit_translation:
     defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:editProjectTranslation"}
     requirements:
         _locale: en|fr
-        id: \d+
+        id: \w+
 
 tst_project_persist_translation:
     pattern: /{_locale}/project/translation/persist
     defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:persistProjectTranslation", _locale: fr}
     requirements:
         _locale: en|fr
-        original: \d+
+        original: \w+
