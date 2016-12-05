@@ -378,7 +378,7 @@ class ProjectTranslationController extends Controller {
 
     if (empty($translated)) {
         $translated = new ProjectTranslation();
-        $translated->setOriginal($project);
+        $translated->setOriginal($project->getId());
         $translated->setLanguage($language);
         $translated->setTitle($project->getTitle());
         $translated->setGoal($project->getGoal());
@@ -430,11 +430,16 @@ class ProjectTranslationController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
+            $project = $this->get('doctrine_mongodb')
+            ->getRepository('TheScienceTourProjectBundle:Project')
+            ->find($translation->getOriginal());
+
             // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
+            $translation->setOriginal($projet);
 
-            var_dump($translation->getOriginal()); die;
+            var_dump($translation->setOriginal->getTitle()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
