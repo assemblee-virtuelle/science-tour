@@ -378,7 +378,7 @@ class ProjectTranslationController extends Controller {
 
     if (empty($translated)) {
         $translated = new ProjectTranslation();
-        $translated->setOriginal($project->getId());
+        $translated->setOriginal($project);
         $translated->setLanguage($language);
         $translated->setTitle($project->getTitle());
         $translated->setGoal($project->getGoal());
