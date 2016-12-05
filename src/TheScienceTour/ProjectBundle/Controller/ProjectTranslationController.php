@@ -439,7 +439,7 @@ class ProjectTranslationController extends Controller {
             $translation->setUpdatedAt(new \DateTime);
             $translation->setOriginal($project);
 
-            var_dump($translation->getStartedAt()); die;
+            var_dump($translation->getCreatedAt()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
