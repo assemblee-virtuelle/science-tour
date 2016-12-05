@@ -300,7 +300,7 @@ class ProjectTranslationController extends Controller {
   private function _formProjectTranslation($translation, $edit = FALSE) {
     // Get erasmus site status.
     $session   = $this->get('session');
-    $isErasmus = $session->get('isErasmus', FALSE);
+    $isErasmus = $session->get('isErasmus', false);
 
     $form = $this->createFormBuilder($translation, array('cascade_validation' => TRUE))
       ->add('title', 'text');
@@ -331,7 +331,7 @@ class ProjectTranslationController extends Controller {
     $form->add('goal', 'purified_textarea')
          ->add('description', 'purified_textarea');
 
-    if (!$edit || $project->getStatus() == 0) {
+    if (!$edit || $translation->getStatus() == 0) {
       $form->add('draft', 'submit', array(
         'attr' => [
             'formnovalidate' => 'formnovalidate',
