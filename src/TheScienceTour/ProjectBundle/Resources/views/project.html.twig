@@ -170,7 +170,7 @@
     </div>
 
     <div class="banner-overlay overlay-with-map">
-        {% if not isErasmus() and not project.isErasmus %}
+        {% if not project.isErasmus %}
             <div class="banner-overlay-box">
                 {{ render(controller('TheScienceTourMapBundle:Map:asideMap',
                 { 'documentList': project, 'sizes': { 'width': '210px', 'height': '157px' } })) }}
