@@ -429,12 +429,13 @@ class ProjectTranslationController extends Controller {
         $form = $this->_formProjectTranslation(new ProjectTranslation())->getForm();
         $form->bind($request);
 
+        var_dump($translation->getOriginal()->getTitle()); die;
+
         if ($form->isValid()) {
             // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
 
-            var_dump($translation->getOriginal()->getTitle()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
