@@ -302,8 +302,13 @@ class ProjectTranslationController extends Controller {
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', false);
 
-    $form = $this->createFormBuilder($translation, array('cascade_validation' => TRUE))
-      ->add('title', 'text');
+    $form = $this->createFormBuilder($translation, array('cascade_validation' => true))
+                 ->add('title', 'text')
+                 ->add('original', 'hidden')
+                 ->add('language', 'hidden')
+                 ->add('goal', 'purified_textarea')
+                 ->add('description', 'purified_textarea');
+
 
     if ($edit) {
       $lang         = $this->container->getParameter('erasmusLanguages');
@@ -319,17 +324,11 @@ class ProjectTranslationController extends Controller {
 
     }
 
-    $form->add('original', 'hidden')
-         ->add('language', 'hidden');
-
     // $form->add('picture', 'sonata_media_type', array(
     //   'provider' => 'sonata.media.provider.image',
     //   'context'  => 'project',
     //   'required' => $edit && $project->getPicture()
     // ));
-
-    $form->add('goal', 'purified_textarea')
-         ->add('description', 'purified_textarea');
 
     if (!$edit || $translation->getStatus() == 0) {
       $form->add('draft', 'submit', array(
@@ -430,13 +429,12 @@ class ProjectTranslationController extends Controller {
         $form = $this->_formProjectTranslation($translation)->getForm();
         $form->bind($request);
 
-        var_dump($translation->getOriginal()->getTitle()); die;
-
         if ($form->isValid()) {
             // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
 
+            var_dump($translation->getOriginal()->getTitle()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
