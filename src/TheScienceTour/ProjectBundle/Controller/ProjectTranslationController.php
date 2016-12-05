@@ -437,9 +437,9 @@ class ProjectTranslationController extends Controller {
             // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
-            $translation->setOriginal($projet);
+            $translation->setOriginal($project);
 
-            var_dump($translation->setOriginal->getTitle()); die;
+            var_dump($translation->getOriginal()->getTitle()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
