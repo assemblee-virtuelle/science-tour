@@ -439,7 +439,7 @@ class ProjectTranslationController extends Controller {
             $translation->setUpdatedAt(new \DateTime);
             $translation->setOriginal($project);
 
-            var_dump($translation->getCreatedAt()); die;
+            // var_dump($translation->getCreatedAt()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
@@ -549,8 +549,8 @@ class ProjectTranslationController extends Controller {
       'project'    => $project,
       'form'       => $form->createView(),
       'isErasmus'  => $isErasmus,
-      'isEditForm' => TRUE,
-      'isAddForm'  => FALSE
+      'isEditForm' => true,
+      'isAddForm'  => false
     ));
   }
 
