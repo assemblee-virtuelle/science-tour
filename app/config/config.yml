@@ -29,6 +29,7 @@ twig:
     globals:
         tst_version: %tst_version%
         erasmusLanguages: %erasmusLanguages%
+        st_contact_mail: %st_contact_mail%
 
 # Assetic Configuration
 assetic:
@@ -285,4 +286,3 @@ services:
 parameters:
     sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
     tst_version: 'V1.2'
-

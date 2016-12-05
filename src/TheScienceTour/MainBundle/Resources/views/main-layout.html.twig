@@ -182,6 +182,7 @@
 </div>
 
 <footer id="overall-footer" class="overall-footer">
+    {% if not app.session.get('isErasmus') %}
     <div id="overall-footer-container">
         <div class="overall-footer-item">
             <h1>{% trans %}The festival{% endtrans %}</h1>
@@ -194,6 +195,7 @@
                         Agenda{% endtrans %}</a></li>
             </ul>
         </div>
+        {% endif %}
         <div class="overall-footer-item">
             <h1>{% trans %}The projects{% endtrans %}</h1>
             <ul>
@@ -214,6 +216,7 @@
                         Finished{% endtrans %}</a></li>
             </ul>
         </div>
+        {% if not app.session.get('isErasmus') %}
         <div class="overall-footer-item">
             <h1>{% trans %}Network{% endtrans %}</h1>
             <ul>
@@ -222,37 +225,55 @@
                         Trucks{% endtrans %}</a></li>
             </ul>
         </div>
+        {% endif %}
+        {% if not app.session.get('isErasmus') %}
+            {% set ln_facebook = "https://www.facebook.com/sharer.php?u="~url('tst_home') %}
+            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Le Science Tour&hashtags=lesciencetour" %}
+            {% set ln_googleplus = "https://plus.google.com/share?u="~url('tst_home') %}
+            {% set ln_mail = "mailto:?subject=Le Science Tour&body="~url('tst_home') %}
+        {% else %}
+            {% set ln_facebook = "https://www.facebook.com/sharer.php?u="~url('tst_home') %}
+            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Le Science Tour&hashtags=lesciencetour" %}
+            {% set ln_googleplus = "https://plus.google.com/share?u="~url('tst_home') %}
+            {% set ln_mail = "mailto:?subject=Le Science Tour&body="~url('tst_home') %}
+        {% endif %}
         <div class="overall-footer-item">
             <h1>{% trans %}Share{% endtrans %}</h1>
             <a class="share-button facebook-button" target="_blank"
                title="Facebook"
-               href="https://www.facebook.com/sharer.php?u={{ url('tst_home') }}"
+               href="{{ ln_facebook }}"
                rel="nofollow"
                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i
                         class="icon-facebook-sign"></i></a>
             <a class="share-button twitter-button" target="_blank"
                title="Twitter"
-               href="https://twitter.com/share?url={{ url('tst_home') }}&text=Le Science Tour&hashtags=lesciencetour"
+               href="{{ ln_twitter }}"
                rel="nofollow"
                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i
                         class="icon-twitter-sign"></i></a>
             <a class="share-button googleplus-button" target="_blank"
                title="Google +"
-               href="https://plus.google.com/share?url={{ url('tst_home') }}"
+               href="{{ ln_googleplus }}"
                rel="nofollow"
                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i
                         class="icon-google-plus-sign"></i></a>
             <a class="share-button mail-button" title="Mail"
-               href="mailto:?subject=Le Science Tour&body={{ url('tst_home') }}"
+               href="{{ ln_mail }}"
                rel="nofollow"><i class="icon-envelope"></i></a>
         </div>
         <div class="overall-footer-right">
             <h1>{% trans %}Contact{% endtrans %}</h1>
             <ul>
+                {% if not app.session.get('isErasmus') %}
+                    {% set contact_mail = st_contact_mail %}
+                {% else %}
+                    {% set contact_mail = ycfc_contact_mail %}
+                {% endif %}
                 <li>
-                    <a href="mailto:info@lesciencetour.fr">info@lesciencetour.fr</a>
+                    <a href="mailto:{{ contact_mail}}">
+                        {{ contact_mail}}
+                    </a>
                 </li>
-                <li>01 40 05 75 57</li>
             </ul>
             <div id="copyright">
                 <a class="pdeb-logo" href="http://lespetitsdebrouillards.org"
@@ -262,7 +283,7 @@
                 <a href="http://creativecommons.org/licenses/by-sa/2.0/fr/"
                    target="_blank">CC-BY-SA</a>
                 <br/>
-                Some rights reserved.
+                {% trans %}Some rights reserved.{% endtrans %}
             </div>
         </div>
         <div class="overall-footer-credits">
