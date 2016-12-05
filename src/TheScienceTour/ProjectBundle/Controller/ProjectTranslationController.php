@@ -15,7 +15,7 @@ use TheScienceTour\MessageBundle\Document\Chat;
 use TheScienceTour\MessageBundle\Document\Message;
 use Ivory\GoogleMap\Places\AutocompleteType;
 use TheScienceTour\MainBundle\Model\GeoNear;
-use TheScienceTour\projectBundle\Document\ProjectTranslation;
+// use TheScienceTour\ProjectBundle\Document\ProjectTranslation;
 
 
 class ProjectTranslationController extends Controller {
