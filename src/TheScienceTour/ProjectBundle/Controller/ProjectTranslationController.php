@@ -434,7 +434,7 @@ class ProjectTranslationController extends Controller {
             $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
 
-            var_dump($translation->getOriginal()->getTitle()); die;
+            var_dump($translation->getOriginal()); die;
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);

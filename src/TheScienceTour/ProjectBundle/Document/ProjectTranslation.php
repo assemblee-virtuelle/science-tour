@@ -140,7 +140,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   }
 
   public function setTranslator($translator) {
-    $this->creator = translator;
+    $this->creator = $translator;
   }
 
   public function setStatus($status) {
