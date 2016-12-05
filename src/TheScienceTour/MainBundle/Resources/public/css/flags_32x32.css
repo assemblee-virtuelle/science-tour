@@ -1,0 +1,115 @@
+/*!
+ * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
+ */
+
+.flag-32 {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url('../img/flags_32x32.png') no-repeat;
+}
+
+
+.flag-32.flag-ee {
+    background-position: -160px 0;
+}
+
+.flag-32.flag-de {
+    background-position: -96px 0;
+}
+
+.flag-32.flag-nl {
+    background-position: -32px -96px;
+}
+
+.flag-32.flag-hu {
+    background-position: 0 -64px;
+}
+
+.flag-32.flag-sk {
+    background-position: -32px -128px;
+}
+
+.flag-32.flag-it {
+    background-position: -64px -64px;
+}
+
+.flag-32.flag-si {
+    background-position: 0 -128px;
+}
+
+.flag-32.flag-pt {
+    background-position: -96px -96px;
+}
+
+.flag-32.flag-gb {
+    background-position: -96px -32px;
+}
+
+.flag-32.flag-lv {
+    background-position: -160px -64px;
+}
+
+.flag-32.flag-cz {
+    background-position: -64px 0;
+}
+
+.flag-32.flag-pl {
+    background-position: -64px -96px;
+}
+
+.flag-32.flag-dk {
+    background-position: -128px 0;
+}
+
+.flag-32.flag-mt {
+    background-position: 0 -96px;
+}
+
+.flag-32.flag-ro {
+    background-position: -128px -96px;
+}
+
+.flag-32.flag-fr {
+    background-position: -64px -32px;
+}
+
+.flag-32.flag-fi {
+    background-position: -32px -32px;
+}
+
+.flag-32.flag-es {
+    background-position: 0 -32px;
+}
+
+.flag-32.flag-ie {
+    background-position: -32px -64px;
+}
+
+.flag-32.flag-bg {
+    background-position: -32px 0;
+}
+
+.flag-32.flag-se {
+    background-position: -160px -96px;
+}
+
+.flag-32.flag-be {
+    background-position: 0 0;
+}
+
+.flag-32.flag-lu {
+    background-position: -128px -64px;
+}
+
+.flag-32.flag-gr {
+    background-position: -128px -32px;
+}
+
+.flag-32.flag-hr {
+    background-position: -160px -32px;
+}
+
+.flag-32.flag-lt {
+    background-position: -96px -64px;
+}

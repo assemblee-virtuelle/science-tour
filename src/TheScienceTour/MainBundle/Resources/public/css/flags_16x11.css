@@ -1,0 +1,119 @@
+/*!
+ * Generated with CSS Flag Sprite generator (https://www\-sprites.com/)
+ */
+
+.flag-16 {
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    background: url('../img/flags_16x11.png') no-repeat;
+}
+
+
+.flag-16.flag-ee {
+    background-position: 0 -11px;
+}
+
+.flag-16.flag-de {
+    background-position: -64px 0;
+}
+
+.flag-16.flag-nl {
+    background-position: -32px -33px;
+}
+
+.flag-16.flag-hu {
+    background-position: -16px -22px;
+}
+
+.flag-16.flag-sk {
+    background-position: -32px -44px;
+}
+
+.flag-16.flag-it {
+    background-position: -48px -22px;
+}
+
+.flag-16.flag-si {
+    background-position: -16px -44px;
+}
+
+.flag-16.flag-pt {
+    background-position: -64px -33px;
+}
+
+.flag-16.flag-gb {
+    background-position: -64px -11px;
+}
+
+.flag-16.flag-lv {
+    background-position: 0 -33px;
+}
+
+.flag-16.flag-ro {
+    background-position: -80px -33px;
+}
+
+.flag-16.flag-cz {
+    background-position: -48px 0;
+}
+
+.flag-16.flag-pl {
+    background-position: -48px -33px;
+}
+
+.flag-16.flag-dk {
+    background-position: -80px 0;
+}
+
+.flag-16.flag-mt {
+    background-position: -16px -33px;
+}
+
+.flag-16.flag-at {
+    background-position: 0 0;
+}
+
+.flag-16.flag-fr {
+    background-position: -48px -11px;
+}
+
+.flag-16.flag-fi {
+    background-position: -32px -11px;
+}
+
+.flag-16.flag-es {
+    background-position: -16px -11px;
+}
+
+.flag-16.flag-ie {
+    background-position: -32px -22px;
+}
+
+.flag-16.flag-bg {
+    background-position: -32px 0;
+}
+
+.flag-16.flag-se {
+    background-position: 0 -44px;
+}
+
+.flag-16.flag-be {
+    background-position: -16px 0;
+}
+
+.flag-16.flag-lu {
+    background-position: -80px -22px;
+}
+
+.flag-16.flag-gr {
+    background-position: -80px -11px;
+}
+
+.flag-16.flag-hr {
+    background-position: 0 -22px;
+}
+
+.flag-16.flag-lt {
+    background-position: -64px -22px;
+}
