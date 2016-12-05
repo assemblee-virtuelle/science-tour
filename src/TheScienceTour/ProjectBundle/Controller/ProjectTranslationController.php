@@ -420,7 +420,7 @@ class ProjectTranslationController extends Controller {
     if ($request->getMethod() == 'POST') {
         $user = $this->getUser();
         if (!$user) {
-            throw new AccessDeniedException();
+            // throw new AccessDeniedException();
         }
         // Get erasmus site status.
         $session   = $this->get('session');
