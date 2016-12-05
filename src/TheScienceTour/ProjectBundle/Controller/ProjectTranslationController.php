@@ -317,8 +317,9 @@ class ProjectTranslationController extends Controller {
       ]);
 
     }
-    
-    $form->add('original', 'hidden');
+
+    $form->add('original', 'hidden')
+         ->add('language', 'hidden');
 
     // $form->add('picture', 'sonata_media_type', array(
     //   'provider' => 'sonata.media.provider.image',
@@ -413,7 +414,8 @@ class ProjectTranslationController extends Controller {
    * @param Request $request Données du formulaire
    * @return Response formulaire de saisie de la traduction
    */
-  public function persistProjectTranslationAction(Request $request) {
+  public function persistProjectTranslationAction(Request $request)
+  {
     if ($request->getMethod() == 'POST') {
         $user = $this->getUser();
         if (!$user) {
@@ -421,36 +423,33 @@ class ProjectTranslationController extends Controller {
         }
         // Get erasmus site status.
         $session   = $this->get('session');
-        $isErasmus = $session->get('isErasmus', FALSE);
-
-        $translation = new ProjectTranslation();
-
+        $isErasmus = $session->get('isErasmus', false);
         // Build form.
-        $form = $this->_formProjectTranslationAction($project);
+        $form = $this->_formProjectTranslationAction(new ProjectTranslation())->getForm();
+        $form->bind($request);
 
-        $form    = $form->getForm();
+        if ($form->isValid()) {
+            // TODO: Affectation de la paternité de la traduction (validation)
+            $translation->setTranslator($user);
+            $translation->setUpdatedAt(new \DateTime);
 
-      $form->bind($request);
-      if ($form->isValid()) {
-          // TODO: Affectation de la paternité de la traduction (validation)
-          $translation->setCreator($user);
-          $translation->setOriginal($project->getId());
+            var_dump($translation->getOriginal()->getTitle()); die;
 
-        if ($form->get('draft')->isClicked()) {
-          $translation->setStatus(0);
-        }
-        else {
-          $translation->setStatus(1);
-          $translation->setPublishedAt(new \Datetime);
-        }
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($translation);
-        $dm->flush();
-        if ($form->get('draft')->isClicked()) {
-          return $this->redirect($this->generateUrl('fos_user_profile_show', array('tab' => "mydrafts")));
-        }
+            if ($form->get('draft')->isClicked()) {
+                $translation->setStatus(0);
+            }
+            else {
+                $translation->setStatus(1);
+                $translation->setPublishedAt(new \Datetime);
+            }
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $dm->persist($translation);
+            $dm->flush();
+            if ($form->get('draft')->isClicked()) {
+                return $this->redirect($this->generateUrl('fos_user_profile_show', array('tab' => "mydrafts")));
+            }
 
-        return $this->redirect($this->generateUrl('tst_project', array('id' => $project->getId())));
+            return $this->redirect($this->generateUrl('tst_project', array('id' => $project->getId())));
       }
     }
   }
@@ -460,7 +459,8 @@ class ProjectTranslationController extends Controller {
    * @param  integer $id clef primaire de la traduction
    * @return Response Formulaire d'édition de la traduction
    */
-  public function editProjectTranslationAction($id) {
+  public function editProjectTranslationAction($id)
+  {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
