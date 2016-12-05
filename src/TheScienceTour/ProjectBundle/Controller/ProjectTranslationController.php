@@ -425,8 +425,9 @@ class ProjectTranslationController extends Controller {
         // Get erasmus site status.
         $session   = $this->get('session');
         $isErasmus = $session->get('isErasmus', false);
+        $translation = new ProjectTranslation()
         // Build form.
-        $form = $this->_formProjectTranslation(new ProjectTranslation())->getForm();
+        $form = $this->_formProjectTranslation($translation)->getForm();
         $form->bind($request);
 
         var_dump($translation->getOriginal()->getTitle()); die;
