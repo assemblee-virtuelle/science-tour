@@ -54,8 +54,12 @@
 {% endblock %}
 
 {% block content %}
-
-    <form action="{{ path('tst_project_persist_translation') }}" class="project_form" method="post" {{ form_enctype(form) }}>
+    {% if isAddForm %}
+    {% set persist_target = {} %}
+    {% else %}
+    {% set persist_target = {'id': translated.id } %}
+    {% endif %}
+    <form action="{{ path('tst_project_persist_translation', persist_target) }}" class="project_form" method="post" {{ form_enctype(form) }}>
 
         {{ form_errors(form) }}
 

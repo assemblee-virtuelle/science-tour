@@ -180,14 +180,18 @@ tst_project_add_translation:
 
 tst_project_edit_translation:
     pattern: /{_locale}/project/translation/edit/{id}
-    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:editProjectTranslation"}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:editProjectTranslation"
     requirements:
         _locale: en|fr
         id: \w+
 
 tst_project_persist_translation:
-    pattern: /{_locale}/project/translation/persist
-    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:persistProjectTranslation", _locale: fr}
+    pattern: /{_locale}/project/translation/persist/{id}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:persistProjectTranslation"
+        _locale: fr
+        id: null
     requirements:
         _locale: en|fr
         original: \w+

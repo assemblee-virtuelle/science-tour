@@ -414,7 +414,7 @@ class ProjectTranslationController extends Controller {
    * @param Request $request Données du formulaire
    * @return Response formulaire de saisie de la traduction
    */
-  public function persistProjectTranslationAction(Request $request)
+  public function persistProjectTranslationAction(Request $request, $id = null)
   {
     if ($request->getMethod() == 'POST') {
         $user = $this->getUser();
@@ -424,7 +424,13 @@ class ProjectTranslationController extends Controller {
         // Get erasmus site status.
         $session   = $this->get('session');
         $isErasmus = $session->get('isErasmus', false);
-        $translation = new ProjectTranslation();
+        if (is_null($id)) {
+            $translation = new ProjectTranslation();
+        } else {
+            $translation = $this->get('doctrine_mongodb')
+            ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
+            ->find($id);
+        }
         // Build form.
         $form = $this->_formProjectTranslation($translation)->getForm();
         $form->bind($request);
@@ -439,8 +445,6 @@ class ProjectTranslationController extends Controller {
             $translation->setUpdatedAt(new \DateTime);
             $translation->setOriginal($project);
 
-            // var_dump($translation->getCreatedAt()); die;
-
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
             }
@@ -449,7 +453,7 @@ class ProjectTranslationController extends Controller {
                 $translation->setPublishedAt(new \Datetime);
             }
             $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($translation);
+            if (is_null($id)) { $dm->persist($translation); }
             $dm->flush();
             if ($form->get('draft')->isClicked()) {
                 return $this->redirect($this->generateUrl('fos_user_profile_show', array('tab' => "mydrafts")));
@@ -475,78 +479,27 @@ class ProjectTranslationController extends Controller {
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
 
-    $project = $this->get('doctrine_mongodb')
+    $translation = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
       ->find($id);
 
-    if (!$project) {
+    if (!$translation) {
       throw $this->createNotFoundException('Aucun projet trouvé avec l\'id ' . $id);
     }
-    if ($user != $project->getCreator() && !($this->get('security.context')
-        ->isGranted('ROLE_PROJECT_MOD'))
+    if (
+        $user != $translation->getTranslator()
+        && !($this->get('security.context')->isGranted('ROLE_PROJECT_MOD'))
     ) {
       throw new AccessDeniedException();
     }
 
-    $form = $this->_formProjectAction($project, true)->getForm();
+    $form = $this->_formProjectTranslation($translation, $translation->getLanguage())->getForm();
 
     $request = $this->get('request');
-    /*
-    if ($request->getMethod() == 'POST') {
-      $form->bind($request);
-      if ($form->isValid()) {
-        if (!$project->getPicture()->getSize()) {
-          $project->setPicture(NULL);
-        }
-        if (!$project->getChallenge()) {
-          $project->eraseSponsors();
-        }
-        $project->updateFinishedAt();
-        $dm = $this->get('doctrine_mongodb')->getManager();
-
-        if ($project->getStatus() == 0) {
-          if ($form->get('publish')->isClicked()) {
-            $project->setStatus(1);
-            $project->setPublishedAt(new \Datetime);
-            $news = new News();
-            $news->setProjectId($project->getId());
-            $news->setAuthor($user);
-            $news->setTitle("{% publishProject %}");
-            $dm->persist($news);
-          }
-        }
-        else {
-          $project->setStatus(1);
-        }
-
-        // If the place has change then clear the coordinates
-        // so they are updated in MapBundle\Listener\CoordinatesSetterSubscriber
-        $original = $dm->getUnitOfWork()->getOriginalDocumentData($project);
-        if ($original['place'] != $project->getPlace()) {
-          $project->unsetCoordinates();
-        }
-
-        $dm->persist($project);
-
-        $challenge = $project->getChallenge();
-        if ($challenge and $challenge != $originalChallenge) {
-          $challengeCreator = $challenge->getCreator();
-          $challengeCreator->addNotification("challenge-newproject", $challenge->getId());
-          $dm->persist($challengeCreator);
-        }
-
-        $dm->flush();
-        if ($project->getStatus() == 0) {
-          return $this->redirect($this->generateUrl('fos_user_profile_show', array('tab' => "mydrafts")));
-        }
-        return $this->redirect($this->generateUrl('tst_project', array('id' => $project->getId())));
-      }
-    }
-    */
 
     return $this->render('TheScienceTourProjectBundle:translations:editTranslation.html.twig', array(
       'message'    => '',
-      'project'    => $project,
+      'translation'    => $translation,
       'form'       => $form->createView(),
       'isErasmus'  => $isErasmus,
       'isEditForm' => true,
