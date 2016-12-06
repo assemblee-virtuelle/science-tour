@@ -271,9 +271,9 @@
                 {% endif %}
                 {% if isEditForm %}
                     <div class="translate-to-tab">
-                        {# form_label(form.language, "Project language") #}
-                        {# form_errors(form.language) #}
-                        {{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                        {# form_label(translation_form.language, "Project language") #}
+                        {# form_errors(translation_form.language) #}
+                        {{ form_widget(translation_form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                     </div>
                 {% endif %}
                 <div>

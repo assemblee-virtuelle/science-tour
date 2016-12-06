@@ -298,23 +298,23 @@ class ProjectController extends Controller {
   private function _formProjectAction($project, $edit = FALSE) {
     // Get erasmus site status.
     $session   = $this->get('session');
-    $isErasmus = $session->get('isErasmus', FALSE);
+    $isErasmus = $session->get('isErasmus', false);
 
-    $form = $this->createFormBuilder($project, array('cascade_validation' => TRUE))
+    $form = $this->createFormBuilder($project, array('cascade_validation' => true))
       ->add('title', 'text');
 
-    if ($edit) {
-      $lang         = $this->container->getParameter('erasmusLanguages');
-      $lang['none'] = '-- ' . $this->get('translator')
-          ->trans('Translate to...') . ' --';
-
-      $form->add('translations', 'choice', [
-        'choices'           => $lang,
-        'preferred_choices' => ['none'],
-        'multiple'          => FALSE,
-        'expanded'          => FALSE
-      ]);
-    }
+    // if ($edit) {
+    //   $lang         = $this->container->getParameter('erasmusLanguages');
+    //   $lang['none'] = '-- ' . $this->get('translator')
+    //       ->trans('Translate to...') . ' --';
+    //
+    //   $form->add('translations', 'choice', [
+    //     'choices'           => $lang,
+    //     'preferred_choices' => ['none'],
+    //     'multiple'          => FALSE,
+    //     'expanded'          => FALSE
+    //   ]);
+    // }
 
     $form->add('place', 'places_autocomplete', array(
       'prefix'   => 'js_tst_place_',
@@ -594,9 +594,15 @@ class ProjectController extends Controller {
       $originalSkills[] = $skill;
     }
 
-    $form = $this->_formProjectAction($project, TRUE);
-
-    $form = $form->getForm();
+    $form = $this->_formProjectAction($project, true)->getForm();
+    $form_languages = $this->createForm(
+        new TranslationLanguageType,
+        new ProjectTranslation,
+        [
+            'languages' => $this->container->getParameter('erasmusLanguages'),
+            'no_choice' => '-- ' . $this->get('translator')->trans('Translate to...') . ' --'
+        ]
+    )->getForm();
 
     $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
@@ -879,6 +885,7 @@ class ProjectController extends Controller {
       'message'    => (isset($_GET['lang']) && isset($lang[$_GET['lang']]) ? $this->get('translator')->trans('You are currently editing content in:') . ' ' . $lang[$_GET['lang']] : ''),
       'project'    => $project,
       'form'       => $form->createView(),
+      'translation_form'=> $form_languages->createView(),
       'isErasmus'  => $isErasmus,
       'isEditForm' => TRUE,
       'isAddForm'  => FALSE
