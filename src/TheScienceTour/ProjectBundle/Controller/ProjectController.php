@@ -605,7 +605,7 @@ class ProjectController extends Controller {
             'data' => $this->container->getParameter('erasmusLanguages'),
             'no_choice' => '-- ' . $this->get('translator')->trans('Translate to...') . ' --'
         ]
-    )->getForm();
+    );
 
     $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
