@@ -13,7 +13,7 @@ class TranslationLanguageType extends AbstractType {
 
 		$builder->add('language', 'choice', [
           'choices'           => ['Français' => 'fr', 'English' => 'en'],
-          'no_choice' 		  => $builder->getAttribute('no_choice'),
+        //   'empty_value' 		  => $builder->getAttribute('no_choice'),
           'multiple'          => false,
           'expanded'          => false
         ]);
@@ -23,7 +23,7 @@ class TranslationLanguageType extends AbstractType {
 		$resolver->setDefaults(array(
 				'data_class' => 'TheScienceTour\ProjectBundle\Document\ProjectTranslation',
 				'data' => ['fr', 'en'],
-				'no_choice' => '-- Translate to... --'
+				'empty_value' => '-- Translate to... --'
 		));
 	}
 

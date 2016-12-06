@@ -603,7 +603,7 @@ class ProjectController extends Controller {
         new ProjectTranslation,
         [
             // 'choices' => $this->container->getParameter('erasmusLanguages'),
-            'no_choice' => '-- ' . $this->get('translator')->trans('Translate to...') . ' --'
+            'empty_value' => '-- ' . $this->get('translator')->trans('Translate to...') . ' --'
         ]
     );
 
