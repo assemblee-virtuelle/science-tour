@@ -261,6 +261,7 @@
                 </div>
                 {% if isErasmus() %}
                 <div class="available-translations">
+                    {{ project.translations|length }}
                     {% if project.translations|length > 0 %}
                     <span>{% trans %}Translations are available in{% endtrans %} :</span>
                         {% for tr in project.translations %}

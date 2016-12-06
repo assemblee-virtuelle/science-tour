@@ -13,7 +13,7 @@ class TranslationLanguageType extends AbstractType {
 
 		$builder->add('language', 'choice', [
           'choices'      => ['fr' => 'Français', 'en' => 'English'],
-          'empty_value'  => $builder->getAttribute('empty_value'),
+          'empty_value'  => '-- Translate to... --',
           'multiple'     => false,
           'expanded'     => false
         ]);
