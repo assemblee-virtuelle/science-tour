@@ -22,7 +22,6 @@ class TranslationLanguageType extends AbstractType {
 	public function setDefaultOptions(OptionsResolverInterface $resolver) {
 		$resolver->setDefaults(array(
 				'data_class' => 'TheScienceTour\ProjectBundle\Document\ProjectTranslation',
-				'data' => ['fr', 'en'],
 				'empty_value' => '-- Translate to... --'
 		));
 	}
