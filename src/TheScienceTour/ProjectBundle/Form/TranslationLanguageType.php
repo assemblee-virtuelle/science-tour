@@ -12,8 +12,8 @@ class TranslationLanguageType extends AbstractType {
 		// $builder->setAttribute('data', $options['data']);
 
 		$builder->add('language', 'choice', [
-          'choices'           => ['fr', 'en'],
-        //   'preferred_choices' => $builder->getAttribute('no_choice'),
+          'choices'           => ['Français' => 'fr', 'English' => 'en'],
+          'no_choice' 		  => $builder->getAttribute('no_choice'),
           'multiple'          => false,
           'expanded'          => false
         ]);
