@@ -9,11 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TranslationLanguageType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-		$builder->setAttribute('languages_set', $options['languages']);
+		$builder->setAttribute('languages_set', $options['data']);
 
 		$builder->add('language', 'choice', [
           'choices'           => $builder->getAttribute('languages_set'),
-          'preferred_choices' => $builder->getAttribute('no_choice'),
+        //   'preferred_choices' => $builder->getAttribute('no_choice'),
           'multiple'          => false,
           'expanded'          => false
         ]);
@@ -22,7 +22,7 @@ class TranslationLanguageType extends AbstractType {
 	public function setDefaultOptions(OptionsResolverInterface $resolver) {
 		$resolver->setDefaults(array(
 				'data_class' => 'TheScienceTour\ProjectBundle\Document\ProjectTranslation',
-				'languages_set' => [fr, en],
+				'languages_set' => ['fr', 'en'],
 				'no_choice' => '-- Translate to... --'
 		));
 	}
