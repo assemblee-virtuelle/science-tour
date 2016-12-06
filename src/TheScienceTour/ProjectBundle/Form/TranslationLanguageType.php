@@ -12,10 +12,10 @@ class TranslationLanguageType extends AbstractType {
 		// $builder->setAttribute('data', $options['data']);
 
 		$builder->add('language', 'choice', [
-          'choices'           => ['Français' => 'fr', 'English' => 'en'],
-        //   'empty_value' 		  => $builder->getAttribute('no_choice'),
-          'multiple'          => false,
-          'expanded'          => false
+          'choices'      => ['fr' => 'Français', 'en' => 'English'],
+          'empty_value'  => $builder->getAttribute('empty_value'),
+          'multiple'     => false,
+          'expanded'     => false
         ]);
 	}
 
