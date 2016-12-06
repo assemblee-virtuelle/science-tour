@@ -263,25 +263,25 @@
         <div class="tab-container">
             <div class="tab-container-inner">
                 <div class="message">
-                    {{ message }}
-                </div>
-                {% if isErasmus() or true %}
-                <div class="available-translations">
-                    {% if project.translations|length > 0 %}
-                    <span>{% trans %}Translations are available in{% endtrans %} :</span>
-                        {% for tr in project.translations %}
-                        <img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" alt="Drapeau de la langue {{ tr.language }}" />
-                        {% endfor %}
+                    <p class="form-warning">{{ message }}</p>
+                    {% if isErasmus() or true %}
+                    <p class="available-translations">
+                        {% if project.translations|length > 0 %}
+                        <span>{% trans %}Translations are available in{% endtrans %} :</span>
+                            {% for tr in project.translations %}
+                            <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" alt="Drapeau de la langue {{ tr.language }}" />
+                            {% endfor %}
+                        {% endif %}
+                    </p>
+                    {% endif %}
+                    {% if isEditForm %}
+                    <div class="translate-to-tab">
+                    {# form_label(translation_form.language, "Project language") #}
+                    {# form_errors(translation_form.language) #}
+                    {{ form_widget(translation_form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                    </div>
                     {% endif %}
                 </div>
-                {% endif %}
-                {% if isEditForm %}
-                    <div class="translate-to-tab">
-                        {# form_label(translation_form.language, "Project language") #}
-                        {# form_errors(translation_form.language) #}
-                        {{ form_widget(translation_form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
-                    </div>
-                {% endif %}
                 <div>
                     {{ form_label(form.title, "Project title", { 'label_attr': {'class': 'red-asterisk'} }) }}
                     {{ form_errors(form.title) }}
