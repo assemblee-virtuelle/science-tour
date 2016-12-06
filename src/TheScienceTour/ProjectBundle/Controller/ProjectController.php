@@ -16,6 +16,7 @@ use TheScienceTour\ProjectBundle\Form\SkillType;
 use TheScienceTour\MessageBundle\Document\Chat;
 use TheScienceTour\MessageBundle\Document\Message;
 use TheScienceTour\MainBundle\Model\GeoNear;
+use TheScienceTour\ProjectBundle\Document\ProjectTranslation;
 use TheScienceTour\ProjectBundle\Form\TranslationLanguageType;
 
 class ProjectController extends Controller {
