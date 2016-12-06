@@ -2,6 +2,12 @@
 
 {% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}">
+{% endblock %}
+
 {% block scripts %}
     <script>
         function show(id) {
@@ -261,7 +267,6 @@
                 </div>
                 {% if isErasmus() or true %}
                 <div class="available-translations">
-                    {{ project.translations|length }}
                     {% if project.translations|length > 0 %}
                     <span>{% trans %}Translations are available in{% endtrans %} :</span>
                         {% for tr in project.translations %}
