@@ -5,6 +5,9 @@ namespace TheScienceTour\ProjectBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Ivory\GoogleMap\Places\AutocompleteType;
+
 use TheScienceTour\ProjectBundle\Document\Project;
 use TheScienceTour\ProjectBundle\Document\News;
 use TheScienceTour\ProjectBundle\Document\Help;
@@ -12,9 +15,8 @@ use TheScienceTour\ProjectBundle\Form\ResourceType;
 use TheScienceTour\ProjectBundle\Form\SkillType;
 use TheScienceTour\MessageBundle\Document\Chat;
 use TheScienceTour\MessageBundle\Document\Message;
-use Ivory\GoogleMap\Places\AutocompleteType;
 use TheScienceTour\MainBundle\Model\GeoNear;
-
+use TheScienceTour/ProjectBundle/Form/TranslationLanguageType;
 
 class ProjectController extends Controller {
 
