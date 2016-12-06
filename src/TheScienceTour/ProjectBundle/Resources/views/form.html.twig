@@ -264,7 +264,7 @@
             <div class="tab-container-inner">
                 <div class="message">
                     <p class="form-warning">{{ message }}</p>
-                    {% if isErasmus() or true %}
+                    {% if isErasmus() %}
                     <p class="available-translations">
                         {% if project.translations|length > 0 %}
                         <span>{% trans %}Translations are available in{% endtrans %} :</span>
@@ -311,12 +311,14 @@
                         {{ form_errors(form.durationUnit) }}
                         {{ form_widget(form.durationUnit) }}
                     </div>
+                    {% if not isErasmus() %}
                     <div class="price_form">
                         {{ form_label(form.price, "Estimated price") }}
                         {{ form_errors(form.price) }}
                         {{ form_widget(form.price, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                         €
                     </div>
+                    {% endif %}
                 </div>
                 <div class="place_form">
                     {{ form_label(form.place, "Place", { 'label_attr': {'class': 'orange-asterisk'} }) }}

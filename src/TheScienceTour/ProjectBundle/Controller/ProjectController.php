@@ -363,10 +363,6 @@ class ProjectController extends Controller {
           'month' => $this->get('translator')->trans('Months')
         )
       ))
-      ->add('price', 'integer', array(
-        'attr'     => array('min' => 0),
-        'required' => FALSE
-      ))
       ->add('startedAt', 'date', array(
         'empty_value' => '',
         'required'    => FALSE
@@ -397,6 +393,10 @@ class ProjectController extends Controller {
           'allow_add'    => TRUE,
           'allow_delete' => TRUE,
           'by_reference' => FALSE,
+        ))
+        ->add('price', 'integer', array(
+            'attr'     => array('min' => 0),
+            'required' => FALSE
         ));
     }
 
