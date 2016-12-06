@@ -265,7 +265,7 @@
                     {% if project.translations|length > 0 %}
                     <span>{% trans %}Translations are available in{% endtrans %} :</span>
                         {% for tr in project.translations %}
-                        <img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ language }}" alt="Drapeau de la langue {{ tr.language }}" />
+                        <img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" alt="Drapeau de la langue {{ tr.language }}" />
                         {% endfor %}
                     {% endif %}
                 </div>
