@@ -259,7 +259,7 @@
                 <div class="message">
                     {{ message }}
                 </div>
-                {% if isErasmus() %}
+                {% if isErasmus() or true %}
                 <div class="available-translations">
                     {{ project.translations|length }}
                     {% if project.translations|length > 0 %}
