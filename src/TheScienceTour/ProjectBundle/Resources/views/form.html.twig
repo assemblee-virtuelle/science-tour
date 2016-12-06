@@ -269,7 +269,9 @@
                         {% if project.translations|length > 0 %}
                         <span>{% trans %}Translations are available in{% endtrans %} :</span>
                             {% for tr in project.translations %}
-                            <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" alt="Drapeau de la langue {{ tr.language }}" />
+                            <a href="{{ path('tst_project_edit_translation', {'_locale': 'en', 'id': tr.id}) }}">
+                                <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" alt="Drapeau de la langue {{ tr.language }}" />
+                            </a>
                             {% endfor %}
                         {% endif %}
                     </p>

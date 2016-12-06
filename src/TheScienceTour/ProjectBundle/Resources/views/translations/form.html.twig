@@ -89,13 +89,13 @@
                 <div class="message">
                     <span>{{ message }}</span><img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ language }}" />
                 </div>
-                {% if isEditForm %}
+                {#% if isEditForm %}
                     <div class="translate-to-tab">
                         {# form_label(form.language, "Project language") #}
                         {# form_errors(form.language) #}
                         {{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                     </div>
-                {% endif %}
+                {% endif %#}
                 <div>
                     {{ form_label(form.title, "Project title", { 'label_attr': {'class': 'red-asterisk'} }) }}
                     {{ form_errors(form.title) }}
