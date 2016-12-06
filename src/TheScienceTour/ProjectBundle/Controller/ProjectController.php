@@ -552,7 +552,7 @@ class ProjectController extends Controller {
   public function editProjectAction($id) {
     $user = $this->getUser();
     if (!$user) {
-    //   throw new AccessDeniedException();
+      throw new AccessDeniedException();
     }
     // Get erasmus site status.
     $session   = $this->get('session');
@@ -568,7 +568,7 @@ class ProjectController extends Controller {
     if ($user != $project->getCreator() && !($this->get('security.context')
         ->isGranted('ROLE_PROJECT_MOD'))
     ) {
-    //   throw new AccessDeniedException();
+      throw new AccessDeniedException();
     }
 
     $originalChallenge = $project->getChallenge();
