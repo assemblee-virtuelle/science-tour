@@ -13,7 +13,15 @@
 			<p>
 				{%  set durationUnit = project.durationUnit ? project.durationUnit : 'month' %}
 				<strong>{{ project.duration }}</strong> {{ durationUnit|transchoice(project.duration) }}
-				<span><i class="icon-beaker"></i>{#{{ project.price }} €#}{{ project.totalResNb }}</span>
+				<span>
+					{% if project.translations|length > 0 %}
+						{% for tr in project.translations %}
+						<a href="{{ path('tst_project', {'_locale': tr.language , 'id': project.id }) }}">
+							<img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-16 flag-{{ tr.language }}" />
+						</a>
+						{% endfor %}
+					{% endif %}
+					<i class="icon-beaker"></i>{#{{ project.price }} €#}{{ project.totalResNb }}</span>
 			</p>
 		</a>
 		{% if project.challenge %}
