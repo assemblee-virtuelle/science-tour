@@ -23,7 +23,7 @@ class TranslationLanguageType extends AbstractType {
 		$resolver->setDefaults(array(
 				'data_class' => 'TheScienceTour\ProjectBundle\Document\ProjectTranslation',
 				'languages_set' => [fr, en],
-				'no_choice' => '-- Translate to... --';
+				'no_choice' => '-- Translate to... --'
 		));
 	}
 
