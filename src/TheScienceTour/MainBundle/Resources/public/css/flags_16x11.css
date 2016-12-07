@@ -6,7 +6,7 @@
     display: inline-block;
     width: 16px;
     height: 11px;
-    background: url('bundles/thesciencetourmain/img/flags_16x11.png') no-repeat;
+    background: url('/bundles/thesciencetourmain/img/flags_16x11.png') no-repeat;
 }
 
 
