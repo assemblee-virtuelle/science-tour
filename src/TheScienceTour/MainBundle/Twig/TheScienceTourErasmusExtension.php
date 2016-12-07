@@ -22,6 +22,6 @@ class TheScienceTourErasmusExtension extends \Twig_Extension {
   }
 
   public function isErasmusFunction() {
-    return $this->session->get('isErasmus', FALSE);
+    return $this->session->get('isErasmus', false);
   }
 }
