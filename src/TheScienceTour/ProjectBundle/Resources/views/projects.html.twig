@@ -1,5 +1,11 @@
 {% extends "TheScienceTourMainBundle::main.html.twig" %}
 
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}">
+{% endblock %}
+
 {% block scripts %}
     <script>
         function handlePaginatorNavLinks() {

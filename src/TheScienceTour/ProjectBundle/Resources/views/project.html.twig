@@ -6,6 +6,12 @@
 
 {% block title %}{{ parent() }} - {{ project.title }}{% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}">
+{% endblock %}
+
 {% block scripts %}
     <script>
         function show(id) {
@@ -170,7 +176,7 @@
     </div>
 
     <div class="banner-overlay overlay-with-map">
-        {% if not project.isErasmus %}
+        {% if not isErasmus() %}
             <div class="banner-overlay-box">
                 {{ render(controller('TheScienceTourMapBundle:Map:asideMap',
                 { 'documentList': project, 'sizes': { 'width': '210px', 'height': '157px' } })) }}

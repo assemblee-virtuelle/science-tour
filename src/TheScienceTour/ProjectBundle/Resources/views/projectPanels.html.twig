@@ -3,20 +3,24 @@
 	<li class="{% if loop.index is not divisibleby(nbByRow) %}mgr{{ mgr }}p{% endif %}{% if app.user and app.user.numberOf("project", project.id) > 0 %} has_notif{% endif %}">
 		<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
 			{% thumbnail project.picture, 'thumbnail'  %}
-			<div class="progress_bar">
-				<div style="width: 35%;">
-				</div>
+		</a>
+		<div class="progress_bar">
+			<div style="width: 35%;">
 			</div>
-			<h2>
-			{% if app.user and app.user.numberOf("project", project.id) > 0 %}<div class="notif bgRed">{{ app.user.numberOf("project", project.id)}}</div>{% endif %}
-			{{ project.title }}</h2>
+		</div>
+		<h2>
+		{% if app.user and app.user.numberOf("project", project.id) > 0 %}<div class="notif bgRed">{{ app.user.numberOf("project", project.id)}}</div>{% endif %}
+			<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
+			{{ project.title }}
+			</a>
+		</h2>
 			<p>
 				{%  set durationUnit = project.durationUnit ? project.durationUnit : 'month' %}
 				<strong>{{ project.duration }}</strong> {{ durationUnit|transchoice(project.duration) }}
 				<span>
 					{% if project.translations|length > 0 %}
 						{% for tr in project.translations %}
-						<a href="{{ path('tst_project', {'_locale': tr.language , 'id': project.id }) }}">
+						<a href="{{ path('tst_project', {'_locale': tr.language , 'id': project.id }) }}" class="translation_thumbnail">
 							<img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-16 flag-{{ tr.language }}" />
 						</a>
 						{% endfor %}

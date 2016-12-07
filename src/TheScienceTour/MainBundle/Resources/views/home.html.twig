@@ -42,7 +42,7 @@
 	{% else %}
 	<img src="{{ asset('img/test_homebanner.png') }}" alt="" />
 	{% endif %}
-{% endblock %}	
+{% endblock %}
 
 {% block content %}
 <section>
@@ -82,29 +82,29 @@
 {% block scripts %}
 	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-	
+
 	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
-	
+
 	<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
-	
+
 	<!--
 	  jCarousel library
 	-->
 	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.min.js') }}"></script>
-	
+
 	<script type="text/javascript">
-	
+
 	function mycarousel_initCallback(carousel, state)
 	{
 	    // Disable autoscrolling if the user clicks the prev or next button.
 	    carousel.buttonNext.bind('click', function() {
 	        carousel.startAuto(0);
 	    });
-	
+
 	    carousel.buttonPrev.bind('click', function() {
 	        carousel.startAuto(0);
 	    });
-	
+
 	    // Pause autoscrolling if the user moves with the cursor over the clip.
 	    carousel.clip.hover(function() {
 	        carousel.stopAuto();
@@ -121,7 +121,7 @@
 			});
 		}
 	}
-	
+
 	$(document).ready(function() {
 	    jQuery('#home-banner-carousel').jcarousel({
 		    scroll: 1,
@@ -133,6 +133,6 @@
 			}
 		});
 	});
-	
+
 	</script>
 {% endblock %}
