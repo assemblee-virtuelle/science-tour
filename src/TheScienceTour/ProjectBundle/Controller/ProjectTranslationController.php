@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use TheScienceTour\ProjectBundle\Document\Project;
+use TheScienceTour\UserBundle\Document\User;
 use TheScienceTour\ProjectBundle\Document\News;
 use TheScienceTour\ProjectBundle\Document\Help;
 use TheScienceTour\ProjectBundle\Form\ResourceType;
@@ -16,7 +17,6 @@ use TheScienceTour\MessageBundle\Document\Message;
 use Ivory\GoogleMap\Places\AutocompleteType;
 use TheScienceTour\MainBundle\Model\GeoNear;
 use TheScienceTour\ProjectBundle\Document\ProjectTranslation;
-use TheScienceTour\UserBundle\Document\User;
 
 
 class ProjectTranslationController extends Controller {
@@ -456,17 +456,19 @@ class ProjectTranslationController extends Controller {
             ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
             ->find($id);
         }
+
         // Build form.
         $form = $this->_formProjectTranslation($translation)->getForm();
         $form->bind($request);
 
         if ($form->isValid()) {
-            if (!$translation->getOriginal() instanceof User) {
+            if (!($translation->getOriginal() instanceof Project) || (is_null($id))) {
                 $project = $this->get('doctrine_mongodb')
                 ->getRepository('TheScienceTourProjectBundle:Project')
                 ->find($translation->getOriginal());
                 $translation->setOriginal($project);
             }
+
 
             // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setUpdatedAt(new \DateTime);
