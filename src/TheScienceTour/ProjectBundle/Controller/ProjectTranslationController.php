@@ -16,6 +16,7 @@ use TheScienceTour\MessageBundle\Document\Message;
 use Ivory\GoogleMap\Places\AutocompleteType;
 use TheScienceTour\MainBundle\Model\GeoNear;
 use TheScienceTour\ProjectBundle\Document\ProjectTranslation;
+use TheScienceTour\UserBundle\Document\User;
 
 
 class ProjectTranslationController extends Controller {
@@ -213,7 +214,14 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  public function projectAction($id, $tab) {
+  /**
+   * [projectAction Affichage de la version traduite d'un projet YCFC]
+   * @param  [String] $id       [identifiant du contenu original]
+   * @param  [String] $tab      [onglet à afficher par défaut]
+   * @param  [String] $language [langue dans laquelle afficher le projet]
+   * @return [Response]         [HTML à afficher]
+   */
+  public function projectAction($id, $tab, $language) {
     $user = $this->getUser();
 
     $project = $this->get('doctrine_mongodb')
@@ -286,8 +294,24 @@ class ProjectTranslationController extends Controller {
     }
     ksort($allContribArray);
 
-    return $this->render('TheScienceTourProjectBundle::project.html.twig', array(
+    // TODO : requête MongoDB ne retourne rien :(
+    // $translations = $this->get('doctrine_mongodb')
+    //   ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
+    //   ->findBy(['original' => $id, 'language' => $language]);
+
+    foreach ($project->getTranslations() as $tr) {
+        if ($tr->getLanguage() == $language) {
+            $translation = $tr;
+            break;
+        }
+    }
+    if (!isset($translation)) {
+        $translation = $project;
+    }
+
+    return $this->render('TheScienceTourProjectBundle:translations:project.html.twig', array(
       'project'         => $project,
+      'translation'     => $translation,
       'newsList'        => $newsList,
       'isEditable'      => $isEditable,
       'tab'             => $tab,
@@ -419,13 +443,14 @@ class ProjectTranslationController extends Controller {
     if ($request->getMethod() == 'POST') {
         $user = $this->getUser();
         if (!$user) {
-            // throw new AccessDeniedException();
+            throw new AccessDeniedException();
         }
         // Get erasmus site status.
         $session   = $this->get('session');
         $isErasmus = $session->get('isErasmus', false);
         if (is_null($id)) {
             $translation = new ProjectTranslation();
+            $translation->setTranslator($user);
         } else {
             $translation = $this->get('doctrine_mongodb')
             ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
@@ -436,14 +461,15 @@ class ProjectTranslationController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $project = $this->get('doctrine_mongodb')
-            ->getRepository('TheScienceTourProjectBundle:Project')
-            ->find($translation->getOriginal());
+            if (!$translation->getOriginal() instanceof User) {
+                $project = $this->get('doctrine_mongodb')
+                ->getRepository('TheScienceTourProjectBundle:Project')
+                ->find($translation->getOriginal());
+                $translation->setOriginal($project);
+            }
 
             // TODO: Affectation de la paternité de la traduction (validation)
-            $translation->setTranslator($user);
             $translation->setUpdatedAt(new \DateTime);
-            $translation->setOriginal($project);
 
             if ($form->get('draft')->isClicked()) {
                 $translation->setStatus(0);
