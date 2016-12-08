@@ -70,8 +70,12 @@
 {% endblock %}
 
 {% block content %}
-
-    <form class="project_form" method="post" {{ form_enctype(form) }}>
+    {% if isAddForm %}
+    {% set persist_target = {} %}
+    {% else %}
+    {% set persist_target = {'id': translation.id } %}
+    {% endif %}
+    <form action="{{ path('tst_project_persist_translation', persist_target) }}" class="project_form" method="post" {{ form_enctype(form) }}>
 
         {{ form_errors(form) }}
 
@@ -94,7 +98,7 @@
                 <div class="translate-to-tab">
                     {# form_label(form.language, "Project language") #}
                     {# form_errors(form.language) #}
-                    {{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                    {#{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }#}
                 </div>
             {% endif %}
         </ul>
@@ -110,13 +114,19 @@
                     {{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
                 </div>
                 <div>
-                // TODO: Afficher les valeurs de l'original
+                    <div class="start_data">
+                        {% trans %}Starting date{% endtrans %} : {{ translation.original.getStartedAt()|date('d/m/Y') }}
+                    </div>
+                    <div class="duration_data">
+                        {% trans %}Duration{% endtrans %} : {{ translation.original.getDuration() ~ " " ~ translation.original.getDurationUnit() }}
+                    </div>
                 </div>
-                <div class="place_form">
-                // TODO: Afficher les valeurs de l'original
+                <div class="place_data">
+                    {% trans %}Place{% endtrans %} : {{ translation.original.getPlace() }}
                 </div>
-                <div>
-                // TODO: Afficher les valeurs de l'original
+                <div class="picture_data">
+                    <p>{% trans %}Front page image{% endtrans %} :</p>
+                    <img src="{{ translation.original.getPicture() }}" />
                 </div>
             </div>
         </div>
