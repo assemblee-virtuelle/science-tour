@@ -37,7 +37,6 @@
             var translate_url = "{{ path('tst_project_add_translation', {'_locale': 'en', 'original': project.id, language: 'none'}) }}";
 
             $('#project_translation_language_language').change(function () {
-                alert(translate_url);
                 window.location.href = translate_url.replace('none', $(this).val());
             });
 
