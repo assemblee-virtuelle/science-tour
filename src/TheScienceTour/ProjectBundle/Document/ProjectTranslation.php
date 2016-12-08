@@ -91,11 +91,11 @@ class ProjectTranslation /* extends BaseDocument */ {
   protected $language;
 
   public function __construct() {
-    $this->frontPage = FALSE;
-    $this->tools     = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->materials = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->premises  = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->skills    = new \Doctrine\Common\Collections\ArrayCollection();
+    // $this->frontPage = false;
+    // $this->tools     = new \Doctrine\Common\Collections\ArrayCollection();
+    // $this->materials = new \Doctrine\Common\Collections\ArrayCollection();
+    // $this->premises  = new \Doctrine\Common\Collections\ArrayCollection();
+    // $this->skills    = new \Doctrine\Common\Collections\ArrayCollection();
   }
 
 
@@ -140,7 +140,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   }
 
   public function setTranslator($translator) {
-    $this->creator = $translator;
+    $this->$translator = $translator;
   }
 
   public function setStatus($status) {
