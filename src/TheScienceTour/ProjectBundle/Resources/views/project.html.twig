@@ -294,7 +294,7 @@
                 <div class="available-translations">
                 {% trans %}Translations are available :{% endtrans %}
                 {% for tr in project.translations %}
-                    <a href="{{ path('tst_project_translation', {'_locale': tr.language , 'language': tr.language 'id': project.id }) }}" class="translation-thumbnail">
+                    <a href="{{ path('tst_project_translation', {'_locale': app.request.locale , 'language': tr.language, 'id': project.id }) }}" class="translation-thumbnail">
                         <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" />
                     </a>
                 {% endfor %}
