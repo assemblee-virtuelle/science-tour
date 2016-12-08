@@ -205,7 +205,7 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% if project.challenge %}
+                {% if (not isErasmus()) and (project.challenge|length > 0) %}
                     <a href="{{ path('tst_challenge', {'id' : project.challenge.id}) }}"
                        class="challenge-project-button bgRed"
                        alt="{% trans %}Show the challenge{% endtrans %}">{% trans %}
@@ -233,9 +233,11 @@
     {% endif %}
 
     <ul id="tabs" class="tabs">
-        <li{% if tab == "about" %} class="active"{% endif %}><a
-                    href="javascript:show(0);"><h1>{% trans %}The
-                    project{% endtrans %}</h1></a></li>
+        <li{% if tab == "about" %} class="active"{% endif %}>
+            <h1>
+                <a href="javascript:show(0);">{% trans %}The project{% endtrans %}</a>
+            </h1>
+        </li>
         {% if not isErasmus() and not project.isErasmus %}
             {% if app.user and app.user.numberOf("project-resources", project.id) %}
                 <li>
@@ -282,10 +284,20 @@
 
     <div class="tab-container"{% if tab != "about" %} style="display: none;"{% endif %}>
         <div class="tab-container-inner">
-            {% if project.challenge %}
+            {% if (not isErasmus()) and (project.challenge|length > 0) %}
                 <div class="project_challenge">{% trans %}This project
                     contributes to the challenge:{% endtrans %} <a
                             href="{{ path('tst_challenge', {'id' : project.challenge.id}) }}">{{ project.challenge.title }}</a>
+                </div>
+            {% endif %}
+            {% if isErasmus() and (project.translations|length > 0) %}
+                <div class="available-translations">
+                {% trans %}Translations are available :{% endtrans %}
+                {% for tr in project.translations %}
+                    <a href="{{ path('tst_project_translation', {'_locale': tr.language , 'language': tr.language 'id': project.id }) }}" class="translation-thumbnail">
+                        <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" />
+                    </a>
+                {% endfor %}
                 </div>
             {% endif %}
             <h1>{% trans %}Goal of the game{% endtrans %}</h1>
