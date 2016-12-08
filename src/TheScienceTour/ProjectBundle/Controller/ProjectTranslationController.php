@@ -321,40 +321,21 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  private function _formProjectTranslation($translation, $edit = FALSE) {
+  private function _formProjectTranslation($translation) {
     // Get erasmus site status.
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', false);
 
     $form = $this->createFormBuilder($translation, array('cascade_validation' => true))
                  ->add('title', 'text')
-                 ->add('original', 'hidden')
-                 ->add('language', 'hidden')
                  ->add('goal', 'purified_textarea')
                  ->add('description', 'purified_textarea');
 
-
-    if ($edit) {
-      $lang         = $this->container->getParameter('erasmusLanguages');
-      $lang['none'] = '-- ' . $this->get('translator')
-          ->trans('Translate to...') . ' --';
-
-      $form->add('language', 'choice', [
-        'choices'           => $lang,
-        'preferred_choices' => ['none'],
-        'multiple'          => FALSE,
-        'expanded'          => FALSE
-      ]);
-
+    if (!($translation->getOriginal() instanceof Project)) {
+        $form->add('original', 'hidden')
+             ->add('language', 'hidden');
     }
-
-    // $form->add('picture', 'sonata_media_type', array(
-    //   'provider' => 'sonata.media.provider.image',
-    //   'context'  => 'project',
-    //   'required' => $edit && $project->getPicture()
-    // ));
-
-    if (!$edit || $translation->getStatus() == 0) {
+    if ($translation->getStatus() == 0) {
       $form->add('draft', 'submit', array(
         'attr' => [
             'formnovalidate' => 'formnovalidate',
@@ -396,11 +377,19 @@ class ProjectTranslationController extends Controller {
       ->getRepository('TheScienceTourProjectBundle:Project')
       ->find($original);
 
-    $translated = $this->get('doctrine_mongodb')
-      ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
-      ->findOneBy(['original' => $project->getId(), 'language' => $language]);
+    $translated = null;
+    foreach ($project->getTranslations() as $tr) {
+        if ($tr->getLanguage() === $language) {
+            $translated = $tr;
+            break;
+        }
+    }
 
-    if (empty($translated)) {
+    // $translated = $this->get('doctrine_mongodb')
+    //   ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
+    //   ->findOneBy(['original' => $project->getId(), 'language' => $language]);
+
+    if (is_null($translated)) {
         $translated = new ProjectTranslation();
         $translated->setOriginal($project->getId());
         $translated->setLanguage($language);
@@ -469,25 +458,25 @@ class ProjectTranslationController extends Controller {
                 $translation->setOriginal($project);
             }
 
-
-            // TODO: Affectation de la paternité de la traduction (validation)
             $translation->setUpdatedAt(new \DateTime);
+            if (!$form->has('save')) {
+                if ($form->get('draft')->isClicked()) {
+                    $translation->setStatus(0);
+                }
+                else {
+                    $translation->setStatus(1);
+                    $translation->setPublishedAt(new \Datetime);
+                }
+            }
 
-            if ($form->get('draft')->isClicked()) {
-                $translation->setStatus(0);
-            }
-            else {
-                $translation->setStatus(1);
-                $translation->setPublishedAt(new \Datetime);
-            }
             $dm = $this->get('doctrine_mongodb')->getManager();
             if (is_null($id)) { $dm->persist($translation); }
             $dm->flush();
-            if ($form->get('draft')->isClicked()) {
+            if ($form->has('draft') && $form->get('draft')->isClicked()) {
                 return $this->redirect($this->generateUrl('fos_user_profile_show', array('tab' => "mydrafts")));
             }
 
-            return $this->redirect($this->generateUrl('tst_project', array('id' => $project->getId())));
+            return $this->redirect($this->generateUrl('tst_project', array('id' => $translation->getOriginal()->getId())));
       }
     }
   }
@@ -505,7 +494,7 @@ class ProjectTranslationController extends Controller {
     }
     // Get erasmus site status.
     $session   = $this->get('session');
-    $isErasmus = $session->get('isErasmus', FALSE);
+    $isErasmus = $session->get('isErasmus', false);
 
     $translation = $this->get('doctrine_mongodb')
       ->getRepository('TheScienceTourProjectBundle:ProjectTranslation')
@@ -514,6 +503,7 @@ class ProjectTranslationController extends Controller {
     if (!$translation) {
       throw $this->createNotFoundException('Aucun projet trouvé avec l\'id ' . $id);
     }
+
     if (
         $user != $translation->getTranslator()
         && !($this->get('security.context')->isGranted('ROLE_PROJECT_MOD'))
@@ -521,7 +511,7 @@ class ProjectTranslationController extends Controller {
       throw new AccessDeniedException();
     }
 
-    $form = $this->_formProjectTranslation($translation, $translation->getLanguage())->getForm();
+    $form = $this->_formProjectTranslation($translation)->getForm();
 
     $request = $this->get('request');
 
