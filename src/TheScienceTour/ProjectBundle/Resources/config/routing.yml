@@ -60,7 +60,6 @@ tst_project:
         _locale: en|fr
         tab: about|resources|news|chats
 
-
 tst_project_contribute:
     pattern: /{_locale}/project/{id}/contribute
     defaults: { _controller: "TheScienceTourProjectBundle:Project:contribute", _locale: fr }
@@ -195,3 +194,15 @@ tst_project_persist_translation:
     requirements:
         _locale: en|fr
         original: \w+
+
+tst_project_translation:
+    pattern: /{_locale}/project/{id}/{language}/{tab}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:project"
+        _locale: fr
+        # language: en
+        tab: about
+    requirements:
+        _locale: en|fr
+        language: en|fr
+        tab: about|resources|news|chats
