@@ -182,8 +182,8 @@
 </div>
 
 <footer id="overall-footer" class="overall-footer">
-    {% if not app.session.get('isErasmus') %}
     <div id="overall-footer-container">
+        {% if not app.session.get('isErasmus') %}
         <div class="overall-footer-item">
             <h1>{% trans %}The festival{% endtrans %}</h1>
             <ul>
