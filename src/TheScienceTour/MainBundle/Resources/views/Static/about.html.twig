@@ -20,27 +20,26 @@
 		<div class="about-column">
 			<div class="about-column-inner">
 				<h3><img src="{{ asset('bundles/thesciencetourmain/img/logo-petits-debs-129x110.png') }}" alt="" /><br />
-				L'ASSOCIATION</h3>
-				<p>Créé il y a plus de trente ans, l'association des Petits Débrouillards est aujourd'hui le premier réseau français de culture scientifique et technique. Nous animons, au quotidien, le lien entre les enfants, les jeunes et l'université des sciences, que nous considérons avant tout comme un médium de compréhension de soi et du monde.</p>
+				{% trans %}The association{% endtrans %}</h3>
+				{% include "TheScienceTourMainBundle:Static:aboutAssociation_"~app.request.locale~".html.twig" %}
 			</div>
 		</div>
 		<div class="about-column">
 			<div class="about-column-inner">
 				<h3><img src="{{ asset('bundles/thesciencetourmain/img/erlenmeyer-59x110.png') }}" alt="" /><br />
-				LES PROJETS</h3>
-				<p>La plateforme web permet de rassembler autour de projets de sicence une diversité d'acteurs : des parents aux médiateurs, des chercheurs aux instituteurs, des artisans aux entreprises.<br />
-				Les dynamiques engendrées donnent l'occasion de se rencontrer, d'échanger et de partager une vision du monde.</p>
+				{% trans %}The projects{% endtrans %}</h3>
+				{% include "TheScienceTourMainBundle:Static:aboutProjet_"~app.request.locale~".html.twig" %}
 			</div>
 		</div>
 		<div class="about-column">
 			<div class="about-column-inner">
-				<h3><img src="{{ asset('bundles/thesciencetourmain/img/test-tube-truck-155x102.png') }}" alt="" /><br />LES CAMIONS</h3>
-				<p>Douze laboratoires mobiles sillonnent la France à la recherche des scientifiques de demain et à la rencontre de tous les publics, des villages aux grandes villes.<br />
-				La venues des FabLabs sur roue est un événement festif, ouvert à tous, pour explorer, dialoguer et comprendre le monde qui nous entoure.</p>
+				<h3><img src="{{ asset('bundles/thesciencetourmain/img/test-tube-truck-155x102.png') }}" alt="" />
+					<br />{% trans %}The trucks{% endtrans %}</h3>
+					{% include "TheScienceTourMainBundle:Static:aboutCamions_"~app.request.locale~".html.twig" %}
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="about-line">
 		<h2 class="txtcenter">LES PARTENAIRES</h2>
 		<div class="about-logo-line">
