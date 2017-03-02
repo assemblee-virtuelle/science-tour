@@ -207,6 +207,11 @@ class Project /* extends BaseDocument */ {
   protected $challenge;
 
   /**
+   * @MongoDB\Boolean
+   */
+  protected $isErasmus; // Est-ce un projet Erasmus ?
+
+  /**
    * @MongoDB\ReferenceMany(targetDocument="ProjectTranslation", mappedBy="original")
    */
   protected $translations; // Ensemble des traductions
@@ -714,6 +719,25 @@ class Project /* extends BaseDocument */ {
       $nb += $skill->getNumber();
     }
     return $nb;
+  }
+
+  /**
+   * getIsErasmus Accesseur : Le projet est-il lié à Erasmus (YCFC) ?
+   * @return boolean
+   */
+  public function getIsErasmus() {
+      return $this->isErasmus;
+  }
+
+  /**
+   * setIsErasmus Mutateur pour indiquer si Le projet est lié à Erasmus (YCFC)
+   *
+   * @param boolean $isErasmus [description]
+   * @return Project
+   */
+  public function setIsErasmus($isErasmus) {
+      $this->isErasmus = $isErasmus;
+      return $this;
   }
 
   /**
