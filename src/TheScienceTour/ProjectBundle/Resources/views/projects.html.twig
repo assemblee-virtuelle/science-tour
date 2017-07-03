@@ -63,13 +63,11 @@
     <div class="annotate_idea">
         <div class="bulb"><i class="icon-lightbulb"></i></div>
         <p>
-            <b>{% trans %}You just want to annotate a project idea without
-                publishing?{% endtrans %}</b><br/>
-            {% trans %}Start filling the form and save is as a
-            draft.{% endtrans %}
+            <b>{% trans %}You just want to annotate a project idea without publishing?{% endtrans %}</b><br/>
+            {% trans %}Start filling the form and save is as a draft.{% endtrans %}
         </p>
-        <div class="draft"><a href="{{ path('tst_project_add') }}"
-                              alt="">{% trans %}Create a draft{% endtrans %}</a>
+        <div class="draft">
+            <a href="{{ path('tst_project_add') }}" alt="">{% trans %}Create a draft{% endtrans %}</a>
         </div>
     </div>
 {% endblock %}

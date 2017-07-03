@@ -3,6 +3,7 @@
 {% block title %}{{ parent() }} - {% trans %}Home{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
+	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
 	{% stylesheets

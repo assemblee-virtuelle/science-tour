@@ -40,12 +40,15 @@ class MainController extends Controller {
       $session->getFlashBag()->add('notice', $e->getMessage());
     }
 
-    return $this->render('TheScienceTourMainBundle::home.html.twig', array(
+    $response = $this->render('TheScienceTourMainBundle::home.html.twig', array(
       'projectList'      => $projectList,
       'aroundMeProjects' => $aroundMeProjects,
       'trucksList'       => $trucksList,
       'isErasmus'        => $isErasmus
     ));
+    $response->headers->set('Accept-Language', 'en-US, fr-FR');
+
+    return $response;
   }
 
   public function searchAction($request) {

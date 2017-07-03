@@ -32,7 +32,7 @@ class MapController extends Controller {
       return new Response('Les cartes sont désactivées en environnement de dev.');
     }
 
-    $map = $this->_addMarkers($documentList, $centerCoordinates, TRUE);
+    $map = $this->_addMarkers($documentList, $centerCoordinates, true);
 
     return $this->render('TheScienceTourMapBundle::map.html.twig', array(
       'map'        => $map,
@@ -42,24 +42,27 @@ class MapController extends Controller {
     ));
   }
 
-  public function asideMapAction($documentList, $zoomMax = 5,
+  public function asideMapAction($documentList,
+                                 $zoomMax = 5,
                                  $sizes = array(
                                    'width'  => '204px',
                                    'height' => '153px'
-                                 ), $htmlContainerId = 'aside-map-canvas', $centerCoordinates = array()) {
+                                 ),
+                                 $htmlContainerId = 'aside-map-canvas',
+                                 $centerCoordinates = array()) {
 
     if (!($documentList instanceof \Countable)) {
       $documentList = new ArrayCollection(array($documentList));
     }
 
-    $map = $this->_addMarkers($documentList, $centerCoordinates, FALSE);
+    $map = $this->_addMarkers($documentList, $centerCoordinates, false);
 
     $map->setHtmlContainerId($htmlContainerId);
 
     $map->setMapOptions(array(
       'mapTypeId'              => 'roadmap',
-      'disableDefaultUI'       => TRUE,
-      'disableDoubleClickZoom' => TRUE,
+      'disableDefaultUI'       => true,
+      'disableDoubleClickZoom' => true,
     ));
 
     $map->setStylesheetOptions($sizes);

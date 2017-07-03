@@ -2,7 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8"/>
-    <title>{% block title %}Le Science Tour{% endblock %}</title>
+    <title>
+        {% block title %}
+            {% if isErasmus() %}{% trans %}Youth Committed For Climate{% endtrans %}
+            {% else %}{% trans %}Le Science Tour{% endtrans %}
+            {% endif %}
+        {% endblock %}
+    </title>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
           rel="stylesheet">
@@ -14,10 +20,34 @@
     output='css/compiled/main.css' %}
     <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
+    {% stylesheets filter='cssrewrite'
+    'bundles/thesciencetourmain/css/all.less'
+    output='css/compiled/flags.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
 
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}" />
+    {% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <!-- Déclaration inline temporaire en attendant l'installation de LESS -->
+    <style media="screen">
+        #main #content .project_items li > a {
+            display: inline;
+        }
+        #main #content .project_items li p {
+            display: flex;
+            justify-content: flex-end;
+        }
+        #main #content .project_items li p > * {
+            display: inline-block;
+            margin: 0 4px;
+            width: auto;
+        }
+    </style>
 </head>
 <body id="{% block bodyid %}default-body-id{% endblock %}"
       class=" {% if isErasmus() %}is-erasmus{% endif %}">
@@ -39,6 +69,7 @@
                         {# We need to reuse whole current page parameters #}
                         {# We adjust only _locale on it. #}
                         {% set finalParams = app.request.attributes.get('_route_params')|merge({_locale: key}) %}
+                        {% set chosenLanguage = app.session.get('chosenLanguage') %}
                         <option {% if key == app.request.getLocale() %}selected="selected"{% endif %}
                                 value="{{ path(app.request.attributes.get('_route'), finalParams) }}">{{ lang }}
                         </option>
@@ -95,22 +126,26 @@
                     <h1>1000 défis<br />pour la vie</h1>
                     <a href="{{ path('tst_home') }}"><img id="logost" src="{{ asset('img/st.png') }}" alt="" /></a>
                     #}
-                    <a href="{{ path('tst_home') }}"><img id="logobadge"
-                                                          src="{{ asset('img/sciencetour-red.png') }}"
-                                                          alt="Logo du Science Tour"/></a>
+                    <a href="{{ path('tst_home') }}">
+                        <img id="logobadge"
+                              src="{{ asset('img/sciencetour-red.png') }}"
+                              alt="Logo du Science Tour"/>
+                    </a>
                     <h1>LES DÉFIS DU<br/>SCIENCE TOUR</h1>
                     <a href="http://www.lespetitsdebrouillards.org"
                        target="_blank"><img id="logopdeb"
                                             src="{{ asset('img/pdeb.png') }}"
                                             alt=""/></a>
                 {% else %}
-                    <a href="{{ path('tst_home') }}"><img id="logobadge"
-                                                          src="{% if app.session.get('isErasmus') %}
-                                                          {{ asset('img/erasmus.png') }}
-                                                          {% else %}
-                                                          {{ asset('img/sciencetour.png') }}
-                                                          {% endif %}"
-                                                          alt="Logo de The Science Tour"/></a>
+                    <a href="{{ path('tst_home') }}">
+                        <img id="logobadge"
+                              src="{% if app.session.get('isErasmus') %}
+                              {{ asset('img/erasmus.png') }}
+                              {% else %}
+                              {{ asset('img/sciencetour.png') }}
+                              {% endif %}"
+                              alt="Logo de The Science Tour"/>
+                    </a>
                     <h1>
                         {% if not app.session.get('isErasmus') %}
                             AUX SCIENCES<br/>CITOYENS !
@@ -119,28 +154,34 @@
                             <br/>{% trans %}for Climate{% endtrans %}
                         {% endif %}
                     </h1>
-                    <a href="http://www.lespetitsdebrouillards.org"
-                       target="_blank"><img id="logopdeb"
-                                            src="{% if app.session.get('isErasmus') %}
-                                                          {{ asset('img/pdeb-erasmus.png') }}
-                                                          {% else %}
-                                                          {{ asset('img/pdeb.png') }}
-                                                          {% endif %}"
-                                            alt=""/></a>
+                    <a href="http://www.lespetitsdebrouillards.org" target="_blank">
+                       <img id="logopdeb"
+                            src="{% if app.session.get('isErasmus') %}
+                                          {{ asset('img/pdeb-erasmus.png') }}
+                                          {% else %}
+                                          {{ asset('img/pdeb.png') }}
+                                          {% endif %}"
+                            alt=""/>
+                    </a>
                 {% endif %}
             </div>
             <nav>
                 <ul>
+                    {% if app.request.locale == 'fr' %}
+                    {% set lng = app.request.locale %}
+                    {% else %}
+                    {% set lng = '' %}
+                    {% endif %}
                     <li {% block nav_home %}{% endblock %}><a
                                 href="{{ path('tst_home') }}">{% trans %}
-                            Home{% endtrans %}</a></li>
+                            Home{% endtrans %}</a> {# app.session.get('chosenLanguage') #}</li>
                     <li{% block nav_about %}{% endblock %}><a
                                 href="{{ path('tst_about') }}">{% trans %}
                             About{% endtrans %}</a></li>
                     {# Not available for Erasmus #}
                     {% if not app.session.get('isErasmus') %}
                         <li{% block nav_trucks %}{% endblock %}><a
-                                    href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}
+                                    href="{{ path('tst_agenda', {'filter': 'trucks'}) }}">{% trans %}
                                 Trucks{% endtrans %}</a></li>
                     {% endif %}
                     <li {% block nav_projects %}{% endblock %}><a
@@ -233,9 +274,9 @@
             {% set ln_mail = "mailto:?subject=Le Science Tour&body="~url('tst_home') %}
         {% else %}
             {% set ln_facebook = "https://www.facebook.com/sharer.php?u="~url('tst_home') %}
-            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Le Science Tour&hashtags=lesciencetour" %}
+            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Youth Committed For Climate&hashtags=YouthCommittedForClimate" %}
             {% set ln_googleplus = "https://plus.google.com/share?u="~url('tst_home') %}
-            {% set ln_mail = "mailto:?subject=Le Science Tour&body="~url('tst_home') %}
+            {% set ln_mail = "mailto:?subject=Youth Committed For Climate&body="~url('tst_home') %}
         {% endif %}
         <div class="overall-footer-item">
             <h1>{% trans %}Share{% endtrans %}</h1>
@@ -276,6 +317,7 @@
                 </li>
             </ul>
             <div id="copyright">
+                {% if not isErasmus() %}
                 <a class="pdeb-logo" href="http://lespetitsdebrouillards.org"
                    target="_blank"></a>
                 {{ tst_version }}
@@ -284,6 +326,7 @@
                    target="_blank">CC-BY-SA</a>
                 <br/>
                 {% trans %}Some rights reserved.{% endtrans %}
+                {% endif %}
             </div>
         </div>
         <div class="overall-footer-credits">

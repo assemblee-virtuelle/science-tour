@@ -298,7 +298,7 @@ class ProjectController extends Controller {
     ));
   }
 
-  private function _formProjectAction($project, $edit = FALSE) {
+  private function _formProjectAction($project, $edit = false) {
     // Get erasmus site status.
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', false);
@@ -322,7 +322,7 @@ class ProjectController extends Controller {
     $form->add('place', 'places_autocomplete', array(
       'prefix'   => 'js_tst_place_',
       'types'    => array(AutocompleteType::CITIES),
-      'async'    => FALSE,
+      'async'    => false,
       'language' => 'fr',
       'attr'     => array(
         'placeholder' => '',
@@ -343,7 +343,7 @@ class ProjectController extends Controller {
         'empty_value' => 'Aucun',
         'empty_data'  => NULL,
         'choices'     => $challengeList,
-        'required'    => FALSE
+        'required'    => false
       ));
     }
 
@@ -597,7 +597,7 @@ class ProjectController extends Controller {
       $originalSkills[] = $skill;
     }
 
-    $form = $this->_formProjectAction($project, true)->getForm();
+    $form = $this->_formProjectAction($project/*, true*/)->getForm();
     $form_languages = $this->createForm(
         new TranslationLanguageType,
         new ProjectTranslation,

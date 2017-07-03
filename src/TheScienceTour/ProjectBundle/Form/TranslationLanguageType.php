@@ -15,7 +15,8 @@ class TranslationLanguageType extends AbstractType {
           'choices'      => ['fr' => 'Français', 'en' => 'English'],
           'empty_value'  => '-- Translate to... --',
           'multiple'     => false,
-          'expanded'     => false
+          'expanded'     => false,
+		  'required'	 => false
         ]);
 	}
 

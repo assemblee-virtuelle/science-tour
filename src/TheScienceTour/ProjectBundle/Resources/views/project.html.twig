@@ -1002,10 +1002,25 @@
         {% endif %}
     </div>
 
-    <a href="mailto:abus@lesciencetour.org?subject=Signalement sur le Science Tour !!"
-       title="{% trans %}Contact the moderator{% endtrans %}" class="claim"><i
-                class="icon-warning-sign"></i> {% trans %}Contact the
-        moderator{% endtrans %}</a>
+    {% if not isErasmus() %}
+    {% set adresse = "abus@lesciencetour.org" %}
+    {% set contact = "contact@lesciencetour.org" %}
+    {% set message = "Signalement sur le Science Tour !!" %}
+    {% set organisation = "Le Science Tour" %}
+    {% set hashtags = "lesciencetour" %}
+    {% else %}
+    {% set adresse = "abus@ycfc.eu"%}
+    {% set contact = "contact@ycfc.eu"%}
+    {% set message = "Signalement sur YCFC !!" %}
+    {% set organisation = "Youth Committed For Climate" %}
+    {% set hashtags = "youthcommittedforclimate" %}
+    {% endif %}
+
+    <a href="mailto:{{ adresse }}?subject={{ message }}"
+       title="{% trans %}Contact the moderator{% endtrans %}"
+       class="claim">
+       <i class="icon-warning-sign"></i> {% trans %}Contact the moderator{% endtrans %}
+   </a>
 
     <h1>{% trans %}Share{% endtrans %}</h1>
     <a class="share-button facebook-button" target="_blank" title="Facebook"
@@ -1014,7 +1029,7 @@
        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i
                 class="icon-facebook-sign"></i></a>
     <a class="share-button twitter-button" target="_blank" title="Twitter"
-       href="https://twitter.com/share?url={{ url('tst_project', {'id' : project.id}) }}&text=Le Science Tour - Projet {{ project.title|url_encode(true) }}&hashtags=lesciencetour"
+       href="https://twitter.com/share?url={{ url('tst_project', {'id' : project.id}) }}&text={{ organisation }} - Projet {{ project.title|url_encode(true) }}&hashtags={{ hashtags }}"
        rel="nofollow"
        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i
                 class="icon-twitter-sign"></i></a>
@@ -1024,6 +1039,6 @@
        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i
                 class="icon-google-plus-sign"></i></a>
     <a class="share-button mail-button" title="Mail"
-       href="mailto:?subject=Le Science Tour - Projet {{ project.title|replace({'&': '%26'}) }}&body={{ url('tst_project', {'id' : project.id}) }}"
+       href="mailto:{{ contact }}?subject={{ organisation }} - Projet {{ project.title|replace({'&': '%26'}) }}&body={{ url('tst_project', {'id' : project.id}) }}"
        rel="nofollow"><i class="icon-envelope"></i></a>
 {% endblock %}
