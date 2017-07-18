@@ -1,0 +1,23 @@
+# This file is auto-generated during the composer install
+parameters:
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: e0c1c36f031a8385841dc751c649ca5ea68d5e70
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: symfony
+    database_user: root
+    database_password: null
+    db_name: science-tour
+    mailer_sender_address: contact@science-tour.org
+    root_url: 'http://178.170/72.70:8080/st0/web/app.php'
+    st_contact_mail: info@lesciencetour.fr
+    ycfc_contact_mail: info@ycfc.eu
+    erasmusLanguages:
+        fr: Français
+        en: English
+    erasmusDomains:
+        - www.ycfc.eu
+        - ycfc.eu
