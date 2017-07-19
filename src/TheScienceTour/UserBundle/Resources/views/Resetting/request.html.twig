@@ -1,0 +1,30 @@
+{% extends "TheScienceTourUserBundle::Resetting/resetting_layout.html.twig" %}
+
+{% block fos_user_content %}
+<div class="center w600p">
+	<div id="reset_request_form_content">
+	
+		{% if invalid_username is defined %}
+		    <div class="error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
+		{% endif %}
+		
+		<form  action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+		
+		    <div class="form-row">
+		    	<div class="w40 inbl">
+		    		<label for="username" class="label-big">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+		    	</div>
+		    	<div class="w60 inbl txtright">
+		    		<input type="text" id="username" name="username" required="required" class="w80" />
+		    	</div>
+			</div>
+			<div class="form-row">
+				<div class="w100 inbl txtright">
+					<input type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+				</div>
+			</div>
+		</form>
+	
+	</div>
+</div>
+{% endblock fos_user_content %}

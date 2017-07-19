@@ -1,0 +1,1044 @@
+{% if project.challenge %}
+    {% set challengeHeader = true %}
+{% endif %}
+
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ project.title }}{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function show(id) {
+
+            var tabsul = document.getElementById('tabs');
+            var containers = document.getElementsByClassName('tab-container');
+
+            for (var i = 0; i < containers.length; i++) {
+                if (i == id) {
+                    tabsul.children[i].className = 'active';
+                    containers[i].style.display = 'block';
+                } else {
+                    tabsul.children[i].className = '';
+                    containers[i].style.display = 'none';
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            $('.project_res_help').click(function () {
+                var url = $(this).attr('href');
+                var $dialog = $('<div></div>').load(url + ' #help_form_content');
+                $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+                $($dialog).dialog({
+                    modal: true,
+                    title: "{% trans %}Help{% endtrans %}",
+                    resizable: false,
+                    draggable: false,
+                    closeText: "{% trans %}Close{% endtrans %}",
+                    width: 355,
+                    height: 305
+                });
+                return false;
+            });
+            $('.project_add_edit_news').click(function () {
+                var url = $(this).attr('href');
+                var $dialog = $('<div></div>').load(url + ' #news_form_content', function () {
+                            var script1 = document.createElement('script');
+                            script1.type = "text/javascript";
+                            script1.text = "var myFile = document.getElementById('form_picture_binaryContent');";
+                            $(this).append(script1);
+                            var script2 = document.createElement('script');
+                            script2.type = 'text/javascript';
+                            script2.src = "{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/thesciencetourmain/js/validImg.js') }}";
+                            $(this).append(script2);
+                            var script3 = document.createElement('script');
+                            script3.type = 'text/javascript';
+                            script3.src = "{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/stfalcontinymce/vendor/tinymce/jquery.tinymce.min.js') }}";
+                            $(this).append(script3);
+                            initTinyMCE();
+                        }
+                );
+                $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+                $($dialog).dialog({
+                    modal: true,
+                    title: "{% trans %}Article{% endtrans %}",
+                    resizable: false,
+                    draggable: false,
+                    closeText: "{% trans %}Close{% endtrans %}",
+                    width: 740,
+                    height: 545,
+                    close: function (event, ui) {
+                        $(this).dialog('destroy');
+                        tinymce.remove();
+                    },
+                });
+                return false;
+            });
+
+            $('.project_add_chat').click(function () {
+                var url = $(this).attr('href');
+                var $dialog = $('<div></div>').load(url + ' #project_chat_form_content', function () {
+                            var script1 = document.createElement('script');
+                            script1.type = 'text/javascript';
+                            script1.src = "{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/stfalcontinymce/vendor/tinymce/jquery.tinymce.min.js') }}";
+                            $(this).append(script1);
+                            initTinyMCE();
+                        }
+                );
+                $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+                $($dialog).dialog({
+                    modal: true,
+                    title: "{% trans %}Chat{% endtrans %}",
+                    resizable: false,
+                    draggable: false,
+                    closeText: "{% trans %}Close{% endtrans %}",
+                    width: 640,
+                    height: 370,
+                    close: function (event, ui) {
+                        $(this).dialog('destroy');
+                        tinymce.remove();
+                    },
+                });
+                return false;
+            });
+
+            $.widget("ui.dialog", $.ui.dialog, {
+                _allowInteraction: function (event) {
+                    return !!$(event.target).closest(".mce-container").length || this._super(event);
+                }
+            });
+            $('.project_news_bigpic').click(function () {
+                var $image = $('<img src=""/>');
+
+                var url = $(this).attr('href');
+                var title = $(this).attr('id');
+
+                $image.attr('src', url);
+                $image.attr('title', title);
+
+                $image.load(function () {
+                    var $dialog = $('<div></div>').append($image);
+                    $($dialog).dialog({
+                        modal: true,
+                        title: $(this).attr('title'),
+                        resizable: false,
+                        draggable: false,
+                        closeText: "{% trans %}Close{% endtrans %}",
+                        width: 'auto',
+                        height: 'auto'
+                    });
+                    if ($($dialog).width() > $(window).width() - 50) {
+                        $($dialog).dialog('option', 'width', $(window).width() - 50);
+                    }
+                    if ($($dialog).height() > $(window).height() - 50) {
+                        $($dialog).dialog('option', 'height', $(window).height() - 50);
+                    }
+                    $($dialog).animate({
+                        scrollTop: ($(this).height() - $($dialog).height()) / 2,
+                        scrollLeft: ($(this).width() - $($dialog).width()) / 2,
+                    }, 1)
+                });
+                return false;
+            });
+            $('.project_res_help_view').click(function () {
+                var url = $(this).attr('href');
+                var $dialog = $('<div></div>').load(url + ' #reshelpshow_content');
+                var modal_title = '{% trans %}They gave{% endtrans %} "' + $(this).attr('title') + '"';
+                $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+                $($dialog).dialog({
+                    modal: true,
+                    title: modal_title,
+                    resizable: false,
+                    draggable: false,
+                    closeText: "{% trans %}Close{% endtrans %}",
+                    width: 450,
+                    height: "auto"
+                });
+                return false;
+            });
+        });
+
+    </script>
+{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner %}
+    {% thumbnail project.picture, 'banner' %}
+    <div class="banner-title gradient">
+        <h1>{{ project.title }}</h1>
+    </div>
+
+    <div class="banner-overlay overlay-with-map">
+        {% if not isErasmus() %}
+            <div class="banner-overlay-box">
+                {{ render(controller('TheScienceTourMapBundle:Map:asideMap',
+                { 'documentList': project, 'sizes': { 'width': '210px', 'height': '157px' } })) }}
+
+                <ul class="banner-overlay-nav">
+                    <li>
+                        <div class="place" title="{{ project.place }}">
+                            <i class="icon-map-marker"></i>{{ city }}
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <i class="icon-time"></i>{% trans %}
+                            Duration{% endtrans %}
+                            {% set durationUnit = project.durationUnit ? project.durationUnit : 'month' %}
+                            <span>{{ project.duration }} {{ durationUnit|transchoice(project.duration) }}</span>
+                        </div>
+                    </li>
+                    {% if project.startedAt is not null %}
+                        <li>
+                            <div>
+                                <i class="icon-calendar"></i>{% trans %}
+                                Start{% endtrans %}
+                                <span>{{ project.startedAt | localizeddate('short', 'none') }}</span>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if (not isErasmus()) and (project.challenge|length > 0) %}
+                    <a href="{{ path('tst_challenge', {'id' : project.challenge.id}) }}"
+                       class="challenge-project-button bgRed"
+                       alt="{% trans %}Show the challenge{% endtrans %}">{% trans %}
+                        Show the challenge{% endtrans %}</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% if isEditable %}
+        <div class="settings"><a
+                    href="{{ path('tst_project_edit', {'id' : project.id}) }}"
+                    alt="{% trans %}Edition{% endtrans %}"><i
+                        class="icon-edit"></i>{% trans %}Edition{% endtrans %}
+            </a></div>
+        <div class="settings"><a
+                    href="{{ path('tst_project_admin', {'id' : project.id}) }}"
+                    alt="{% trans %}Management{% endtrans %}"><i
+                        class="icon-cog"></i>{% trans %}Management{% endtrans %}
+            </a></div>
+
+    {% endif %}
+
+    <ul id="tabs" class="tabs">
+        <li{% if tab == "about" %} class="active"{% endif %}>
+            <h1>
+                <a href="javascript:show(0);">{% trans %}The project{% endtrans %}</a>
+            </h1>
+        </li>
+        {% if not isErasmus() and not project.isErasmus %}
+            {% if app.user and app.user.numberOf("project-resources", project.id) %}
+                <li>
+                    <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "resources"}) }}">
+                        <h1>{% trans %}Resources{% endtrans %}
+                            <div class="notif bgLightGrey">{{ app.user.numberOf("project-resources", project.id) }}</div>
+                        </h1>
+                    </a></li>
+            {% else %}
+                <li{% if tab == "resources" %} class="active"{% endif %}><a
+                            href="javascript:show(1);"><h1>{% trans %}
+                            Resources{% endtrans %}</h1></a></li>
+            {% endif %}
+        {% else %}
+            {# We need to keep tabs order. #}
+            <li style="display: none"></li>
+        {% endif %}
+        {% if app.user and app.user.numberOf("project-news", project.id) %}
+            <li>
+                <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "news"}) }}">
+                    <h1>{% trans %}News{% endtrans %}
+                        <div class="notif bgLightGrey">{{ app.user.numberOf("project-news", project.id) }}</div>
+                    </h1>
+                </a></li>
+        {% else %}
+            <li{% if tab == "news" %} class="active"{% endif %}><a
+                        href="javascript:show(2);"><h1>{% trans %}
+                        News{% endtrans %}</h1></a></li>
+        {% endif %}
+
+        {% if app.user and app.user.numberOf("project-chats", project.id) %}
+            <li>
+                <a href="{{ path('tst_project', {'id' : project.id, 'tab' : "chats"}) }}">
+                    <h1>{% trans %}Chats{% endtrans %}
+                        <div class="notif bgLightGrey">{{ app.user.numberOf("project-chats", project.id) }}</div>
+                    </h1>
+                </a></li>
+        {% else %}
+            <li{% if tab == "chats" %} class="active"{% endif %}><a
+                        href="javascript:show(3);"><h1>{% trans %}
+                        Chats{% endtrans %}</h1></a></li>
+        {% endif %}
+    </ul>
+
+    <div class="tab-container"{% if tab != "about" %} style="display: none;"{% endif %}>
+        <div class="tab-container-inner">
+            {% if (not isErasmus()) and (project.challenge|length > 0) %}
+                <div class="project_challenge">{% trans %}This project
+                    contributes to the challenge:{% endtrans %} <a
+                            href="{{ path('tst_challenge', {'id' : project.challenge.id}) }}">{{ project.challenge.title }}</a>
+                </div>
+            {% endif %}
+            {% if isErasmus() and (project.translations|length > 0) %}
+                <div class="available-translations">
+                {% trans %}Translations are available :{% endtrans %}
+                {% for tr in project.translations %}
+                    <a href="{{ path('tst_project_translation', {'_locale': app.request.locale , 'language': tr.language, 'id': project.id }) }}" class="translation-thumbnail">
+                        <img style="vertical-align:middle" src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" class="flag-32 flag-{{ tr.language }}" />
+                    </a>
+                {% endfor %}
+                </div>
+            {% endif %}
+            <h1>{% trans %}Goal of the game{% endtrans %}</h1>
+            <div class="tinymce-content">
+                {{ project.goal|purify }}
+            </div>
+
+            <h1>{% trans %}Rules of the game{% endtrans %}</h1>
+            <div class="tinymce-content">
+                {{ project.description|purify }}
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-container"{% if tab != "resources" %} style="display: none;"{% endif %}>
+        <div class="tab-container-inner">
+            <h1 class="tools">{% trans %}Tools{% endtrans %}/{% trans %}
+                Materials{% endtrans %}</h1>
+        </div>
+        <table id="project_res" class="project-resources-items">
+
+            {% for tool in project.tools %}
+                <tr class="project-resource-row">
+                    <td class="project-resource-progressbar-cell">
+                        {% if tool.percent == 0 %}
+                            <div title="{% trans %}There are currently no donations.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #F76964;"></div>
+                        {% elseif tool.percent == 100 %}
+                            <div title="{{ tool.actualNumber }}/{{ tool.number }}, {% trans %}we have everything we need.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #85C16D"></div>
+                        {% else %}
+                            <div title="{{ tool.actualNumber }}/{{ tool.number }}, {% trans with {'%nb%': tool.number - tool.actualNumber} %}%nb% still missing.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #CFCFCF">
+                                <div style="background-color: #F6C450; height: 100%; width: {{ tool.percent }}%"></div>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td class="project-resource-quantity-cell">
+                        <strong>{{ tool.number }}</strong> x
+                    </td>
+                    <td class="project-resource-name-cell">
+                        {% if tool.percent == 0 %}
+                            {{ tool.name }}
+                        {% else %}
+                            <a title="{{ tool.name }}"
+                               class="project_res_help_view"
+                               href="{{ path('tst_project_res_help_show', {'id' : project.id, 'idres' : tool.id}) }}">
+                                {{ tool.name }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td class="project-resource-actions-cell">
+                        {% if app.user == project.creator %}
+                            {% if tool.untreatedProposedHelpNumber != 0 %}
+                                <div class="project-resource-redbox">{{ tool.untreatedProposedHelpNumber }}</div>
+                            {% endif %}
+                            <a href="{{ path('tst_project_admin', {'id' : project.id}) }}"
+                               alt="" class="action-button">{% trans %}
+                                Manage{% endtrans %}</a>
+                        {% elseif tool.containsHelper(app.user) %}
+                            {% if tool.isHelpCompleted(app.user) %}
+                                <a alt="" class="action-button">{% trans %}Help
+                                    received{% endtrans %}</a>
+                            {% else %}
+                                <a href="{{ path('tst_project_res_unhelp', {'id' : project.id, 'idres' : tool.id}) }}"
+                                   alt="" class="action-button">{% trans %}
+                                    Unhelp{% endtrans %}</a>
+                            {% endif %}
+                        {% elseif tool.percent != 100 %}
+                            <a href="{{ path('tst_project_res_help', {'id' : project.id, 'idres' : tool.id}) }}"
+                               alt=""
+                               class="action-button{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} project_res_help{% endif %}">{% trans %}
+                                Help{% endtrans %}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% for material in project.materials %}
+                <tr class="project-resource-row">
+                    <td class="project-resource-progressbar-cell">
+                        {% if material.percent == 0 %}
+                            <div title="{% trans %}There are currently no donations.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #F76964;"></div>
+                        {% elseif material.percent == 100 %}
+                            <div title="{{ material.actualNumber }}/{{ material.number }}, {% trans %}we have everything we need.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #85C16D"></div>
+                        {% else %}
+                            <div title="{{ material.actualNumber }}/{{ material.number }}, {% trans with {'%nb%': material.number - material.actualNumber} %}%nb% still missing.{% endtrans %}"
+                                 class="progress"
+                                 style="background-color: #CFCFCF">
+                                <div style="background-color: #F6C450; height: 100%; width: {{ material.percent }}%"></div>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td class="project-resource-quantity-cell">
+                        <strong>{{ material.number }}</strong> x
+                    </td>
+                    <td class="project-resource-name-cell">
+                        {% if material.percent == 0 %}
+                            {{ material.name }}
+                        {% else %}
+                            <a title="{{ material.name }}"
+                               class="project_res_help_view"
+                               href="{{ path('tst_project_res_help_show', {'id' : project.id, 'idres' : material.id}) }}">
+                                {{ material.name }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td class="project-resource-actions-cell">
+                        {% if app.user == project.creator %}
+                            {% if material.untreatedProposedHelpNumber != 0 %}
+                                <div class="project-resource-redbox">{{ material.untreatedProposedHelpNumber }}</div>
+                            {% endif %}
+                            <a href="{{ path('tst_project_admin', {'id' : project.id}) }}"
+                               alt="" class="action-button">{% trans %}
+                                Manage{% endtrans %}</a>
+                        {% elseif material.containsHelper(app.user) %}
+                            {% if material.isHelpCompleted(app.user) %}
+                                <a alt="" class="action-button">{% trans %}Help
+                                    received{% endtrans %}</a>
+                            {% else %}
+                                <a href="{{ path('tst_project_res_unhelp', {'id' : project.id, 'idres' : material.id}) }}"
+                                   alt="" class="action-button">{% trans %}
+                                    Unhelp{% endtrans %}</a>
+                            {% endif %}
+                        {% elseif material.percent != 100 %}
+                            <a href="{{ path('tst_project_res_help', {'id' : project.id, 'idres' : material.id}) }}"
+                               alt=""
+                               class="action-button{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} project_res_help{% endif %}">{% trans %}
+                                Help{% endtrans %}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if project.premises.count > 0 %}
+            <div class="tab-container-inner">
+                <h1 class="premises">{% trans %}Premises{% endtrans %}</h1>
+            </div>
+            <table class="project-resources-items">
+                {% for premise in project.premises %}
+                    <tr class="project-resource-row">
+                        <td class="project-resource-progressbar-cell">
+                            {% if premise.percent == 0 %}
+                                <div title="{% trans %}There are currently no donations.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #F76964;"></div>
+                            {% elseif premise.percent == 100 %}
+                                <div title="{{ premise.actualNumber }}/{{ premise.number }}, {% trans %}we have everything we need.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #85C16D"></div>
+                            {% else %}
+                                <div title="{{ premise.actualNumber }}/{{ premise.number }}, {% trans with {'%nb%': premise.number - premise.actualNumber} %}%nb% still missing.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #CFCFCF">
+                                    <div style="background-color: #F6C450; height: 100%; width: {{ premise.percent }}%"></div>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="project-resource-quantity-cell">
+                            <strong>{{ premise.number }}</strong> x
+                        </td>
+                        <td class="project-resource-name-cell">
+                            {% if premise.percent == 0 %}
+                                {{ premise.name }}
+                            {% else %}
+                                <a title="{{ premise.name }}"
+                                   class="project_res_help_view"
+                                   href="{{ path('tst_project_res_help_show', {'id' : project.id, 'idres' : premise.id}) }}">
+                                    {{ premise.name }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="project-resource-actions-cell">
+                            {% if app.user == project.creator %}
+                                {% if premise.untreatedProposedHelpNumber != 0 %}
+                                    <div class="project-resource-redbox">{{ premise.untreatedProposedHelpNumber }}</div>
+                                {% endif %}
+                                <a href="{{ path('tst_project_admin', {'id' : project.id}) }}"
+                                   alt="" class="action-button">{% trans %}
+                                    Manage{% endtrans %}</a>
+                            {% elseif premise.containsHelper(app.user) %}
+                                {% if premise.isHelpCompleted(app.user) %}
+                                    <a alt="" class="action-button">{% trans %}
+                                        Help received{% endtrans %}</a>
+                                {% else %}
+                                    <a href="{{ path('tst_project_res_unhelp', {'id' : project.id, 'idres' : premise.id}) }}"
+                                       alt="" class="action-button">{% trans %}
+                                        Unhelp{% endtrans %}</a>
+                                {% endif %}
+                            {% elseif premise.percent != 100 %}
+                                <a href="{{ path('tst_project_res_help', {'id' : project.id, 'idres' : premise.id}) }}"
+                                   alt=""
+                                   class="action-button{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} project_res_help{% endif %}">{% trans %}
+                                    Help{% endtrans %}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        {% if project.skills.count > 0 %}
+            <div class="tab-container-inner">
+                <h1 class="skills">{% trans %}Skills{% endtrans %}</h1>
+            </div>
+            <table class="project-resources-items">
+                {% for skill in project.skills %}
+                    <tr class="project-resource-row">
+                        <td class="project-resource-progressbar-cell">
+                            {% if skill.percent == 0 %}
+                                <div title="{% trans %}There are currently no helps.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #F76964;"></div>
+                            {% elseif skill.percent == 100 %}
+                                <div title="{{ skill.helpers.count }}/{{ skill.number }}, {% trans %}we have everything we need.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #85C16D"></div>
+                            {% else %}
+                                <div title="{{ skill.helpers.count }}/{{ skill.number }}, {% trans with {'%nb%': skill.number - skill.helpers.count} %}%nb% still missing.{% endtrans %}"
+                                     class="progress"
+                                     style="background-color: #CFCFCF">
+                                    <div style="background-color: #F6C450; height: 100%; width: {{ skill.percent }}%"></div>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="project-resource-quantity-cell">
+                            <strong>{{ skill.number }}</strong> x
+                        </td>
+                        <td class="progress-resource-name-cell">
+                            {{ skill.name }}
+                        </td>
+                        <td class="project-resource-actions-cell">
+                            {% if app.user in skill.helpers %}
+                                <a href="{{ path('tst_project_skill_unhelp', {'id' : project.id, 'idskill' : skill.id}) }}"
+                                   alt="" class="action-button">{% trans %}
+                                    Unhelp{% endtrans %}</a>
+                            {% elseif skill.percent != 100 %}
+                                <a href="{{ path('tst_project_skill_help', {'id' : project.id, 'idskill' : skill.id}) }}"
+                                   alt="" class="action-button">{% trans %}
+                                    Help{% endtrans %}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="tab-container"{% if tab != "news" %} style="display: none;"{% endif %}>
+        <div class="tab-container-inner">
+            {% if isEditable or app.user in project.team %}
+                <div class="txtright">
+                    <a href="{{ path('tst_project_add_news', {'id' : project.id}) }}"
+                       alt="" class="btn2 project_add_edit_news"><i
+                                class="icon-plus"></i>{% trans %}Add an
+                        article{% endtrans %}</a>
+                </div>
+            {% endif %}
+
+            {% for news in newsList %}
+                {% if news.title == "{% publishProject %}" %}
+                    <div class="news-event news-project">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(0);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            <p><b>{{ news.author.username }}</b> {% trans %}
+                                published the project{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% newAdmin %}" %}
+                    <div class="news-event news-project">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(0);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            <p><b>{{ news.author.username }}</b> {% trans %}is
+                                the new administrator of the
+                                project{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% newSponsor %}" %}
+                    <div class="news-event news-project">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(0);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            <p><b>{{ news.author.username }}</b> {% trans %}is
+                                now sponsoring the project{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% giveTool %}" %}
+                    <div class="news-event news-tool">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(1);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            {% set content = news.content|split('{%#%}') %}
+                            <p><b>{{ news.author.username }}</b> {% trans %}gave
+                                the resource{% endtrans %}
+                                <b>{{ content[0] }}</b> {{ content[1] }} {% trans %}
+                                times{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% giveMaterial %}" %}
+                    <div class="news-event news-material">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(1);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            {% set content = news.content|split('{%#%}') %}
+                            <p><b>{{ news.author.username }}</b> {% trans %}gave
+                                the resource{% endtrans %}
+                                <b>{{ content[0] }}</b> {{ content[1] }} {% trans %}
+                                times{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% givePremise %}" %}
+                    <div class="news-event news-premise">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(1);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            {% set content = news.content|split('{%#%}') %}
+                            <p><b>{{ news.author.username }}</b> {% trans %}gave
+                                the resource{% endtrans %}
+                                <b>{{ content[0] }}</b> {{ content[1] }} {% trans %}
+                                times{% endtrans %}</p>
+                        </a>
+                    </div>
+                {% elseif news.title == "{% giveSkill %}" %}
+                    <div class="news-event news-skill">
+                        {% if isEditable %}
+                            <a href="{{ path('tst_project_delete_news', {'id' : project.id, 'idnews' : news.id}) }}">
+                                <div class="news-delete"></div>
+                            </a>
+                        {% endif %}
+                        {% if news.author.avatar is null %}
+                            <img title="{{ news.author.username }}"
+                                 src="{{ asset('img/test_avatar50.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail news.author.avatar, 'normal' %}
+                        {% endif %}
+                        <a href="javascript:show(1);">
+                            <header>{{ news.createdAt | localizeddate('medium', 'none') }}</header>
+                            <p><b>{{ news.author.username }}</b> {% trans %}
+                                offered the skill{% endtrans %}
+                                <b>{{ news.content }}</b></p>
+                        </a>
+                    </div>
+                {% else %}
+                    <h1>{{ news.title }}</h1>
+                    <div class="publish"> {% trans %}
+                        published{% endtrans %} {{ news.createdAt | localizeddate('medium', 'none') }} {% trans %}
+                        by{% endtrans %} <strong>{{ news.author }}</strong>
+                    </div>
+                    <div class="news-content tinymce-content">
+                        {% if news.picture is not null %}
+                            {% if news.picture.width > 670 %}
+                                <a class="project_news_bigpic"
+                                   href="{% path news.picture, 'reference' %}"
+                                   target="_blank" id="{{ news.title }}">
+                                    {% thumbnail news.picture, 'big' %}
+                                </a>
+                            {% else %}
+                                {% thumbnail news.picture, 'reference' %}
+                            {% endif %}
+                        {% endif %}
+                        {{ news.content|purify }}
+                    </div>
+                    {% if isEditable or (app.user == news.author and app.user in project.team) %}
+                        <div class="txtright">
+                            <a href="{{ path('tst_project_edit_news', {'id' : project.id, 'idnews' : news.id}) }}"
+                               alt="" class="btn2 project_add_edit_news"><i
+                                        class="icon-plus"></i>{% trans %}Edit
+                                this article{% endtrans %}</a>
+                        </div>
+                    {% endif %}
+                    {% if not loop.last %}
+                        <hr/>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="tab-container"{% if tab != "chats" %} style="display: none;"{% endif %}>
+        <div class="tab-container-inner">
+            <div class="txtright">
+                <a href="{{ path('tst_project_add_chat', {'id' : project.id}) }}"
+                   alt=""
+                   class="btn2{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} project_add_chat{% endif %}"><i
+                            class="icon-plus"></i>{% trans %}Add a
+                    chat{% endtrans %}</a>
+            </div>
+            <div>
+                {% for chat in project.chats|reverse %}
+                    {% if (not chat.private) or (chat.private and (teamMember or isEditable)) %}
+                        {% for message in chat.messages %}
+                            {% if loop.first %}
+                                <div class="chat-message chat-first-message">
+                                    {% if isEditable %}
+                                        <a href="{{ path('tst_project_delete_chat', {'id' : project.id, 'idchat' : chat.id}) }}">
+                                            <div class="chat-delete"></div>
+                                        </a>
+                                    {% endif %}
+                                    {% if message.author.avatar is null %}
+                                        <img title="{{ message.author.username }}"
+                                             src="{{ asset('img/test_avatar50.png') }}"
+                                             alt=""/>
+                                    {% else %}
+                                        {% thumbnail message.author.avatar, 'normal' %}
+                                    {% endif %}
+                                    <h2>{{ message.author.username }}
+                                        <span>{{ message.createdAt | localizeddate('medium', 'none') }}{% if chat.private %}
+                                            <i
+                                                    title="{% trans %}Private chat{% endtrans %}"
+                                                    class="icon-lock"></i>{% endif %}</span>
+                                    </h2>
+                                    <div class="tinymce-content">
+                                        {{ message.content|purify }}
+                                    </div>
+                                    <a class="reply{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} project_add_chat{% endif %}"
+                                       href="{{ path('tst_project_add_message', {'id' : project.id, 'idchat' : chat.id}) }}"
+                                       alt=""><i
+                                                class="icon-share-alt"></i>{% trans %}
+                                        Reply{% endtrans %}</a>
+                                </div>
+                            {% else %}
+                                <div class="chat-message">
+                                    {% if message.author.avatar is null %}
+                                        <img title="{{ message.author.username }}"
+                                             src="{{ asset('img/test_avatar35.png') }}"
+                                             alt=""/>
+                                    {% else %}
+                                        {% thumbnail message.author.avatar, 'small' %}
+                                    {% endif %}
+                                    <h2>{{ message.author.username }}
+                                        <span>{{ message.createdAt | localizeddate('medium', 'none') }}</span>
+                                    </h2>
+                                    <div class="tinymce-content">
+                                        {{ message.content|purify }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {{ tinymce_init() }}
+{% endblock %}
+
+{% block aside %}
+    <h1>{% trans %}Team{% endtrans %}</h1>
+    <div class="team">
+        <div class="creator">
+            {% if project.creator.avatar is null %}
+                <img title="{{ project.creator.username }}"
+                     src="{{ asset('img/test_avatar50.png') }}" alt=""/>
+            {% else %}
+                {% thumbnail project.creator.avatar, 'normal' %}
+            {% endif %}
+            <span>{% trans %}Creator{% endtrans %}</span>
+            {{ project.creator.username|length > 16 ? project.creator.username[:16] : project.creator.username }}
+        </div>
+        <dl class="team_list">
+            {% if project.challenge %}
+                <dt>{% if project.sponsors|length > 1 %}{% trans %}Sponsors{% endtrans %}{% else %}{% trans %}Sponsor&nbsp;{% endtrans %}{% endif %}{% if project.sponsors|length > 0 %}
+                        <span>{{ project.sponsors|length }}</span>{% endif %}
+                </dt>
+                {% if project.sponsors|length < 1 %}
+                    {% if app.user == project.creator or app.user in project.contributors %}
+                        <dd><p>{% trans %}Boost your project: adopt a
+                                researcher.{% endtrans %}</p></dd>
+                    {% else %}
+                        <dd><p>{% trans %}This project awaits its
+                                researcher-sponsor.{% endtrans %}</p></dd>
+                    {% endif %}
+                {% else %}
+                    {% for sponsor in project.sponsors %}
+                        <dd class="pb25">
+                            <a href="{{ path('fos_user_profile_public', {'nickname': sponsor.username}) }}">
+                                {% if sponsor.avatar is null %}
+                                    <img title="{{ sponsor.username }}"
+                                         src="{{ asset('img/test_avatar35.png') }}"
+                                         alt=""/>
+                                {% else %}
+                                    {% thumbnail sponsor.avatar, 'small' %}
+                                {% endif %}
+                                <span><i class="icon-user"></i>{{ sponsor.username }}</span>
+                            </a>
+                        </dd>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            <dt {% if project.sponsors|length > 0 %}style="margin-top: -10px"
+                {% endif %}title="{% trans %}Skills{% endtrans %} : {{ project.skillFraction }}">{% trans %}
+                Contributors{% endtrans %}{% if allContribArray|length > 0 %}
+                    <span>{{ allContribArray|length }}</span>{% endif %}</dt>
+            {% if allContribArray|length < 1 %}
+                {% if app.user == project.creator %}
+                    <dd class="pb14"><p>{% trans %}Grow your team, your project
+                            will go further!{% endtrans %}</p></dd>
+                {% else %}
+                    <dd class="pb14"><p>{% trans %}Join the project team, we
+                            need you!{% endtrans %}</p></dd>
+                {% endif %}
+            {% else %}
+                {% for key in allContribArray|keys %}
+                    {% if allContribArray[key][1] == '' %}
+                        <dd class="pb25">
+                    {% else %}
+                        <dd class="pb14" title="{{ allContribArray[key][1] }}">
+                    {% endif %}
+                    {% if allContribArray[key][0].avatar is null %}
+                        <img title="{{ allContribArray[key][0].username }}"
+                             src="{{ asset('img/test_avatar35.png') }}" alt=""/>
+                    {% else %}
+                        {% thumbnail allContribArray[key][0].avatar, 'small' %}
+                    {% endif %}
+                    <span>{{ allContribArray[key][0].username }}</span>
+                    {% set maxLength = 30 %}
+                    {{ allContribArray[key][1]|length > maxLength ? allContribArray[key][1][:maxLength]|split(' ', -1)|join(' ') ~ '…' : allContribArray[key][1] }}
+                    </dd>
+                {% endfor %}
+            {% endif %}
+        </dl>
+        <div class="progress_bar">
+            <div style="width: 40%"></div>
+        </div>
+        {% if project.challenge and is_granted('ROLE_RESEARCHER') %}
+            {% if app.user in project.sponsors %}
+                <a href="{{ path('tst_project_unsponsor', {'id' : project.id}) }}"
+                   alt="">
+                    <div class="contribute">{% trans %}Don't
+                        sponsor{% endtrans %}</div>
+                </a>
+            {% else %}
+                <a href="{{ path('tst_project_sponsor', {'id' : project.id}) }}"
+                   alt="">
+                    <div class="contribute">{% trans %}
+                        Sponsor{% endtrans %}</div>
+                </a>
+            {% endif %}
+        {% elseif app.user in project.contributors %}
+            <a href="{{ path('tst_project_uncontribute', {'id' : project.id}) }}"
+               alt="">
+                <div class="contribute">{% trans %}Don't
+                    contribute{% endtrans %}</div>
+            </a>
+        {% elseif app.user != project.creator %}
+            <a href="{{ path('tst_project_contribute', {'id' : project.id}) }}"
+               alt="">
+                <div class="contribute">{% trans %}
+                    Contribute{% endtrans %}</div>
+            </a>
+        {% endif %}
+    </div>
+
+    <h1>{% trans %}Supporters{% endtrans %}</h1>
+    <div class="supporters">
+        <ul>
+            {% if project.supporters|length == 0 %}
+                {% if app.user == project.creator or app.user in project.contributors %}
+                    <li><p>{% trans %}Communicate on your project to mobilize
+                            the resources that you lack.{% endtrans %}</p></li>
+                {% else %}
+                    <li><p>{% trans %}Be the first to support this project by
+                            providing resources.{% endtrans %}</p></li>
+                {% endif %}
+            {% else %}
+                {% for supporter in project.supporters %}
+                    <li>
+                        {% if supporter.avatar is null %}
+                            <img title="{{ supporter.username }}"
+                                 src="{{ asset('img/test_avatar35.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail supporter.avatar, 'small' %}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        {% if app.user != project.creator %}
+            <a href="javascript:show(1);">
+                <div class="support">{% trans %}Support{% endtrans %}</div>
+            </a>
+        {% endif %}
+    </div>
+
+    <h1>{% trans %}Subscribers{% endtrans %}</h1>
+    <div class="subscribers">
+        <ul>
+            {% if project.subscribers|length == 0 %}
+                {% if app.user == project.creator or app.user in project.contributors %}
+                    <li><p>{% trans %}Invite your friends to subscribe to your
+                            project. They will know when a new article is
+                            published.{% endtrans %}</p></li>
+                {% else %}
+                    <li><p>{% trans %}Subscribe to receive news from this
+                            project.{% endtrans %}</p></li>
+                {% endif %}
+            {% else %}
+                {% for subscriber in project.subscribers %}
+                    <li>
+                        {% if subscriber.avatar is null %}
+                            <img title="{{ subscriber.username }}"
+                                 src="{{ asset('img/test_avatar35.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail subscriber.avatar, 'small' %}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        {% if app.user in project.subscribers %}
+            <a href="{{ path('tst_project_unsubscribe', {'id' : project.id}) }}"
+               alt="">
+                <div class="subscribe">{% trans %}
+                    Unsubscribe{% endtrans %}</div>
+            </a>
+        {% elseif app.user != project.creator %}
+            <a href="{{ path('tst_project_subscribe', {'id' : project.id}) }}"
+               alt="">
+                <div class="subscribe">{% trans %}Subscribe{% endtrans %}</div>
+            </a>
+        {% endif %}
+    </div>
+
+    {% if not isErasmus() %}
+    {% set adresse = "abus@lesciencetour.org" %}
+    {% set contact = "contact@lesciencetour.org" %}
+    {% set message = "Signalement sur le Science Tour !!" %}
+    {% set organisation = "Le Science Tour" %}
+    {% set hashtags = "lesciencetour" %}
+    {% else %}
+    {% set adresse = "abus@ycfc.eu"%}
+    {% set contact = "contact@ycfc.eu"%}
+    {% set message = "Signalement sur YCFC !!" %}
+    {% set organisation = "Youth Committed For Climate" %}
+    {% set hashtags = "youthcommittedforclimate" %}
+    {% endif %}
+
+    <a href="mailto:{{ adresse }}?subject={{ message }}"
+       title="{% trans %}Contact the moderator{% endtrans %}"
+       class="claim">
+       <i class="icon-warning-sign"></i> {% trans %}Contact the moderator{% endtrans %}
+   </a>
+
+    <h1>{% trans %}Share{% endtrans %}</h1>
+    <a class="share-button facebook-button" target="_blank" title="Facebook"
+       href="https://www.facebook.com/sharer.php?u={{ url('tst_project', {'id' : project.id}) }}"
+       rel="nofollow"
+       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i
+                class="icon-facebook-sign"></i></a>
+    <a class="share-button twitter-button" target="_blank" title="Twitter"
+       href="https://twitter.com/share?url={{ url('tst_project', {'id' : project.id}) }}&text={{ organisation }} - Projet {{ project.title|url_encode(true) }}&hashtags={{ hashtags }}"
+       rel="nofollow"
+       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i
+                class="icon-twitter-sign"></i></a>
+    <a class="share-button googleplus-button" target="_blank" title="Google +"
+       href="https://plus.google.com/share?url={{ url('tst_project', {'id' : project.id}) }}"
+       rel="nofollow"
+       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i
+                class="icon-google-plus-sign"></i></a>
+    <a class="share-button mail-button" title="Mail"
+       href="mailto:{{ contact }}?subject={{ organisation }} - Projet {{ project.title|replace({'&': '%26'}) }}&body={{ url('tst_project', {'id' : project.id}) }}"
+       rel="nofollow"><i class="icon-envelope"></i></a>
+{% endblock %}

@@ -1,0 +1,12 @@
+parameters:
+#    the_science_tour_project.example.class: TheScienceTour\ProjectBundle\Example
+
+services:
+    sonata.admin.project:
+        class: TheScienceTour\ProjectBundle\Admin\ProjectAdmin
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: Project, label: Project }
+        arguments:
+            - ~
+            - TheScienceTour\ProjectBundle\Document\Project
+            - 'SonataAdminBundle:CRUD'

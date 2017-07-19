@@ -1,0 +1,328 @@
+{% set challengeHeader = true %}
+
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Challenge{% endtrans %}{% endblock %}
+
+{%  block scripts %}
+<script>
+	function show(id) {
+	
+		var tabsul = document.getElementById('tabs');
+		var containers = document.getElementsByClassName('tab-container');
+		
+		for (var i=0; i<tabsul.children.length; i++) {
+			if (i==id) {
+				tabsul.children[i].className = 'active';
+				containers[i].style.display = 'block';
+			} else {
+				tabsul.children[i].className = '';
+				containers[i].style.display = 'none';
+			}
+		}
+	}
+
+	$(document).ready(function() {
+		var $toolsContainer = $('div#form_tools');
+		var $materialsContainer = $('div#form_materials');
+		var $premisesContainer = $('div#form_premises');
+		var $skillsContainer = $('div#form_skills');
+		
+		var $addToolLink = $('<a href="#" class="add_res"><span>{% trans %}Add a tool{% endtrans %}</span></a>');
+		var $addMaterialLink = $('<a href="#" class="add_res"><span>{% trans %}Add a material{% endtrans %}</span></a>');
+		var $addPremiseLink = $('<a href="#" class="add_res"><span>{% trans %}Add premises{% endtrans %}</span></a>');
+		var $addSkillLink = $('<a href="#" class="add_res"><span>{% trans %}Add a skill{% endtrans %}</span></a>');
+				
+		$toolsContainer.parent().append($addToolLink);
+		$materialsContainer.parent().append($addMaterialLink);
+		$premisesContainer.parent().append($addPremiseLink);
+		$skillsContainer.parent().append($addSkillLink);
+
+		$addToolLink.click(function(e) {
+			addTool($toolsContainer);
+			e.preventDefault();
+			return false;
+		});
+		$addMaterialLink.click(function(e) {
+			addMaterial($materialsContainer);
+			e.preventDefault();
+			return false;
+		});
+		$addPremiseLink.click(function(e) {
+			addPremise($premisesContainer);
+			e.preventDefault();
+			return false;
+		});
+		$addSkillLink.click(function(e) {
+			addSkill($skillsContainer);
+			e.preventDefault();
+			return false;
+		});
+
+		if ($toolsContainer.children().length != 0) {
+			$toolsContainer.children().each(function() {
+				addDeleteToolLink($(this), $toolsContainer);
+			});
+		} {% if newChallenge %} else {
+			addTool($toolsContainer);
+		}
+		{% endif %}
+		
+		if ($materialsContainer.children().length != 0) {
+			$materialsContainer.children().each(function() {
+				addDeleteMaterialLink($(this), $materialsContainer);
+			});
+		} {% if newChallenge %} else {
+			addMaterial($materialsContainer);
+		}
+		{% endif %}
+		
+		if ($premisesContainer.children().length != 0) {
+			$premisesContainer.children().each(function() {
+				addDeletePremiseLink($(this), $premisesContainer);
+			});
+		} {% if newChallenge %} else {
+			addPremise($premisesContainer);
+		}
+		{% endif %}
+
+		if ($skillsContainer.children().length != 0) {
+			$skillsContainer.children().each(function() {
+				addDeleteSkillLink($(this), $skillsContainer);
+			});
+		} {% if newChallenge %} else {
+			addSkill($skillsContainer);
+		}
+		{% endif %}
+ 
+		function addTool($toolsContainer) {
+			var index = $toolsContainer.children().length;
+			var $protoTools = $($toolsContainer.attr('data-prototype').replace(/__name__label__/g, '').replace(/__name__/g, index).replace('placeholder=""', 'placeholder="Ex : Marteau, fer à souder, caméra..."').replace('][number]"', '][number]" value="1"'));
+			addDeleteToolLink($protoTools, $toolsContainer);
+			$toolsContainer.append($protoTools);
+		}
+		function addMaterial($materialsContainer) {
+			var index = $materialsContainer.children().length;
+			var $protoMaterials = $($materialsContainer.attr('data-prototype').replace(/__name__label__/g, '').replace(/__name__/g, index).replace('placeholder=""', 'placeholder="Ex : Planches de bois, clous, feuilles A3..."').replace('][number]"', '][number]" value="1"'));
+			addDeleteMaterialLink($protoMaterials, $materialsContainer);
+			$materialsContainer.append($protoMaterials);
+		}
+		function addPremise($premisesContainer) {
+			var index = $premisesContainer.children().length;
+			var $protoPremises = $($premisesContainer.attr('data-prototype').replace(/__name__label__/g, '').replace(/__name__/g, index).replace('placeholder=""', 'placeholder="Ex : Grande salle, grange..."').replace('][number]"', '][number]" value="1"'));
+			addDeletePremiseLink($protoPremises, $premisesContainer);
+			$premisesContainer.append($protoPremises);
+		}
+		function addSkill($skillsContainer) {
+			var index = $skillsContainer.children().length;
+			var $protoSkills = $($skillsContainer.attr('data-prototype').replace(/__name__label__/g, '').replace(/__name__/g, index).replace('placeholder=""', 'placeholder="Ex : Astrophysique, mécanique, chimie..."').replace('][number]"', '][number]" value="1"'));
+			addDeleteSkillLink($protoSkills, $skillsContainer);
+			$skillsContainer.append($protoSkills);
+		}
+ 
+		function addDeleteToolLink($protoTools, $toolsContainer) {
+			$deleteToolLink = $('<a class="delete_res" href="#"></a>');
+			$protoTools.prepend($deleteToolLink);
+			$deleteToolLink.click(function(e) {
+				$protoTools.remove();
+				updateTools($toolsContainer);
+				e.preventDefault();
+				return false;
+			});
+		}
+		function addDeleteMaterialLink($protoMaterials, $materialsContainer) {
+			$deleteMaterialLink = $('<a class="delete_res" href="#"></a>');
+			$protoMaterials.prepend($deleteMaterialLink);
+			$deleteMaterialLink.click(function(e) {
+				$protoMaterials.remove();
+				updateMaterials($materialsContainer);
+				e.preventDefault();
+				return false;
+			});
+		}
+		function addDeletePremiseLink($protoPremises, $premisesContainer) {
+			$deletePremiseLink = $('<a class="delete_res" href="#"></a>');
+			$protoPremises.prepend($deletePremiseLink);
+			$deletePremiseLink.click(function(e) {
+				$protoPremises.remove();
+				updatePremises($premisesContainer);
+				e.preventDefault();
+				return false;
+			});
+		}
+		function addDeleteSkillLink($protoSkills, $skillsContainer) {
+			$deleteSkillLink = $('<a class="delete_res" href="#"></a>');
+			$protoSkills.prepend($deleteSkillLink);
+			$deleteSkillLink.click(function(e) {
+				$protoSkills.remove();
+				updateSkills($skillsContainer);
+				e.preventDefault();
+				return false;
+			});
+		}
+			
+		function updateTools($toolsContainer) {
+			$toolsContainer.children().each(function(index) {
+				$(this).children()[2].id = "form_tools_" + index;
+				$(this).children()[2].children[0].children[0].setAttribute('for', "form_tools_" + index + "_name");
+				$(this).children()[2].children[0].children[1].id = "form_tools_" + index + "_name";
+				$(this).children()[2].children[0].children[1].name = "form[tools][" + index + "][name]";
+				$(this).children()[2].children[1].children[0].id = "form_tools_" + index + "_number";
+				$(this).children()[2].children[1].children[0].name = "form[tools][" + index + "][number]";
+			});
+		}
+		function updateMaterials($materialsContainer) {
+			$materialsContainer.children().each(function(index) {
+				$(this).children()[2].id = "form_materials_" + index;
+				$(this).children()[2].children[0].children[0].setAttribute('for', "form_materials_" + index + "_name");
+				$(this).children()[2].children[0].children[1].id = "form_materials_" + index + "_name";
+				$(this).children()[2].children[0].children[1].name = "form[materials][" + index + "][name]";
+				$(this).children()[2].children[1].children[0].id = "form_materials_" + index + "_number";
+				$(this).children()[2].children[1].children[0].name = "form[materials][" + index + "][number]";
+			});
+		}
+		function updatePremises($premisesContainer) {
+			$premisesContainer.children().each(function(index) {
+				$(this).children()[2].id = "form_premises_" + index;
+				$(this).children()[2].children[0].children[0].setAttribute('for', "form_premises_" + index + "_name");
+				$(this).children()[2].children[0].children[1].id = "form_premises_" + index + "_name";
+				$(this).children()[2].children[0].children[1].name = "form[premises][" + index + "][name]";
+				$(this).children()[2].children[1].children[0].id = "form_premises_" + index + "_number";
+				$(this).children()[2].children[1].children[0].name = "form[premises][" + index + "][number]";
+			});
+		}
+		function updateSkills($skillsContainer) {
+			$skillsContainer.children().each(function(index) {
+				$(this).children()[2].id = "form_skills_" + index;
+				$(this).children()[2].children[0].children[0].setAttribute('for', "form_skills_" + index + "_name");
+				$(this).children()[2].children[0].children[1].id = "form_skills_" + index + "_name";
+				$(this).children()[2].children[0].children[1].name = "form[skills][" + index + "][name]";
+				$(this).children()[2].children[1].children[0].id = "form_skills_" + index + "_number";
+				$(this).children()[2].children[1].children[0].name = "form[skills][" + index + "][number]";
+			});
+		}
+
+		$("#form_picture input").attr('oninvalid', 'javascript:show(0);');
+
+		{% if form.description.vars.errors|length > 0 or form.rules.vars.errors|length > 0 %}
+		show(1);
+		{% endif %}
+	
+	});
+
+var myFile = document.getElementById('form_picture_binaryContent');
+</script>
+		
+<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/validImg.js') }}"></script>
+{% endblock %}
+
+{% block nav_challenges %} id="nav_challenges"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">
+		{% if newChallenge %}
+			{% trans %}Add a challenge{% endtrans %}
+		{% else %}
+			<a href="{{ path('tst_challenge', {'id' : challenge.id}) }}">{{ challenge.title }}</a>
+		{% endif %}
+	</h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+
+<form class="project_form challenge_form" method="post" {{ form_enctype(form) }}>
+
+	{{ form_errors(form) }}
+	
+	<button type="submit" class="button orange_button">{% trans %}Save{% endtrans %}</button>
+	
+	<ul id="tabs" class="tabs">
+		<li class="active"><a href="javascript:show(0);"><h1>{% trans %}Basic info{% endtrans %}</h1></a></li>
+		<li><a href="javascript:show(1);"><h1>{% trans %}About{% endtrans %}</h1></a></li>
+		<li><a href="javascript:show(2);"><h1>{% trans %}Resources{% endtrans %}</h1></a></li>
+	</ul>
+
+	<div class="tab-container">
+		<div class="tab-container-inner">
+			<div>
+				{{ form_label(form.title, "Challenge title", { 'label_attr': {'class': 'red-asterisk'} }) }}
+				{{ form_errors(form.title) }}
+				{{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+			</div>
+			<div>
+				<div class="start_form">
+					{{ form_label(form.startedAt, "Starting date", { 'label_attr': {'class': 'red-asterisk'} }) }}
+					{{ form_errors(form.startedAt) }}
+					{{ form_widget(form.startedAt, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+				</div>
+				<div class="duration_form">
+					{{ form_label(form.duration, "Duration", { 'label_attr': {'class': 'red-asterisk'} }) }}
+					{{ form_errors(form.duration) }}
+					{{ form_widget(form.duration, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+					{{ form_errors(form.durationUnit) }}
+					{{ form_widget(form.durationUnit) }}
+				</div>		
+			</div>
+			<div>
+				{{ form_label(form.picture, "Picture", { 'label_attr': {'class': 'red-asterisk'} }) }}
+				{{ form_errors(form.picture) }}
+				{{ form_widget(form.picture) }}
+			</div>
+		</div>
+	</div>
+	
+	<div class="tab-container" style="display: none;">
+		<div class="tab-container-inner">
+			<div>
+				{{ form_label(form.description, "Goal of the challenge", { 'label_attr': {'class': 'red-asterisk'} }) }}
+				{{ form_errors(form.description) }}
+				{{ form_widget(form.description, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce', 'data-theme': 'bbcode'} }) }}
+			</div>
+			<div>
+				{{ form_label(form.rules, "Rules of the challenge", { 'label_attr': {'class': 'red-asterisk'} }) }}
+				{{ form_errors(form.rules) }}
+				{{ form_widget(form.rules, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce'} }) }}
+			</div>
+		</div>
+	</div>
+	
+	<div class="tab-container" style="display: none;">
+		<div class="tab-container-inner">
+			<div>
+				<span class="tools">{{ form_label(form.tools, "Tools") }}</span>
+				<div class="right_labels">
+					<div>{% trans %}Required{% endtrans %}</div>
+				</div>
+				{{ form_errors(form.tools) }}
+				{{ form_widget(form.tools) }}
+			</div>
+			<div>
+				<span class="material">{{ form_label(form.materials, "Materials") }}</span>
+				{{ form_errors(form.materials) }}
+				{{ form_widget(form.materials) }}
+			</div>
+			<div>
+				<span class="premises">{{ form_label(form.premises, "Premises") }}</span>
+				{{ form_errors(form.premises) }}
+				{{ form_widget(form.premises) }}
+			</div>
+			<div>
+				<span class="skills">{{ form_label(form.skills, "Skills") }}</span>
+				{{ form_errors(form.skills) }}
+				{{ form_widget(form.skills) }}
+			</div>
+		</div>
+	</div>
+	
+	{{ form_rest(form) }}
+	
+</form>
+{{ tinymce_init() }}
+{% endblock %}

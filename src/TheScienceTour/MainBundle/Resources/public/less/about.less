@@ -1,0 +1,61 @@
+.about-page {
+	background: @colorLight;
+	padding: 0 10px 20px;
+}
+
+.about-line {
+	padding-top: 50px;
+	
+	// Keep the floating inside
+	.clearfix;
+}
+
+.about-logo-line {
+	height: 100px;
+	line-height: 100px;
+	text-align: center;
+	
+	img {
+		margin: 0 20px;
+		vertical-align: middle;
+		
+		&:first-child {
+			margin-left: 0;
+		}
+		
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+.about-column {
+	width: 33%;
+	float: left;
+	
+	.about-column-inner {
+		padding: 0 20px;
+		
+		img {
+			margin-bottom: 35px;
+		}
+		
+		h3 {
+			text-align: center;
+		}
+		
+		p {
+			text-align: justify;
+		}
+	}
+	
+	&:first-child .about-column-inner {
+		padding-left: 0;
+		padding-right: 40px;
+	}
+	
+	&:last-child .about-column-inner {
+		padding-left: 40px;
+		padding-right: 0;
+	}
+}

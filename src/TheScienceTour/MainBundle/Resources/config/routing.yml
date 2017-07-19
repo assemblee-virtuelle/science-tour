@@ -1,0 +1,64 @@
+#tst_home_ycfc:
+#    pattern:    /{_locale}
+#    host: "{domain}.eu"
+#    defaults:
+#        _controller: "TheScienceTourMainBundle:Main:home"
+#        _locale: fr
+#    requirements:
+#        _locale: en|fr
+#        domain: ycfc|www.ycfc
+
+tst_home:
+    pattern:    /{_locale}
+    #/home
+    defaults:
+        _controller: "TheScienceTourMainBundle:Main:home"
+        _locale: fr
+    requirements:
+        _locale: en|fr
+
+tst_about_ycfc:
+    path: /{_locale}/about
+    host: "{domain}.eu"
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        _locale: en
+        template: 'TheScienceTourMainBundle:StaticYCFC:about.html.twig'
+    requirements:
+        _locale: en|fr
+        domain: ycfc|www.ycfc
+
+tst_about:
+    path: /{_locale}/about
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        _locale: fr
+        template: 'TheScienceTourMainBundle:Static:about.html.twig'
+    requirements:
+        _locale: en|fr
+
+tst_cgu:
+    path: /{_locale}/cgu
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        _locale: fr
+        template: 'TheScienceTourMainBundle:Static:cgu.html.twig'
+    requirements:
+        _locale: en|fr
+
+tst_search_noreq:
+    pattern: /{_locale}/search
+    defaults:
+         _controller: "TheScienceTourMainBundle:Main:search"
+         _locale: fr
+         request: ''
+    requirements:
+        _locale: en|fr
+
+tst_search:
+    pattern: /{_locale}/search/{request}
+    defaults:
+         _controller: "TheScienceTourMainBundle:Main:search"
+         _locale: fr
+    requirements:
+        _locale: en|fr

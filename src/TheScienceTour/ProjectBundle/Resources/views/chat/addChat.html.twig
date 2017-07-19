@@ -1,0 +1,13 @@
+{% extends "TheScienceTourProjectBundle:chat:chatForm.html.twig" %}
+{% block form_title %}{% trans %}Add a chat{% endtrans %}{% endblock %}
+{% block form_action %}
+	action = "{{ path('tst_project_add_chat', {'id' : project.id}) }}"
+{% endblock %}
+{% block form_checkbox %}
+	{% if privatizable %}
+	<div class="left"><i class="icon-lock"></i> {% trans %}Private chat{% endtrans %}<br/><i class="icon-unlock-alt"></i> {% trans %}Public chat{% endtrans %}</div>
+	<div class="private_checkbox middle">
+		<input title="{% trans %}Private chat{% endtrans %} ?" type="checkbox" id="private" name="private"><label for="private"><span class="icon"></span></label>
+	</div>
+	{% endif %}
+{% endblock %}

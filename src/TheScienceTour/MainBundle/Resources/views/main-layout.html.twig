@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>
+        {% block title %}
+            {% if isErasmus() %}{% trans %}Youth Committed For Climate{% endtrans %}
+            {% else %}{% trans %}Le Science Tour{% endtrans %}
+            {% endif %}
+        {% endblock %}
+    </title>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/thesciencetourmain/less/all.less'
+    output='css/compiled/main.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    {% stylesheets filter='cssrewrite'
+    'bundles/thesciencetourmain/css/all.less'
+    output='css/compiled/flags.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_16x11.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/flags_32x32.css') }}" />
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <!-- Déclaration inline temporaire en attendant l'installation de LESS -->
+    <style media="screen">
+        #main #content .project_items li > a {
+            display: inline;
+        }
+        #main #content .project_items li p {
+            display: flex;
+            justify-content: flex-end;
+        }
+        #main #content .project_items li p > * {
+            display: inline-block;
+            margin: 0 4px;
+            width: auto;
+        }
+    </style>
+</head>
+<body id="{% block bodyid %}default-body-id{% endblock %}"
+      class=" {% if isErasmus() %}is-erasmus{% endif %}">
+<noscript>
+    <div class="main_noscript">
+        <div><i class="icon-warning-sign"></i>Pour profiter du Science Tour, il
+            faut être très curieux et ne pas oublier d'activer Javascript dans
+            son navigateur !
+        </div>
+    </div>
+</noscript>
+<header id="overall-header">
+    <div id="overall-header-login">
+        <ul>
+            {# Lang selection #}
+            <li>
+                <select id="lang_switcher">
+                    {% for key,lang in erasmusLanguages %}
+                        {# We need to reuse whole current page parameters #}
+                        {# We adjust only _locale on it. #}
+                        {% set finalParams = app.request.attributes.get('_route_params')|merge({_locale: key}) %}
+                        {% set chosenLanguage = app.session.get('chosenLanguage') %}
+                        <option {% if key == app.request.getLocale() %}selected="selected"{% endif %}
+                                value="{{ path(app.request.attributes.get('_route'), finalParams) }}">{{ lang }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </li>
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li><a class="separator"
+                           href="{{ path('sonata_admin_dashboard') }}">{% trans %}
+                            ADMIN{% endtrans %}</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_profile_show') }}">
+                        {% if app.user.avatar is null %}
+                            <img src="{{ asset('img/test_avatar25.png') }}"
+                                 alt=""/>
+                        {% else %}
+                            {% thumbnail app.user.avatar, 'tiny' %}
+                        {% endif %}
+                        {{ app.user.username }}
+                        {% if app.user.notifications.count > 0 %}
+                            <div class="notif bgRed"> {{ app.user.notifications.count }}</div>{% endif %}
+                    </a>
+                </li>
+                {% if is_granted("ROLE_SUPER_ANIM") %}
+                    <li class="addchallenge"><a
+                            href="{{ path('tst_challenge_add') }}"><i
+                                class="icon-plus"></i>{% trans %}
+                        CHALLENGE{% endtrans %}</a></li>{% endif %}
+                <li class="addproject"><a
+                            href="{{ path('tst_project_add') }}"><i
+                                class="icon-plus"></i>{% trans %}
+                        PROJECT{% endtrans %}</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}"
+                       title="{% trans %}Log out{% endtrans %}"><i
+                                class="icon-off"></i></a></li>
+            {% else %}
+                <li><a class="register_link separator"
+                       href="{{ path('fos_user_registration_register') }}">{% trans %}
+                        REGISTER{% endtrans %}</a></li>
+                <li><a class="login_link"
+                       href="{{ path('fos_user_security_login') }}">{% trans %}
+                        LOG IN{% endtrans %}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div id="overall-header-main">
+        <div id="header_main_container">
+            <div>
+                {% if challengeHeader is defined %}
+                    {#
+                    <a href="{{ path('tst_challenges') }}"><img id="logobadge" src="{{ asset('img/challenges.png') }}" /></a>
+                    <h1>1000 défis<br />pour la vie</h1>
+                    <a href="{{ path('tst_home') }}"><img id="logost" src="{{ asset('img/st.png') }}" alt="" /></a>
+                    #}
+                    <a href="{{ path('tst_home') }}">
+                        <img id="logobadge"
+                              src="{{ asset('img/sciencetour-red.png') }}"
+                              alt="Logo du Science Tour"/>
+                    </a>
+                    <h1>LES DÉFIS DU<br/>SCIENCE TOUR</h1>
+                    <a href="http://www.lespetitsdebrouillards.org"
+                       target="_blank"><img id="logopdeb"
+                                            src="{{ asset('img/pdeb.png') }}"
+                                            alt=""/></a>
+                {% else %}
+                    <a href="{{ path('tst_home') }}">
+                        <img id="logobadge"
+                              src="{% if app.session.get('isErasmus') %}
+                              {{ asset('img/erasmus.png') }}
+                              {% else %}
+                              {{ asset('img/sciencetour.png') }}
+                              {% endif %}"
+                              alt="Logo de The Science Tour"/>
+                    </a>
+                    <h1>
+                        {% if not app.session.get('isErasmus') %}
+                            AUX SCIENCES<br/>CITOYENS !
+                        {% else %}
+                            {% trans %}Youth Committed{% endtrans %}
+                            <br/>{% trans %}for Climate{% endtrans %}
+                        {% endif %}
+                    </h1>
+                    <a href="http://www.lespetitsdebrouillards.org" target="_blank">
+                       <img id="logopdeb"
+                            src="{% if app.session.get('isErasmus') %}
+                                          {{ asset('img/pdeb-erasmus.png') }}
+                                          {% else %}
+                                          {{ asset('img/pdeb.png') }}
+                                          {% endif %}"
+                            alt=""/>
+                    </a>
+                {% endif %}
+            </div>
+            <nav>
+                <ul>
+                    {% if app.request.locale == 'fr' %}
+                    {% set lng = app.request.locale %}
+                    {% else %}
+                    {% set lng = '' %}
+                    {% endif %}
+                    <li {% block nav_home %}{% endblock %}><a
+                                href="{{ path('tst_home') }}">{% trans %}
+                            Home{% endtrans %}</a> {# app.session.get('chosenLanguage') #}</li>
+                    <li{% block nav_about %}{% endblock %}><a
+                                href="{{ path('tst_about') }}">{% trans %}
+                            About{% endtrans %}</a></li>
+                    {# Not available for Erasmus #}
+                    {% if not app.session.get('isErasmus') %}
+                        <li{% block nav_trucks %}{% endblock %}><a
+                                    href="{{ path('tst_agenda', {'filter': 'trucks'}) }}">{% trans %}
+                                Trucks{% endtrans %}</a></li>
+                    {% endif %}
+                    <li {% block nav_projects %}{% endblock %}><a
+                                href="{{ path('tst_projects') }}">{% trans %}
+                            Projects{% endtrans %}</a></li>
+                    {# Not available for Erasmus #}
+                    {% if not app.session.get('isErasmus') %}
+                        <li{% block nav_challenges %}{% endblock %}><a
+                                    href="{{ path('tst_challenges') }}">{% trans %}
+                                Challenges{% endtrans %}</a>
+                        <li{% block nav_agenda %}{% endblock %}><a
+                                    href="{{ path('tst_agenda') }}">{% trans %}
+                                Agenda{% endtrans %}</a></li>
+                    {% endif %}
+                    <li>
+                        <form id="searchbar" method="get"
+                              action="{{ url('tst_search_noreq') }}">
+                            <input type="text" id="searchbar_query"
+                                   name="query"/>
+                            <input type="submit" value=""/>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div id="banner"{% block banner_attributes %}{% endblock %}>
+    <div id="banner-container">
+        {% block banner %}{% endblock %}
+    </div>
+</div>
+
+<div id="main-container">
+    <div id="main">
+        {% block main %}{% endblock %}
+    </div>
+</div>
+
+<footer id="overall-footer" class="overall-footer">
+    <div id="overall-footer-container">
+        {% if not app.session.get('isErasmus') %}
+        <div class="overall-footer-item">
+            <h1>{% trans %}The festival{% endtrans %}</h1>
+            <ul>
+                <li><a href="{{ path('tst_projects') }}">{% trans %}
+                        Projects{% endtrans %}</a></li>
+                <li><a href="http://lespetitsdebrouillards.org"
+                       target="_blank">{% trans %}Network{% endtrans %}</a></li>
+                <li><a href="{{ path('tst_agenda') }}">{% trans %}
+                        Agenda{% endtrans %}</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        <div class="overall-footer-item">
+            <h1>{% trans %}The projects{% endtrans %}</h1>
+            <ul>
+                <li>
+                    <a href="{{ path('tst_projects', {'filter' : 'around-me' }) }}">{% trans %}
+                        Around me{% endtrans %}</a></li>
+                <li>
+                    <a href="{{ path('tst_projects', {'filter' : 'youngest' }) }}">{% trans %}
+                        The youngest{% endtrans %}</a></li>
+                <li>
+                    <a href="{{ path('tst_projects', {'filter' : 'in-progress' }) }}">{% trans %}
+                        In progress{% endtrans %}</a></li>
+                <li>
+                    <a href="{{ path('tst_projects', {'filter' : 'finished-soon' }) }}">{% trans %}
+                        Finished soon{% endtrans %}</a></li>
+                <li>
+                    <a href="{{ path('tst_projects', {'filter' : 'finished' }) }}">{% trans %}
+                        Finished{% endtrans %}</a></li>
+            </ul>
+        </div>
+        {% if not app.session.get('isErasmus') %}
+        <div class="overall-footer-item">
+            <h1>{% trans %}Network{% endtrans %}</h1>
+            <ul>
+                <li>
+                    <a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}
+                        Trucks{% endtrans %}</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        {% if not app.session.get('isErasmus') %}
+            {% set ln_facebook = "https://www.facebook.com/sharer.php?u="~url('tst_home') %}
+            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Le Science Tour&hashtags=lesciencetour" %}
+            {% set ln_googleplus = "https://plus.google.com/share?u="~url('tst_home') %}
+            {% set ln_mail = "mailto:?subject=Le Science Tour&body="~url('tst_home') %}
+        {% else %}
+            {% set ln_facebook = "https://www.facebook.com/sharer.php?u="~url('tst_home') %}
+            {% set ln_twitter = "https://twitter.com/share?u="~url('tst_home')~"&text=Youth Committed For Climate&hashtags=YouthCommittedForClimate" %}
+            {% set ln_googleplus = "https://plus.google.com/share?u="~url('tst_home') %}
+            {% set ln_mail = "mailto:?subject=Youth Committed For Climate&body="~url('tst_home') %}
+        {% endif %}
+        <div class="overall-footer-item">
+            <h1>{% trans %}Share{% endtrans %}</h1>
+            <a class="share-button facebook-button" target="_blank"
+               title="Facebook"
+               href="{{ ln_facebook }}"
+               rel="nofollow"
+               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i
+                        class="icon-facebook-sign"></i></a>
+            <a class="share-button twitter-button" target="_blank"
+               title="Twitter"
+               href="{{ ln_twitter }}"
+               rel="nofollow"
+               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i
+                        class="icon-twitter-sign"></i></a>
+            <a class="share-button googleplus-button" target="_blank"
+               title="Google +"
+               href="{{ ln_googleplus }}"
+               rel="nofollow"
+               onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i
+                        class="icon-google-plus-sign"></i></a>
+            <a class="share-button mail-button" title="Mail"
+               href="{{ ln_mail }}"
+               rel="nofollow"><i class="icon-envelope"></i></a>
+        </div>
+        <div class="overall-footer-right">
+            <h1>{% trans %}Contact{% endtrans %}</h1>
+            <ul>
+                {% if not app.session.get('isErasmus') %}
+                    {% set contact_mail = st_contact_mail %}
+                {% else %}
+                    {% set contact_mail = ycfc_contact_mail %}
+                {% endif %}
+                <li>
+                    <a href="mailto:{{ contact_mail}}">
+                        {{ contact_mail}}
+                    </a>
+                </li>
+            </ul>
+            <div id="copyright">
+                {% if not isErasmus() %}
+                <a class="pdeb-logo" href="http://lespetitsdebrouillards.org"
+                   target="_blank"></a>
+                {{ tst_version }}
+                <br/>
+                <a href="http://creativecommons.org/licenses/by-sa/2.0/fr/"
+                   target="_blank">CC-BY-SA</a>
+                <br/>
+                {% trans %}Some rights reserved.{% endtrans %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="overall-footer-credits">
+            Conception : <a class="nodesign-logo" href="http://www.nodesign.net"
+                            target="_blank"></a>
+            Réalisation : <a class="g2cw2c-logo" href="http://www.g2cw2c.fr"
+                             target="_blank"></a>
+        </div>
+
+        {% block footer_stuff %}{% endblock %}
+
+    </div>
+</footer>
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="{{ asset('bundles/thesciencetourmain/js/jquery.pstrength-min.1.2.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('a.login_link').click(function () {
+            var url = $(this).attr('href');
+            var $dialog = $('<div></div>').load(url + ' #login_form_content', function () {
+                var $registerLink = $("<a class='popuplink' href='#'>{% trans %}Register{% endtrans %}</a>");
+                $registerLink.click(function (e) {
+                    $dialog.dialog("close");
+                    $('a.register_link').click();
+                    return false;
+                });
+                $(this).append($registerLink);
+            });
+            $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+            $($dialog).dialog({
+                modal: true,
+                title: "{% trans %}Log in{% endtrans %}",
+                resizable: false,
+                draggable: false,
+                closeText: "{% trans %}Close{% endtrans %}",
+                width: 355
+            });
+            return false;
+        });
+        $('a.register_link').click(function () {
+            var url = $(this).attr('href');
+            var $dialog = $('<div></div>').load(url + ' #register_form_content', function () {
+                        var $loginLink = $('<a class="popuplink" href="#">{% trans %}Log in{% endtrans %}</a>');
+                        $loginLink.click(function (e) {
+                            $dialog.dialog("close");
+                            $('a.login_link').click();
+                            return false;
+                        });
+                        $(this).append($loginLink);
+                        $('.secu_password').pstrength();
+                    }
+            );
+            $dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+            $($dialog).dialog({
+                modal: true,
+                title: "{% trans %}Registration{% endtrans %}",
+                resizable: false,
+                draggable: false,
+                closeText: "{% trans %}Close{% endtrans %}",
+                width: 355
+            });
+            return false;
+        });
+        $("#searchbar").submit(function (event) {
+            event.preventDefault();
+            window.location = '{{ url('tst_search_noreq') }}/' + encodeURIComponent($('#searchbar_query').val());
+        });
+
+        $('#lang_switcher').change(function (e) {
+            window.location.href = $(e.currentTarget).val();
+        });
+    });
+</script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

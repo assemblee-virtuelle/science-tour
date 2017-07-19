@@ -1,0 +1,12 @@
+parameters:
+#    the_science_tour_challenge.example.class: TheScienceTour\ChallengeBundle\Example
+
+services:
+    sonata.admin.challenge:
+        class: TheScienceTour\ChallengeBundle\Admin\ChallengeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: Challenge, label: Challenge }
+        arguments:
+            - ~
+            - TheScienceTour\ChallengeBundle\Document\Challenge
+            - 'SonataAdminBundle:CRUD'

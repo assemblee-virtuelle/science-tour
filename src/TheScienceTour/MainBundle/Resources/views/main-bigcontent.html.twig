@@ -1,0 +1,14 @@
+{%  extends "TheScienceTourMainBundle::main-layout.html.twig" %}
+
+{% block main %}
+			<div id="content" class="bigcontent">
+				{% for flashMessage in app.session.flashbag.get('notice') %}
+			    <div class="flash-notice">
+			    	<h2><i class="icon-info-sign"></i>{% trans %}Notice{% endtrans %}</h2>
+			        <p>{{ flashMessage }}</p>
+			    </div>
+				{% endfor %}
+				
+				{% block content %}{% endblock %}
+			</div>
+{% endblock %}

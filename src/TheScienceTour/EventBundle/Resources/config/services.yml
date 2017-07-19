@@ -1,0 +1,9 @@
+parameters:
+  the_science_tour_event.calendar_listener.class: TheScienceTour\EventBundle\Listener\CalendarListener
+
+services:
+  the_science_tour_event.calendar_listener:
+    class: "%the_science_tour_event.calendar_listener.class%"
+    arguments: ["@doctrine_mongodb.odm.default_document_manager", "@router"]
+    tags:
+      - { name: kernel.event_listener, event: calendar.load_events, method: loadEvents }

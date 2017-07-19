@@ -1,3 +1,39 @@
+the_science_tour_user:
+    resource: "@TheScienceTourUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_project:
+    resource: "@TheScienceTourProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_message:
+    resource: "@TheScienceTourMessageBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_media:
+    resource: "@TheScienceTourMediaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_map:
+    resource: "@TheScienceTourMapBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_event:
+    resource: "@TheScienceTourEventBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_document:
+    resource: "@TheScienceTourDocumentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+the_science_tour_main:
+    resource: "@TheScienceTourMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#the_science_tour_challenge:
+#    resource: "@TheScienceTourChallengeBundle/Resources/config/routing.yml"
+#    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

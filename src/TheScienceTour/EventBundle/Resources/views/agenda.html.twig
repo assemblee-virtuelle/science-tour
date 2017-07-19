@@ -1,0 +1,113 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - Agenda{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+	
+	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+	
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
+{% endblock %}
+
+{%  block bodyid %}agenda{% endblock %}
+
+{% block nav_trucks %}{% if route.parameters.filter == 'trucks' %} id="nav_trucks"{% endif %}{% endblock %}
+{% block nav_agenda %}{% if route.parameters.filter != 'trucks' %} id="nav_agenda"{% endif %}{% endblock %}
+
+{% block banner %}
+	{{ render(controller('TheScienceTourMapBundle:Map:map',
+		{ 'documentList': mapEventList, 'route': route, 'menus': menus, 'centerCoordinates': centerCoordinates })) }}
+{% endblock %}
+
+{% block content %}
+<section class="event-items">
+	<h1>{{ listTitle }}</h1>
+	
+	{% for event in eventList %}
+	<article class="event-panel">
+		<a href="{{ path('tst_event', {'id' : event.id }) }}" title="{{ event.title }}" class="block-link">
+			<figure class="event-panel-figure">
+				{%  if event.picture %}
+				{% thumbnail event.picture, 'thumbnail'  %}
+				{% elseif event.label and event.label.LabelType and event.label.labelType.picture %}
+				{% thumbnail event.label.labelType.picture, 'thumbnail'  %}
+				{% else %}
+				<i class="icon-calendar" style="padding: 0 2px; font-size: 114px; color: {% if event.label and event.label.backgroundColor %}{{ event.label.backgroundColor }}{% else %}#6da854{% endif %};"></i>
+				{% endif %}
+				<figcaption class="event-panel-figcaption">
+					{{ event.startDate|date('d') }}
+					<span>{{ event.startDate|format_date('MMM') }}</span>
+				</figcaption>
+			</figure>
+		</a>
+		<div class="event-panel-content-wrapper">
+			<div class="event-panel-content">
+				<header class="event-panel-header">
+					<div class="event-panel-header-buttons">
+						{% if event in userFavoriteEvents %}
+						<a href="{{ path('tst_event_favorites', {'id' : event.id, 'action': 'remove' }) }}">
+							<i class="icon-star remove-from-favorites"></i>
+						</a>
+						{% else %}
+						<a href="{{ path('tst_event_favorites', {'id' : event.id, 'action': 'add' }) }}">
+							<i class="icon-star-empty add-to-favorites"></i>
+						</a>
+						{% endif %}
+					</div>
+					<a href="{{ path('tst_event', {'id' : event.id }) }}" title="{{ event.title }}" class="block-link">
+						<h2 class="event-panel-title">{{ event.title }}</h2>
+					</a>
+					<div class="event-panel-metadata">
+						<span class="date"><i class="icon-time"></i>du {{ event.startDate|format_date('dd MMM YYYY') }} au  {{ event.endDate|format_date('dd MMM YYYY') }}</span>
+						<span class="place"><i class="icon-map-marker"></i>{{ event.place }}</span>
+					</div>
+				</header>
+				<p class="event-panel-description">
+					{% set maxLength = 350 %}
+					{{ event.description|length > maxLength ? event.description[:maxLength] ~ '…' : event.description }}
+				</p>
+			</div>
+			
+			<footer class="event-panel-footer">
+				{%  if event.label %}
+				<div class="event-panel-footer-content">
+					<div class="event-label" style="background-color:{{ event.label.backgroundColor ? event.label.backgroundColor : '#6da854' }}">
+						{{ event.label.title }}
+					</div>
+				</div>
+				{% endif %}
+			</footer>
+		</div>
+	</article>
+	{% endfor %}
+</section>
+{% endblock %}
+
+{% block aside %}
+<h1>AGENDA</h1>
+{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+
+{% if asideMapDocumentList %}<h1 class="favorites_h1">{{ asideMapTitle|trans }}{% if asideMapTitle == "My favorites" %}<a href="{{ path('tst_agenda', {'filter' : 'favorite'}) }}">{% trans %}See all{% endtrans %}</a>{% endif %}</h1>
+
+<div class="colored-box bgBlue">
+	{{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': asideMapDocumentList, 'zoomMax': 100 })) }}
+	<div class="events-list">
+		<table class="striped bgWhite aside-box-table">
+			{% for event in asideMapDocumentList %}
+			<tr>
+				<th class="darkGrey w20" style="padding-right:0"><a href="{{ path('tst_event', {'id' : event.id }) }}" class="block-link">{{ event.startDate|date('d/m') }}</a></th>
+				<td><a href="{{ path('tst_event', {'id' : event.id }) }}" class="block-link">{{ event.title|truncate(35) }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

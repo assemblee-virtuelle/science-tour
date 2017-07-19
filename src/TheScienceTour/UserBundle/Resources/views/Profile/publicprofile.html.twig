@@ -1,0 +1,131 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ other.username }} {% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-blue"{% endblock %}
+
+{% block banner %}
+<div class="profile_panel">
+	<div class="profile_panel_avatar">
+    {% if other.avatar is null %}
+		<img title="{{ other.username }}" width="120" height="120" src="{{ asset('img/test_avatar50.png') }}" alt="" />
+	{% else %}
+		{% thumbnail other.avatar, 'big' %}
+	{% endif %}
+	</div>
+	<div class="profile_panel_content">
+		<header class="profile_panel_header">
+			<h1 class="profile_panel_username txtshadowed">{{ other.username }}</h1>
+			<p class="profile_panel_city txtshadowed">{{ other.city }}</p>
+		</header>
+		<p class="profile_panel_description txtshadowed">{{ other.description }}</p>
+	</div>
+
+	<div class="banner-overlay">
+		<div class="banner-overlay-box">
+			<h2 class="profile_numbers">{% trans %}In figures{% endtrans %}</h2>
+			<ul class="banner-overlay-nav">
+				<li>
+					<div>
+						<b class="profile_number">{{ projects|length }}</b> {% trans %}Sponsored projects{% endtrans %}
+					</div>
+				</li>
+				<li>
+					<div>
+						<b class="profile_number">{{ challenges|length }}</b> {% trans %}Challenges{% endtrans %}
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{%  block scripts %}
+<script>
+	function show(id) {
+	
+		var tabsul = document.getElementById('tabs');
+		var containers = document.getElementsByClassName('tab-container');
+
+		for (var i=0; i<containers.length; i++) {
+			if (i==id) {
+				tabsul.children[i].className = 'active';
+				containers[i].style.display = 'block';
+			} else {
+				tabsul.children[i].className = '';
+				containers[i].style.display = 'none';
+			}
+		}
+	}
+</script>			
+{% endblock %}
+
+{% block content %}
+
+<ul id="tabs" class="tabs">
+	<li class="active"><a href="javascript:show(0);"><h1>{% trans %}Informations{% endtrans %}</h1></a></li>
+	<li><a href="javascript:show(1);"><h1>{% trans %}Projects{% endtrans %}</h1></a></li>
+	<li><a href="javascript:show(2);"><h1>{% trans %}Challenges{% endtrans %}</h1></a></li>
+</ul>
+
+<div class="tab-container">
+	<div class="tab-container-inner">
+		<h1>{% trans %}Education{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ other.info1|purify }}
+		</div>
+		<h1>{% trans %}Research topics{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ other.info2|purify }}
+		</div>
+		<h1>{% trans %}Availability{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ other.info3|purify }}
+		</div>
+	</div>
+</div>
+<div class="tab-container" style="display: none;">
+	<div class="tab-container-inner-small">
+		<h1>{% trans %}Sponsored projects{% endtrans %}</h1>
+		{% if projects|length > 0 %}
+		{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': projects, 'nbByRow': 3, 'mgr': 0 })) }}
+		{% else %}
+		<p>{% trans %}No sponsored project{% endtrans %}</p>
+		{% endif %}
+	</div>
+</div>
+<div class="tab-container" style="display: none;">
+	<div class="tab-container-inner-small">
+		<h1>{% trans %}Challenges of sponsored projects{% endtrans %}</h1>
+		{% if challenges|length > 0 %}
+		{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': challenges, 'nbByRow': 3, 'mgr': 0 })) }}
+		{% else %}
+		<p>{% trans %}No challenge{% endtrans %}</p>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock %}
+
+{% block aside %}
+
+<h1>{% trans %}Roles{% endtrans %}</h1>
+{% if other.userRoles and other.userRoles|length > 0 %}
+<div class="researcher_roles">
+	<ul>
+	{% for role in other.userRoles %}
+		<li>
+			{% if role.picture is null %}
+			<img title="{{ role.organization }}" src="{{ asset('img/test_researcher_role35.png') }}" alt="" />
+			{% else %}
+			{% thumbnail role.picture, 'small' with {'title': role.organization} %}
+			{% endif %}
+			<span>{{ role.organization }}</span>
+			{{ role.job }}&nbsp;
+		</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endif %}
+{% endblock %}

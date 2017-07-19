@@ -1,0 +1,38 @@
+{{ google_map_container(map) }}
+{{ google_map_js(map) }}
+<script>
+var listener_{{ map.javascriptVariable }} = google.maps.event.addListener({{ map.javascriptVariable }}, "idle", function() {
+	{% if defaultMap %}
+	{# default map is centered on France #}
+		{{ map.javascriptVariable }}.setCenter(new google.maps.LatLng(46.6, 6.7));
+		{{ map.javascriptVariable }}.setZoom(5);
+	{% endif %}
+	if ({{ map.javascriptVariable }}.getZoom() > 10)
+	{{ map.javascriptVariable }}.setZoom(10);
+	google.maps.event.removeListener(listener_{{ map.javascriptVariable }});
+});
+</script>
+<div class="banner-overlay map-overlay">
+	{% for menu in menus %}
+	<div class="banner-overlay-box">
+		{% if menu.title is defined %}<h3>{{ menu.title }}</h3>{% endif %}
+		{% if menu.before is defined %}
+			{% if menu.before.controller %}
+				{{ render(controller(menu.before.name, menu.before.params)) }}
+			{% else %}
+				{% include menu.before.name with menu.before.params %}
+			{% endif %}
+		{% endif %}
+		<ul class="banner-overlay-nav">
+			{% for item in menu.items %}
+			<li>
+				<a href="{{ item.href }}"{% if item.active %} class="active"{% endif %}>
+					{% if item.icon is defined %}<i class="{{ item.icon }}"></i>{% endif %}{{ item.text }}
+					{% if item.details is defined %}<span>{{ item.details }}</span>{% endif %}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endfor %}
+</div>

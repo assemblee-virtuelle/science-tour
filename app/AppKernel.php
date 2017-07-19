@@ -41,6 +41,15 @@ class AppKernel extends Kernel
       	    new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
 
 	   new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
+            new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
+            new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
+            new TheScienceTour\EventBundle\TheScienceTourEventBundle(),
+            new TheScienceTour\MapBundle\TheScienceTourMapBundle(),
+            new TheScienceTour\MediaBundle\TheScienceTourMediaBundle(),
+            new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
+            new TheScienceTour\ProjectBundle\TheScienceTourProjectBundle(),
+            new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

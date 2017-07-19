@@ -1,0 +1,11 @@
+Bonjour {{ project.creator.username|raw }} !
+
+L'utilisateur {{ user.username|raw }} propose un don de {{ number }} x "{{ res.name|raw }}" pour votre projet "{{ project.title|raw }}".
+
+{#}Pour accepter, veuillez suivre le lien suivant :
+{{ url('tst_project_activate_res_helper', {'id': project.id, 'idres': res.id, 'idhelper': user.id, 'number': number}) }}#}
+Pour gérer les propositions de dons, veuillez suivre le lien suivant :
+{{ url('tst_project_admin', {'id': project.id}) }}
+
+
+L'équipe du Science Tour.

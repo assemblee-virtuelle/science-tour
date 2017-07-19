@@ -1,0 +1,24 @@
+{% if route.routeName == "tst_agenda_day" %}
+	{% set mainParam = { 'date': route.parameters.date} %}
+{% else %}
+	{% set mainParam = { 'filter': route.parameters.filter} %}
+{% endif %}
+
+<div id="map-filter-geonear">
+	<form action="{{ path(route.routeName, mainParam) }}">
+		<button id="geonear_btn" type="submit">
+			<i class="icon-map-marker"></i>
+		</button>
+		{{ form_widget(form.center) }}
+		<script>
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				document.getElementById('geonear_btn').click();
+			});
+		</script>
+		
+	</form>
+	<p>
+		<a href="{{ path(route.routeName, mainParam|merge({'center': 'around-me' })) }}"{% if route.parameters.center == 'around-me' %} class="active"{% endif %}>{% trans %}Around me{% endtrans %}</a>
+		<a href="{{ path(route.routeName, mainParam|merge({'center': 'all' })) }}"{% if route.parameters.center == 'all' %} class="active"{% endif %}>{% trans %}All{% endtrans %}</a>
+	</p>
+</div>

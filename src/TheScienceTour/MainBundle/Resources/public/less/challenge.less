@@ -1,0 +1,138 @@
+#main {
+	#content {
+		.tab-container {
+			.contribute-link {
+				display: block;
+				width: 200px;
+				margin: 0 auto;
+				text-decoration: initial;
+				background-color: #227390;
+				color: #FFFFFF;
+				text-align:center;
+				padding: 10px;
+				font-family: @font1;
+				font-size: @font1Small;
+				letter-spacing: 1px;
+			}
+		}
+		.challenge_form {
+			#form_skills > div div {
+				input[type=text] {
+					width: 300px;
+				}
+				div:first-child {
+					display: inline-block;
+					width: 60%;
+				}
+				div:last-child {
+					display: inline-block;
+					width: 20%;
+					text-align: center;
+					float: inherit;
+				}
+			}
+		}
+		.challenge_items {
+			li p span {
+				color: #36B0E3;	
+			}
+		}
+		.challenge-panel {
+			.box-shadow();
+			height: 182px;
+			margin-bottom: 18px;
+			background-color: @colorLight;
+			border: solid #DBDBDB 1px;
+			position: relative;
+			.challenge-panel-figure {
+				position: relative;
+				float: left;
+				margin: 0;
+			}
+			.challenge-panel-content-wrapper {
+				height: 147px;
+				margin-left: 462px;
+				padding: 0 15px 15px 15px;
+				.challenge-panel-content {
+					max-height: 100%;
+					overflow: hidden;
+					.challenge-panel-title {
+						font-family: @font2;
+						color: @colorGrey1;
+						font-size: 18px;
+					}
+				}
+			}
+			.challenge-panel-footer {
+				margin: 0 10px 0 472px;
+				span {
+					margin-top: -2px;
+					float: right;
+					color: #36B0E3;
+					font-size: 15px;
+					font-weight: bold;
+					i {
+						margin-right: 3px;
+						color: @colorGrey7;
+					}
+				}
+			}
+			&.has_notif {
+				border: 2px @colorRed solid;
+			}
+			.notif {
+				position: absolute;
+				top: 5px;
+				right: 5px;
+			}
+		}
+	}
+}
+
+.challenge-label {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50px;
+	height: 50px;
+	margin: -3px -3px 0 0;
+	overflow: hidden;
+	div {
+		.box-shadow(1px 2px 3px rgba(0,0,0,0.5));
+		position: absolute;
+		width: 70px;
+		height: 14px;
+		margin: 10px -5px;
+		background: #36B0E3;
+		text-align: center;
+		color: white;
+		font-family: @font1;
+		font-size: 12px;
+		letter-spacing: 1px;
+		padding: 2px;
+		-ms-transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+}
+
+.challenge_progress_bar {
+	width: 100%;
+	height: 6px;
+	background-color: #C2C2C2;
+	div {
+		height: 100%;
+		background-color: #36B0E3;
+	}
+}
+
+.challenge-project-button {
+	display: block;
+	color: #FFFFFF;
+	text-align:center;
+	padding: 10px;
+	font-family: @font1;
+	font-size: @font1Small;
+	text-decoration: none;
+	background: #36B0E3;
+}

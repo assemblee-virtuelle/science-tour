@@ -1,0 +1,5 @@
+{% extends "TheScienceTourProjectBundle:chat:chatForm.html.twig" %}
+{% block form_title %}{% trans %}Add a message{% endtrans %}{% endblock %}
+{% block form_action %}
+	action = "{{ path('tst_project_add_message', {'id' : project.id, 'idchat': chat.id}) }}"
+{% endblock %}

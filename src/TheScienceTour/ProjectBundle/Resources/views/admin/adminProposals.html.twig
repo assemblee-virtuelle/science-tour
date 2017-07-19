@@ -1,0 +1,275 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
+
+{%  block scripts %}
+<script>
+
+	function pause(id) {
+		var div = document.getElementById(id).children[1];
+		
+		if (div.children[2].value == "0") {
+			div.children[0].style.display = "none";
+			div.children[2].value = div.children[0].value;
+			div.children[1].value = div.children[2].value;
+		} else {
+			div.children[0].style.display = "inline";
+			div.children[2].value = "0";
+			div.children[1].value = "#";
+		}
+	}
+	
+	function play(id) {
+		var div = document.getElementById(id).children[1];
+		
+		if (div.children[4].value == "0") {
+			div.children[0].style.display = "none";
+			div.children[1].style.display = "none";
+			div.children[4].value = div.children[0].value;
+			div.children[3].value = div.children[4].value;
+		} else {
+			if (div.children[2].value == "0") {
+				div.children[0].style.display = "inline";
+			}
+			div.children[1].style.display = "inline";
+			div.children[4].value = "0";
+			div.children[3].value = "#";
+		}
+	}
+
+	function stop(id) {
+		var div = document.getElementById(id);
+		var hidden = document.getElementById("delete_"+id);
+		
+		if (hidden.value == "0") {
+			div.style.opacity = .2;
+			div.children[1].children[0].disabled = true;
+			div.children[1].children[1].disabled = true;
+			div.children[1].children[3].disabled = true;
+			hidden.value = "1";
+		} else {			
+			div.style.opacity = 1;
+			div.children[1].children[0].disabled = false;
+			div.children[1].children[1].disabled = false;
+			div.children[1].children[3].disabled = false;
+			hidden.value = "0";
+		}
+
+	}
+
+</script>
+
+{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed"><a href="{{ path('tst_project', {'id' : project.id}) }}">{{ project.title }}</a></h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+
+<form class="project_form" method="post">
+
+	<button type="submit" class="button orange_button" />Sauvegarder</button>
+
+	<ul id="tabs" class="tabs">
+		<li class="active"><h1>{% trans %}Proposals{% endtrans %}</h1></li>
+		<li><a href="{{ path('tst_project_admin', {'id' : project.id, 'tab' : 'team' }) }}"><h1>{% trans %}Team{% endtrans %}</h1></a></li>
+	</ul>
+
+	<div class="tab-container">
+		<div class="tab-container-inner">
+
+		{% set proposalNb = 0 %}
+		
+			{% for tool in project.tools %}
+				{% if tool.uncompletedHelps.count > 0 %}
+				{% set toolIndex = loop.index0 %}
+				<div>
+					<h1>{{ tool.name }} {{ tool.actualNumber }}/{{ tool.number }}</h1>
+					<ul class="admin_list">
+						{% for help in tool.uncompletedHelps %}
+						{% set proposalNb = proposalNb + 1 %}
+						<li>
+							<div class="inbl" id="tool_help[{{ toolIndex }}][{{ loop.index0 }}]">
+							<div class="admin_helper w400p">
+								<a href="{{ path('tst_project_admin_chat', {'id' : project.id, 'idres' : tool.id, 'idhelp' : loop.index0 }) }}" alt="">
+									{% if help.helper.avatar is null %}
+									<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+									{% else%}
+									{% thumbnail help.helper.avatar, 'small' %}
+									{% endif %}
+									<h2>{{ help.helper.username }}<span>{{ help.helper.city }}</span></h2>
+									<p class="overview">
+										{% if help.chat is not null %}
+											{% if help.chat.messages|length != 0 %}
+												{% if app.user in help.chat.messages.last.unreadBy %}
+												<b>{{ help.chat.messages.last.content }}</b>
+												{% else %}
+												{% if app.user == help.chat.messages.last.author %}<i class="icon-reply mgr5p"></i> {% endif %}{{ help.chat.messages.last.content }}
+												{% endif %}
+											{% endif %}
+										{% endif %}
+									</p>
+								</a>
+							</div>
+							<div class="buttons">
+								<select {% if help.nbNeeded != 0 %}style="display: none;"{% endif %}>
+								{% for i in 1..help.nbProposed %}
+									<option value="{{ i }}" {% if loop.last %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+								</select>
+								<input class="pause" type="button" onClick="javascript:pause('tool_help[{{ toolIndex }}][{{ loop.index0 }}]');" value="{% if help.nbNeeded != 0 %}{{ help.nbNeeded }}{% else %}#{% endif %}">
+								<input type="hidden" name="neededTools[{{ toolIndex }}][{{ loop.index0 }}]" value="{{ help.nbNeeded }}" />
+								<input class="play" type="button" onClick="javascript:play('tool_help[{{ toolIndex }}][{{ loop.index0 }}]');" value="#">
+								<input type="hidden" name="receivedTools[{{ toolIndex }}][{{ loop.index0 }}]" value="0" />
+							</div>
+							</div>
+							<input class="stop" type="button" onClick="javascript:stop('tool_help[{{ toolIndex }}][{{ loop.index0 }}]');" value="#">
+							<input type="hidden" id="delete_tool_help[{{ toolIndex }}][{{ loop.index0 }}]" name="deleteTools[{{ toolIndex }}][{{ loop.index0 }}]" value="0" />
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+			{% endfor %}
+			
+			{% for material in project.materials %}
+				{% if material.uncompletedHelps.count > 0 %}
+				{% set materialIndex = loop.index0 %}
+				<div>
+					<h1>{{ material.name }} {{ material.actualNumber }}/{{ material.number }}</h1>
+					<ul class="admin_list">
+						{% for help in material.uncompletedHelps %}
+						{% set proposalNb = proposalNb + 1 %}
+						<li>
+							<div class="inbl" id="material_help[{{ materialIndex }}][{{ loop.index0 }}]">
+							<div class="admin_helper w400p">
+								<a href="{{ path('tst_project_admin_chat', {'id' : project.id, 'idres' : material.id, 'idhelp' : loop.index0 }) }}" alt="">
+									{% if help.helper.avatar is null %}
+									<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+									{% else%}
+									{% thumbnail help.helper.avatar, 'small' %}
+									{% endif %}
+									<h2>{{ help.helper.username }}<span>{{ help.helper.city }}</span></h2>
+									<p class="overview">
+										{% if help.chat is not null %}
+											{% if app.user in help.chat.messages.last.unreadBy %}
+											<b>{{ help.chat.messages.last.content }}</b>
+											{% else %}
+											{% if app.user == help.chat.messages.last.author %}<i class="icon-reply mgr5p"></i> {% endif %}{{ help.chat.messages.last.content }}
+											{% endif %}
+										{% endif %}
+									</p>
+								</a>
+							</div>
+							<div class="buttons">
+								<select {% if help.nbNeeded != 0 %}style="display: none;"{% endif %}>
+								{% for i in 1..help.nbProposed %}
+									<option value="{{ i }}" {% if loop.last %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+								</select>
+								<input class="pause" type="button" onClick="javascript:pause('material_help[{{ materialIndex }}][{{ loop.index0 }}]');" value="{% if help.nbNeeded != 0 %}{{ help.nbNeeded }}{% else %}#{% endif %}">
+								<input type="hidden" name="neededMaterials[{{ materialIndex }}][{{ loop.index0 }}]" value="{{ help.nbNeeded }}" />
+								<input class="play" type="button" onClick="javascript:play('material_help[{{ materialIndex }}][{{ loop.index0 }}]');" value="#">
+								<input type="hidden" name="receivedMaterials[{{ materialIndex }}][{{ loop.index0 }}]" value="0" />
+							</div>
+							</div>
+							<input class="stop" type="button" onClick="javascript:stop('material_help[{{ materialIndex }}][{{ loop.index0 }}]');" value="#">
+							<input type="hidden" id="delete_material_help[{{ materialIndex }}][{{ loop.index0 }}]" name="deleteMaterials[{{ materialIndex }}][{{ loop.index0 }}]" value="0" />
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+			{% endfor %}
+			
+			{% for premise in project.premises %}
+				{% if premise.uncompletedHelps.count > 0 %}
+				{% set premiseIndex = loop.index0 %}
+				<div>
+					<h1>{{ premise.name }} {{ premise.actualNumber }}/{{ premise.number }}</h1>
+					<ul class="admin_list">
+						{% for help in premise.uncompletedHelps %}
+						{% set proposalNb = proposalNb + 1 %}
+						<li>
+							<div class="inbl" id="premise_help[{{ premiseIndex }}][{{ loop.index0 }}]">
+							<div class="admin_helper w400p">
+								<a href="{{ path('tst_project_admin_chat', {'id' : project.id, 'idres' : premise.id, 'idhelp' : loop.index0 }) }}" alt="">
+									{% if help.helper.avatar is null %}
+									<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+									{% else%}
+									{% thumbnail help.helper.avatar, 'small' %}
+									{% endif %}
+									<h2>{{ help.helper.username }}<span>{{ help.helper.city }}</span></h2>
+									<p class="overview">
+										{% if help.chat is not null %}
+											{% if app.user in help.chat.messages.last.unreadBy %}
+											<b>{{ help.chat.messages.last.content }}</b>
+											{% else %}
+											{% if app.user == help.chat.messages.last.author %}<i class="icon-reply mgr5p"></i> {% endif %}{{ help.chat.messages.last.content }}
+											{% endif %}
+										{% endif %}
+									</p>
+								</a>
+							</div>
+							<div class="buttons">
+								<select {% if help.nbNeeded != 0 %}style="display: none;"{% endif %}>
+								{% for i in 1..help.nbProposed %}
+									<option value="{{ i }}" {% if loop.last %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+								</select>
+								<input class="pause" type="button" onClick="javascript:pause('premise_help[{{ premiseIndex }}][{{ loop.index0 }}]');" value="{% if help.nbNeeded != 0 %}{{ help.nbNeeded }}{% else %}#{% endif %}">
+								<input type="hidden" name="neededPremises[{{ premiseIndex }}][{{ loop.index0 }}]" value="{{ help.nbNeeded }}" />
+								<input class="play" type="button" onClick="javascript:play('premise_help[{{ premiseIndex }}][{{ loop.index0 }}]');" value="#">
+								<input type="hidden" name="receivedPremises[{{ premiseIndex }}][{{ loop.index0 }}]" value="0" />
+							</div>
+							</div>
+							<input class="stop" type="button" onClick="javascript:stop('premise_help[{{ premiseIndex }}][{{ loop.index0 }}]');" value="#">
+							<input type="hidden" id="delete_premise_help[{{ premiseIndex }}][{{ loop.index0 }}]" name="deletePremises[{{ premiseIndex }}][{{ loop.index0 }}]" value="0" />
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+			{% endfor %}
+			
+			{% if proposalNb == 0 %}
+				<div class="admin_no_proposals">
+					<p class="admin_bigtxt">{% trans %}No proposals for this project.{% endtrans %}</p>
+					<p>{% trans %}Make know your project in your network{% endtrans %}</p>
+					<div class="admin_social">
+						<a class="share-button facebook-button" target="_blank" title="Facebook" href="https://www.facebook.com/sharer.php?u={{ url('tst_project', {'id' : project.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="icon-facebook-sign"></i></a>
+						<a class="share-button twitter-button" target="_blank" title="Twitter" href="https://twitter.com/share?url={{ url('tst_project', {'id' : project.id}) }}&text=Le Science Tour - Projet {{ project.title|url_encode(true) }}&hashtags=lesciencetour" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i class="icon-twitter-sign"></i></a>
+						<a class="share-button googleplus-button" target="_blank" title="Google +" href="https://plus.google.com/share?url={{ url('tst_project', {'id' : project.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i class="icon-google-plus-sign"></i></a>
+						<a class="share-button mail-button" title="Mail" href="mailto:?subject=Le Science Tour - Projet {{ project.title|replace({'&': '%26'}) }}&body={{ url('tst_project', {'id' : project.id}) }}" rel="nofollow"><i class="icon-envelope"></i></a>
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block aside %}
+
+<h1 style="margin-top: 35px">{% trans %}Manage my proposals{% endtrans %}</h1>
+<div class="proposals">
+	<p>{% trans %}When you receive a proposal for a resource, you can choose to:{% endtrans %}</p>
+		<ul>
+			<li><div class="pause"></div><p>{% trans %}Accept a certain quantity and wait for the receipt of the goods.{% endtrans %}</p></li>
+			<li><div class="play"></div><p>{% trans %}Confirm receipt of the goods.{% endtrans %}</p></li>
+			<li><div class="stop"></div><p>{% trans %}Refuse or cancel the proposal.{% endtrans %}</p></li>		
+		</ul>
+</div>
+	
+
+{% endblock %}

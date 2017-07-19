@@ -1,0 +1,12 @@
+{%  extends "TheScienceTourMainBundle::main-bigcontent.html.twig" %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-purple"{% endblock %}
+
+{% block content %}
+
+  {% block fos_user_content %}
+  {% endblock %}
+  
+{% endblock %}
