@@ -1,6 +1,6 @@
 the_science_tour_user:
     resource: "@TheScienceTourUserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /users
 
 the_science_tour_project:
     resource: "@TheScienceTourProjectBundle/Resources/config/routing.yml"
