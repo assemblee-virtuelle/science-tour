@@ -1,10 +1,10 @@
 <?php
 
-namespace TheScienceTour\UserBundle\Document;
+namespace TheScienceTour/UserBundle/Document;
 
-use FOS\UserBundle\Document\User as BaseUser;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
+use FOS/UserBundle/Document/User as BaseUser;
+use Doctrine/ODM/MongoDB/Mapping/Annotations as MongoDB;
+use TheScienceTour/MediaBundle/Validator/Constraints as TSTMediaAssert;
 
 
 /**
