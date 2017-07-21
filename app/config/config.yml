@@ -6,7 +6,6 @@ imports:
     - { resource: "@TheScienceTourDocumentBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourEventBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourMapBundle/Resources/config/services.yml" }
-    - { resource: "@TheScienceTourMediaBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourMessageBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourProjectBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourUserBundle/Resources/config/services.yml" }

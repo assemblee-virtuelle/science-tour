@@ -10,10 +10,6 @@ the_science_tour_project:
 #    resource: "@TheScienceTourMessageBundle/Resources/config/routing.yml"
 #    prefix:   /
 
-the_science_tour_media:
-    resource: "@TheScienceTourMediaBundle/Resources/config/routing.yml"
-    prefix:   /
-
 the_science_tour_map:
     resource: "@TheScienceTourMapBundle/Resources/config/routing.yml"
     prefix:   /
@@ -37,3 +33,4 @@ the_science_tour_main:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+    prefix: /exemple

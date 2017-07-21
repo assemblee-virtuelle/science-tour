@@ -1,3 +1,0 @@
-the_science_tour_media_homepage:
-    path:     /
-    defaults: { _controller: TheScienceTourMediaBundle:Default:index }
