@@ -40,7 +40,7 @@ class ProjectTranslation /* extends BaseDocument */ {
   protected $translator;
 
   /**
-   * @MongoDB\Int
+   * @MongoDB\Field(type="Int")
    */
   protected $status; // 0: draft, 1: published
 
@@ -67,26 +67,26 @@ class ProjectTranslation /* extends BaseDocument */ {
   protected $original;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank()
    * @Assert\Length(min="0", max="100")
    */
   protected $title;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $goal; // Goal of the game
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $description; // Rules of the game
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    */
   protected $language;
 

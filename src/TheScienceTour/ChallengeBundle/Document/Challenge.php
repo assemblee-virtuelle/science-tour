@@ -58,7 +58,7 @@ class Challenge /* extends BaseDocument */ {
 	protected $finishedAt;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 * @Assert\Length(min="0", max="100")
 	 */
@@ -73,19 +73,19 @@ class Challenge /* extends BaseDocument */ {
 	protected $picture;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $description; // Goal of the challenge
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $rules; // Rules of the challenge
 
 	/**
-	 * @MongoDB\Int
+	 * @MongoDB\Field(type="Int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=0)
@@ -93,7 +93,7 @@ class Challenge /* extends BaseDocument */ {
 	protected $duration;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 * @Assert\Choice({"day", "week", "month"})
 	 */

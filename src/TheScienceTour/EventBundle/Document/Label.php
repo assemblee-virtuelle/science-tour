@@ -17,9 +17,9 @@ class Label {
 	 * @MongoDB\Id
 	 */
 	protected $id;
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $title;
@@ -28,9 +28,9 @@ class Label {
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\EventBundle\Document\LabelType")
 	 */
 	protected $labelType;
-		
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $backgroundColor;
 
@@ -55,7 +55,7 @@ class Label {
         $this->title = $title;
         return $this;
     }
-    
+
     /**
      * Get title
      *
@@ -99,7 +99,7 @@ class Label {
     	$this->labelType = $labelType;
     	return $this;
     }
-    
+
     /**
      * Get labelType
      *
@@ -109,7 +109,7 @@ class Label {
     {
     	return $this->labelType;
     }
-    
+
     public function __toString() {
     	return $this->getTitle();
     }

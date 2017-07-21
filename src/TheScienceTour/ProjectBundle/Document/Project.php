@@ -55,7 +55,7 @@ class Project /* extends BaseDocument */ {
   protected $delegate;
 
   /**
-   * @MongoDB\Int
+   * @MongoDB\Field(type="Int")
    */
   protected $status; // 0: draft, 1: published
 
@@ -87,14 +87,14 @@ class Project /* extends BaseDocument */ {
   protected $finishedAt;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank()
    * @Assert\Length(min="0", max="100")
    */
   protected $title;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @TSTMapAssert\ProvidedAddress(groups={"publish"})
    */
   protected $place;
@@ -108,19 +108,19 @@ class Project /* extends BaseDocument */ {
   protected $picture;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $goal; // Goal of the game
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $description; // Rules of the game
 
   /**
-   * @MongoDB\Int
+   * @MongoDB\Field(type="Int")
    * @Assert\Type(type="integer", groups={"publish"})
    * @Assert\NotBlank(groups={"publish"})
    * @Assert\Range(min=0, groups={"publish"})
@@ -128,14 +128,14 @@ class Project /* extends BaseDocument */ {
   protected $duration;
 
   /**
-   * @MongoDB\String
+   * @MongoDB\Field(type="String")
    * @Assert\NotBlank(groups={"publish"})
    * @Assert\Choice({"day", "week", "month"})
    */
   protected $durationUnit;
 
   /**
-   * @MongoDB\Int
+   * @MongoDB\Field(type="Int")
    * @Assert\Type(type="integer", groups={"publish"})
    * @Assert\Range(min=0, groups={"publish"})
    */
@@ -192,7 +192,7 @@ class Project /* extends BaseDocument */ {
   protected $distance;
 
   /**
-   * @MongoDB\Boolean
+   * @MongoDB\Field(type="Bool")ean
    */
   protected $frontPage;
 
@@ -207,7 +207,7 @@ class Project /* extends BaseDocument */ {
   protected $challenge;
 
   /**
-   * @MongoDB\Boolean
+   * @MongoDB\Field(type="Bool")ean
    */
   protected $isErasmus; // Est-ce un projet Erasmus ?
 

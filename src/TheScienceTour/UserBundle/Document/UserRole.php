@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace TheScienceTour\UserBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -9,48 +9,48 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
  * @MongoDB\EmbeddedDocument
  */
 class UserRole {
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $organization;
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $job;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\MediaBundle\Document\Media", cascade={"persist"})
 	 * @TSTMediaAssert\ValidImgRes()
 	 * @TSTMediaAssert\ValidImgSize()
 	 */
 	protected $picture;
-	
+
 	public function getOrganization() {
 		return $this->organization;
 	}
-	
+
 	public function getJob() {
 		return $this->job;
 	}
-	
+
 	public function getPicture() {
 		return $this->picture;
 	}
-	
+
 	public function setOrganization($organization) {
 		$this->organization = $organization;
 	}
-	
+
 	public function setJob($job) {
 		$this->job = $job;
 	}
-	
+
 	public function setPicture($picture) {
 		$this->picture = $picture;
 	}
-	
+
 
 }

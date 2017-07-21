@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace TheScienceTour\ChallengeBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -9,35 +9,35 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 
 class ChallengeRes {
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $name;
-	
+
 	/**
-	 * @MongoDB\Int
+	 * @MongoDB\Field(type="Int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=0)
 	 */
 	protected $number;
-	
+
 	public function getName() {
 		return $this->name;
 	}
-	
+
 	public function getNumber() {
 		return $this->number;
 	}
-	
+
 	public function setName($name) {
 		$this->name = $name;
 	}
-	
+
 	public function setNumber($number) {
 		$this->number = $number;
 	}
-	
+
 }

@@ -10,12 +10,12 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Coordinates
 {
 	/**
-	 * @MongoDB\Float
+	 * @MongoDB\Field(type="Float")
 	 */
 	protected $longitude;
 
 	/**
-	 * @MongoDB\Float
+	 * @MongoDB\Field(type="Float")
 	 */
 	protected $latitude;
 
@@ -62,7 +62,7 @@ class Coordinates
 	{
 		return $this->latitude;
 	}
-	
+
 	public function __toString() {
 		return $this->latitude.", ".$this->longitude;
 	}

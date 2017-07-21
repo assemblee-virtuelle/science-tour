@@ -1,10 +1,11 @@
 <?php
 
-namespace TheScienceTour/UserBundle/Document;
+namespace TheScienceTour\UserBundle\Document;
 
-use FOS/UserBundle/Document/User as BaseUser;
-use Doctrine/ODM/MongoDB/Mapping/Annotations as MongoDB;
-use TheScienceTour/MediaBundle/Validator/Constraints as TSTMediaAssert;
+/*use FOS\UserBundle\Document\User as BaseUser;*/
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
 
 
 /**
@@ -25,12 +26,12 @@ class User extends BaseUser {
 	protected $avatar;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $city;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $description;
 
@@ -45,17 +46,17 @@ class User extends BaseUser {
 	protected $notifications;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $info1; // for researcher: education
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $info2; // for researcher: research topics
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 */
 	protected $info3; // for researcher: availability
 

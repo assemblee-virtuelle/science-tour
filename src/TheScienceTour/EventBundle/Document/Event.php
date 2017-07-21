@@ -23,30 +23,30 @@ class Event {
 	 * @MongoDB\Id
 	 */
 	protected $id;
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $title;
 
 	/**
-	 * @MongoDB\Int
+	 * @MongoDB\Field(type="Int")
 	 */
 	protected $bidullActivityId;
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $description;
-	
+
 	/**
 	 * @MongoDB\Date
 	 * @Assert\NotBlank()
 	 */
 	protected $startDate;
-	
+
 	/**
 	 * @MongoDB\Date
 	 * @Assert\NotBlank()
@@ -54,39 +54,39 @@ class Event {
 	protected $endDate;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 * @TSTMapAssert\ProvidedAddress()
 	 */
 	protected $place;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\MediaBundle\Document\Media", cascade={"persist", "remove"})
 	 * @TSTMediaAssert\ValidImgRes()
 	 * @TSTMediaAssert\ValidImgSize()
 	 */
 	protected $picture;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\EventBundle\Document\Label")
 	 */
 	protected $label;
-	
+
 	/**
-	 * @MongoDB\Boolean
+	 * @MongoDB\Field(type="Bool")ean
 	 */
 	protected $frontPage;
-	
+
 	/**
 	 * @MongoDB\EmbedOne(targetDocument="TheScienceTour\MapBundle\Document\Coordinates")
 	 */
 	protected $coordinates;
-	
+
 	/**
 	 * @MongoDB\Distance
 	 */
 	protected $distance;
-	
+
     /**
      * Get id
      *
@@ -96,7 +96,7 @@ class Event {
     {
         return $this->id;
     }
-    
+
     /**
      * Set title
      *
@@ -130,7 +130,7 @@ class Event {
     	$this->bidullActivityId = $bidullActivityId;
     	return $this;
     }
-    
+
     /**
      * Get bidullActivityId
      *
@@ -140,7 +140,7 @@ class Event {
     {
     	return $this->bidullActivityId;
     }
-    
+
     /**
      * Set description
      *
@@ -299,12 +299,12 @@ class Event {
     {
         return $this->coordinates;
     }
-    
+
     public function unsetCoordinates()
     {
     	unset($this->coordinates);
     }
-    
+
     /**
      * Set distance
      *
@@ -326,7 +326,7 @@ class Event {
     {
         return $this->distance;
     }
-    
+
     /**
      * Set label
      *

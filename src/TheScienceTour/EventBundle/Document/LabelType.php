@@ -18,19 +18,19 @@ class LabelType {
 	 * @MongoDB\Id
 	 */
 	protected $id;
-	
+
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $name;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="TheScienceTour\MediaBundle\Document\Media", cascade={"persist"})
 	 * @TSTMediaAssert\ValidImgRes()
@@ -39,7 +39,7 @@ class LabelType {
 	protected $marker;
 
 	/**
-	 * @MongoDB\String
+	 * @MongoDB\Field(type="String")
 	 * @Assert\NotBlank()
 	 */
 	protected $markerFormat;
@@ -50,7 +50,7 @@ class LabelType {
 	 * @TSTMediaAssert\ValidImgSize()
 	 */
 	protected $picture; // Used as the default Event.picture if none has been set
-	
+
     /**
      * Get id
      *
@@ -94,7 +94,7 @@ class LabelType {
     	$this->slug = $slug;
     	return $this;
     }
-    
+
     /**
      * Get slug
      *
@@ -104,7 +104,7 @@ class LabelType {
     {
     	return $this->slug;
     }
-    
+
     /**
      * Set marker
      *
@@ -116,7 +116,7 @@ class LabelType {
     	$this->marker = $marker;
     	return $this;
     }
-    
+
     /**
      * Get marker
      *
@@ -160,7 +160,7 @@ class LabelType {
     	$this->picture = $picture;
     	return $this;
     }
-    
+
     /**
      * Get picture
      *
@@ -170,7 +170,7 @@ class LabelType {
     {
     	return $this->picture;
     }
-    
+
     public function __toString() {
     	return $this->name;
     }
