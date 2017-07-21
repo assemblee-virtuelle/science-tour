@@ -73,13 +73,13 @@ class Challenge /* extends BaseDocument */ {
 	protected $picture;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $description; // Goal of the challenge
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $rules; // Rules of the challenge

@@ -28,7 +28,7 @@ class Message {
 	protected $unreadBy;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $content;
 

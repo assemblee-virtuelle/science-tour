@@ -18,15 +18,15 @@ class Skill {
 	 * @MongoDB\Id
 	 */
 	protected $id;
-	
+
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank(groups={"publish"})
 	 */
 	protected $name;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer", groups={"publish"})
 	 * @Assert\NotBlank(groups={"publish"})
 	 * @Assert\Range(min=0, groups={"publish"})

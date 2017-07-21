@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace TheScienceTour\ProjectBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -17,13 +17,13 @@ class Resource {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank(groups={"publish"})
 	 */
 	protected $name;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer", groups={"publish"})
 	 * @Assert\NotBlank(groups={"publish"})
 	 * @Assert\Range(min=1, max=99, groups={"publish"})
@@ -31,7 +31,7 @@ class Resource {
 	protected $number;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer", groups={"publish"})
 	 * @Assert\NotBlank(groups={"publish"})
 	 * @Assert\Range(min=0, max=99, groups={"publish"})

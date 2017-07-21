@@ -25,18 +25,18 @@ class Event {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $title;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 */
 	protected $bidullActivityId;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $description;
@@ -54,7 +54,7 @@ class Event {
 	protected $endDate;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 * @TSTMapAssert\ProvidedAddress()
 	 */
@@ -73,7 +73,7 @@ class Event {
 	protected $label;
 
 	/**
-	 * @MongoDB\Field(type="Bool")ean
+	 * @MongoDB\Field(type="bool")
 	 */
 	protected $frontPage;
 

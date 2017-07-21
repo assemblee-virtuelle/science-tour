@@ -11,13 +11,13 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
 class UserRole {
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $organization;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $job;
 

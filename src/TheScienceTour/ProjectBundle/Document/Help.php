@@ -16,7 +16,7 @@ class Help {
 	protected $helper;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=1)
@@ -24,7 +24,7 @@ class Help {
 	protected $nbProposed;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=1)
@@ -32,7 +32,7 @@ class Help {
 	protected $nbNeeded;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\Range(min=0)
 	 */

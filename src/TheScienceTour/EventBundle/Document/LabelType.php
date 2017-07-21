@@ -20,13 +20,13 @@ class LabelType {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $name;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $slug;
@@ -39,7 +39,7 @@ class LabelType {
 	protected $marker;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $markerFormat;

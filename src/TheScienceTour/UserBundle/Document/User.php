@@ -26,12 +26,12 @@ class User extends BaseUser {
 	protected $avatar;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $city;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $description;
 
@@ -46,17 +46,17 @@ class User extends BaseUser {
 	protected $notifications;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $info1; // for researcher: education
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $info2; // for researcher: research topics
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $info3; // for researcher: availability
 

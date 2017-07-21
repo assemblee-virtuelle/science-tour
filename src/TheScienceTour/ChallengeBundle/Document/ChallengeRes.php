@@ -11,13 +11,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ChallengeRes {
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $name;
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=0)

@@ -21,7 +21,7 @@ class Chat {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $title;
 
@@ -42,7 +42,7 @@ class Chat {
 	protected $messages;
 
 	/**
-	 * @MongoDB\Field(type="Bool")ean
+	 * @MongoDB\Field(type="bool")
 	 */
 	protected $private;
 

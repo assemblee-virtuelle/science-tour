@@ -19,7 +19,7 @@ class Label {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $title;
@@ -30,7 +30,7 @@ class Label {
 	protected $labelType;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $backgroundColor;
 

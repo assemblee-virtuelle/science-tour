@@ -55,7 +55,7 @@ class Project /* extends BaseDocument */ {
   protected $delegate;
 
   /**
-   * @MongoDB\Field(type="Int")
+   * @MongoDB\Field(type="int")
    */
   protected $status; // 0: draft, 1: published
 
@@ -87,14 +87,14 @@ class Project /* extends BaseDocument */ {
   protected $finishedAt;
 
   /**
-   * @MongoDB\Field(type="String")
+   * @MongoDB\Field(type="string")
    * @Assert\NotBlank()
    * @Assert\Length(min="0", max="100")
    */
   protected $title;
 
   /**
-   * @MongoDB\Field(type="String")
+   * @MongoDB\Field(type="string")
    * @TSTMapAssert\ProvidedAddress(groups={"publish"})
    */
   protected $place;
@@ -108,19 +108,19 @@ class Project /* extends BaseDocument */ {
   protected $picture;
 
   /**
-   * @MongoDB\Field(type="String")
+   * @MongoDB\Field(type="string")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $goal; // Goal of the game
 
   /**
-   * @MongoDB\Field(type="String")
+   * @MongoDB\Field(type="string")
    * @Assert\NotBlank(groups={"publish"})
    */
   protected $description; // Rules of the game
 
   /**
-   * @MongoDB\Field(type="Int")
+   * @MongoDB\Field(type="int")
    * @Assert\Type(type="integer", groups={"publish"})
    * @Assert\NotBlank(groups={"publish"})
    * @Assert\Range(min=0, groups={"publish"})
@@ -128,14 +128,14 @@ class Project /* extends BaseDocument */ {
   protected $duration;
 
   /**
-   * @MongoDB\Field(type="String")
+   * @MongoDB\Field(type="string")
    * @Assert\NotBlank(groups={"publish"})
    * @Assert\Choice({"day", "week", "month"})
    */
   protected $durationUnit;
 
   /**
-   * @MongoDB\Field(type="Int")
+   * @MongoDB\Field(type="int")
    * @Assert\Type(type="integer", groups={"publish"})
    * @Assert\Range(min=0, groups={"publish"})
    */
@@ -192,7 +192,7 @@ class Project /* extends BaseDocument */ {
   protected $distance;
 
   /**
-   * @MongoDB\Field(type="Bool")ean
+   * @MongoDB\Field(type="bool")
    */
   protected $frontPage;
 
@@ -207,7 +207,7 @@ class Project /* extends BaseDocument */ {
   protected $challenge;
 
   /**
-   * @MongoDB\Field(type="Bool")ean
+   * @MongoDB\Field(type="bool")
    */
   protected $isErasmus; // Est-ce un projet Erasmus ?
 

@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Notification {
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $docType;
 

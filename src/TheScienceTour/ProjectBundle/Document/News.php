@@ -18,7 +18,7 @@ class News {
 	protected $id;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 */
 	protected $projectId;
 
@@ -28,7 +28,7 @@ class News {
 	protected $author;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 * @Assert\Regex(
 	 *     pattern="/^\{%/",
@@ -38,7 +38,7 @@ class News {
 	protected $title;
 
 	/**
-	 * @MongoDB\Field(type="String")
+	 * @MongoDB\Field(type="string")
 	 * @Assert\NotBlank()
 	 */
 	protected $content;
