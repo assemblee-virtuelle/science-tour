@@ -61,12 +61,12 @@
 
 <h1>{% trans %}Around me{% endtrans %}</h1>
 <div class="colored-box bgRed">
-	{{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': aroundMeProjects, 'zoom': 8 })) }}
+	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': aroundMeProjects, 'zoom': 8 })) }#}
 </div>
 
 <h1 class="trucks_h1">{% trans %}Trucks{% endtrans %}<a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}See all{% endtrans %}</a></h1>
 <div class="colored-box bgBlue">
-	{{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': trucksList, 'htmlContainerId' : 'trucks-canvas' })) }}
+	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': trucksList, 'htmlContainerId' : 'trucks-canvas' })) }#}
 	<div class="events-list">
 		<table class="striped bgWhite aside-box-table">
 			{% for event in trucksList %}
