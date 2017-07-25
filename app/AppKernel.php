@@ -39,6 +39,7 @@ class AppKernel extends Kernel
       	    new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
       	    new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
       	    new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
 	   new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
