@@ -43,6 +43,17 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+#    bundles:        [ TheScienceTourMainBundle ]
+    filters:
+        cssrewrite: ~
+        lessphp:
+            file: "%kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php"
+            apply_to: "\.less$"
+
 # Doctrine MongoDB Configuration
 doctrine_mongodb:
     connections:
@@ -235,11 +246,11 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-#    app.is_erasmus:
-#        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
-#        tags:
-#          - { name: twig.extension }
-#        arguments: ['@session']
+    app.is_erasmus:
+        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
+        tags:
+          - { name: twig.extension }
+        arguments: ['@session']
 #    app.request_listener:
 #        class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
 #        tags:
