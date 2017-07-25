@@ -1,6 +1,6 @@
 <ul class="project_items">
 	{% for project in projectList %}
-	<li class="{% if loop.index is not divisibleby(nbByRow) %}mgr{{ mgr }}p{% endif %}{% if app.user and app.user.numberOf("project", project.id) > 0 %} has_notif{% endif %}">
+	<li class="{% if loop.index is not divisible by(nbByRow) %}mgr{{ mgr }}p{% endif %}{% if app.user and app.user.numberOf("project", project.id) > 0 %} has_notif{% endif %}">
 		<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
 			{% thumbnail project.picture, 'thumbnail'  %}
 		</a>
