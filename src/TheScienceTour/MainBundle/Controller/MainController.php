@@ -34,7 +34,8 @@ class MainController extends Controller {
 
     try {
       $userGeocode           = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
-      $aroundMeProjectsQuery = $projectRepo->findGeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance, $isErasmus);
+      $coord = $userGeocode->first()->getCoordinates();
+      $aroundMeProjectsQuery = $projectRepo->findGeoNear($coord->getLatitude(), $coord->getLongitude(), $maxDistance, $isErasmus);
       $aroundMeProjects      = $aroundMeProjectsQuery->execute();
     } catch (Exception $e) {
       $session->getFlashBag()->add('notice', $e->getMessage());
@@ -44,7 +45,10 @@ class MainController extends Controller {
       'projectList'      => $projectList,
       'aroundMeProjects' => $aroundMeProjects,
       'trucksList'       => $trucksList,
-      'isErasmus'        => $isErasmus
+      'isErasmus'        => $isErasmus,
+      'erasmusLanguages' => [],
+      'st_contact_mail'  => '',
+      'tst_version'      => 2
     ));
     $response->headers->set('Accept-Language', 'en-US, fr-FR');
 
