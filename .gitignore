@@ -24,6 +24,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/css/
 
 # PHPUnit
 /app/phpunit.xml
