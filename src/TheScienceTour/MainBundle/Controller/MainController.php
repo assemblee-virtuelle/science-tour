@@ -46,7 +46,7 @@ class MainController extends Controller {
       'aroundMeProjects' => $aroundMeProjects,
       'trucksList'       => $trucksList,
       'isErasmus'        => $isErasmus,
-      'erasmusLanguages' => [],
+      'erasmusLanguages' => $this->getParameter('erasmusLanguages'),
       'st_contact_mail'  => '',
       'tst_version'      => 2
     ));
