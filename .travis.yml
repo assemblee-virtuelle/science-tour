@@ -4,6 +4,8 @@ php:
   - 5.3.3
   - 5.3
   - 5.4
+  
+before_install: phpenv config-add science-tour.ini
 
 before_script: composer install
 
