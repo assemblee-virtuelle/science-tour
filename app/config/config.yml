@@ -41,7 +41,7 @@ assetic:
         cssrewrite: ~
         lessphp:
             file: "%kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php"
-            apply_to: "\.less$"
+            apply_to: "\\.less$"
 
 # Swiftmailer Configuration
 swiftmailer:
