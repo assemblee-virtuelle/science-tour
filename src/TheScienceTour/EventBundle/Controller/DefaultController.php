@@ -63,6 +63,7 @@ class DefaultController extends Controller
     	if ($center == 'around-me') {
 	    	// For local testing put in your public IP.
 	    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+        var_dump($userGeocode); die;
 			$geoNear = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
 	    	$centerCoordinates = array(
 	    			'latitude' => $userGeocode->getLatitude(),
@@ -211,8 +212,9 @@ class DefaultController extends Controller
 
     		if (!$userGeocode) {
 		    	// For local testing put in your public IP.
-		    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+		    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR'])->first()->getCoordinates();
 	    	}
+        //var_dump($userGeocode->first()->getCoordinates()); die
 
 	    	$aroundMeGeoNear = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
 
