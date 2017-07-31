@@ -85,7 +85,7 @@ class Challenge /* extends BaseDocument */ {
 	protected $rules; // Rules of the challenge
 
 	/**
-	 * @MongoDB\Field(type="Int")
+	 * @MongoDB\Field(type="int")
 	 * @Assert\Type(type="integer")
 	 * @Assert\NotBlank()
 	 * @Assert\Range(min=0)
