@@ -1,30 +1,30 @@
 fos_user_profile_show:
-    pattern: /{tab}
+    path: /{tab}
     defaults: { _controller: "FOSUserBundle:Profile:show", tab: myprojects }
     requirements:
       _method: get
       tab: mychats|myprojects|mydrafts|myskills|mychallenges|mypublicinfo
 
 fos_user_profile_chat:
-    pattern: /{tab}
+    path: /{tab}
     defaults: { _controller: "FOSUserBundle:Profile:chat" }
 
 fos_user_profile_edit:
-    pattern: /edit
+    path: /edit
     defaults: { _controller: "FOSUserBundle:Profile:chat" }
 
 fos_user_profile_edit_publicinfo:
-    pattern: /edit
+    path: /edit
     defaults: { _controller: "FOSUserBundle:Profile:edit" }
 
 fos_user_profile_public:
-    pattern: /public/{nickname}
+    path: /public/{nickname}
     defaults: { _controller: "TheScienceTourUserBundle:Profile:publicProfile" }
 
 fos_user_profile_add_role:
-    pattern: /addrole
+    path: /addrole
     defaults: { _controller: "TheScienceTourUserBundle:Profile:addRole" }
 
 fos_user_profile_delete_role:
-    pattern: /deleterole/{idrole}
+    path: /deleterole/{idrole}
     defaults: { _controller: "TheScienceTourUserBundle:Profile:deleteRole" }

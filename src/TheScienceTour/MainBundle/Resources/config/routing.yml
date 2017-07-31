@@ -1,5 +1,5 @@
 #tst_home_ycfc:
-#    pattern:    /{_locale}
+#    path:    /{_locale}
 #    host: "{domain}.eu"
 #    defaults:
 #        _controller: "TheScienceTourMainBundle:Main:home"
@@ -9,7 +9,7 @@
 #        domain: ycfc|www.ycfc
 
 tst_home:
-    pattern:    /{_locale}
+    path:    /{_locale}
     #/home
     defaults:
         _controller: "TheScienceTourMainBundle:Main:home"
@@ -47,7 +47,7 @@ tst_cgu:
         _locale: en|fr
 
 tst_search_noreq:
-    pattern: /{_locale}/search
+    path: /{_locale}/search
     defaults:
          _controller: "TheScienceTourMainBundle:Main:search"
          _locale: fr
@@ -56,7 +56,7 @@ tst_search_noreq:
         _locale: en|fr
 
 tst_search:
-    pattern: /{_locale}/search/{request}
+    path: /{_locale}/search/{request}
     defaults:
          _controller: "TheScienceTourMainBundle:Main:search"
          _locale: fr

@@ -1,54 +1,54 @@
 tst_challenges:
-    pattern: /{_locale}/challenges
+    path: /{_locale}/challenges
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:challenges", _locale: fr }
     requirements:
         _locale: en|fr
 
 tst_challenge_add:
-    pattern: /{_locale}/challenge/add
+    path: /{_locale}/challenge/add
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:editChallenge", _locale: fr, id: null }
     requirements:
         _locale: en|fr
-        
+
 tst_challenge_edit:
-    pattern: /{_locale}/challenge/{id}/edit
+    path: /{_locale}/challenge/{id}/edit
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:editChallenge", _locale: fr }
     requirements:
         _locale: en|fr
-        
+
 tst_challenge:
-    pattern: /{_locale}/challenge/{id}/{tab}
+    path: /{_locale}/challenge/{id}/{tab}
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:challenge", _locale: fr, tab: about }
     requirements:
         _locale: en|fr
         tab: about|rules|resources|chats
 
 tst_challenge_subscribe:
-    pattern: /{_locale}/challenge/{id}/subscribe
+    path: /{_locale}/challenge/{id}/subscribe
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:subscribe", _locale: fr }
     requirements:
         _locale: en|fr
 
 tst_challenge_unsubscribe:
-    pattern: /{_locale}/challenge/{id}/unsubscribe
+    path: /{_locale}/challenge/{id}/unsubscribe
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:unsubscribe", _locale: fr }
     requirements:
         _locale: en|fr
 
 tst_challenge_add_chat:
-    pattern: /{_locale}/challenge/{id}/addchat
+    path: /{_locale}/challenge/{id}/addchat
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:addChatMessage", _locale: fr, idchat: null }
     requirements:
         _locale: en|fr
 
 tst_challenge_add_message:
-    pattern: /{_locale}/challenge/{id}/addmessage/{idchat}
+    path: /{_locale}/challenge/{id}/addmessage/{idchat}
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:addChatMessage", _locale: fr }
     requirements:
         _locale: en|fr
- 
+
 tst_challenge_delete_chat:
-    pattern: /{_locale}/challenge/{id}/deletechat/{idchat}
+    path: /{_locale}/challenge/{id}/deletechat/{idchat}
     defaults: { _controller: "TheScienceTourChallengeBundle:Challenge:deleteChat", _locale: fr }
     requirements:
         _locale: en|fr
