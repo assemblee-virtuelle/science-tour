@@ -1,3 +1,7 @@
+the_science_tour_main:
+    resource: "@TheScienceTourMainBundle/Resources/config/routing.xml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

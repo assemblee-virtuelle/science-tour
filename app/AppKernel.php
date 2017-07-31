@@ -41,6 +41,7 @@ class AppKernel extends Kernel
       	    new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
 
 	   new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
