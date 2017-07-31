@@ -65,7 +65,7 @@ class ProjectController extends Controller {
     $centerCoordinates = array();
     $maxDistance       = 50; // km
     // For local testing put in your public IP.
-    $userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+    $userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR'])->first()->getCoordinates();
 
     if ($center == 'around-me') {
       $geoNear           = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
