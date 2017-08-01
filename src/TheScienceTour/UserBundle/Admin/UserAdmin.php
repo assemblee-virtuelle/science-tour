@@ -3,7 +3,7 @@
 
 namespace TheScienceTour\UserBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
@@ -17,7 +17,7 @@ class UserAdmin extends Admin {
 			->remove('create')
 		;
 	}
-	
+
 	protected function configureFormFields(FormMapper $formMapper) {
 		$formMapper
 		->add('username')
@@ -37,11 +37,11 @@ class UserAdmin extends Admin {
 			"ROLE_USER" => "ROLE_USER"
 			),
 			'required' => true,
-			'multiple' => true	
+			'multiple' => true
 		))
 		;
 	}
-	
+
 	protected function configureListFields(ListMapper $listMapper) {
 		$listMapper
 		->addIdentifier('username')
@@ -55,7 +55,7 @@ class UserAdmin extends Admin {
 		->add('roles')
 		;
 	}
-	
+
 	public function setUserManager(UserManagerInterface $userManager) {
 		$this->userManager = $userManager;
 	}
@@ -63,9 +63,8 @@ class UserAdmin extends Admin {
 	public function getUserManager() {
 		return $this->userManager;
 	}
-	
+
 	public function getExportFields() {
 		return array('id', 'username', 'usernameCanonical', 'email', 'emailCanonical', 'avatar', 'description', 'city', 'enabled', 'password', 'lastLogin');
 	}
 }
-
