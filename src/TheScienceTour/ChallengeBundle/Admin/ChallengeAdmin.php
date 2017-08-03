@@ -24,7 +24,7 @@ class ChallengeAdmin extends Admin {
 
     /**
      * configureFormFields
-     * 
+     *
      * @param FormMapper $formMapper
      */
 	protected function configureFormFields(FormMapper $formMapper) {
