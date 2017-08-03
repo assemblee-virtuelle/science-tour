@@ -1,0 +1,23 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans%}{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% block message_title %}{% endblock %}</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+
+	<p class="txtcenter message">{% block message_content %}{% endblock %}</p>
+	
+	<div class="txtcenter">
+		<a href="{{ path('tst_project', {'id' : project.id}) }}" class="btn">Retour au projet</a>
+	</div>
+
+{% endblock %}

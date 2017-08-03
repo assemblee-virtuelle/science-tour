@@ -2,7 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@TheScienceTourMainBundle/Resources/config/services.xml" }
+    - { resource: "@TheScienceTourMainBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourDocumentBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourEventBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourMapBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourMessageBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourProjectBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourUserBundle/Resources/config/services.yml" }
+#    - { resource: "@TheScienceTourChallengeBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -35,6 +42,17 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+#    bundles:        [ TheScienceTourMainBundle ]
+    filters:
+        cssrewrite: ~
+        lessphp:
+            file: "%kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php"
+            apply_to: "\.less$"
 
 # Doctrine MongoDB Configuration
 doctrine_mongodb:
@@ -228,11 +246,11 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-#    app.is_erasmus:
-#        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
-#        tags:
-#          - { name: twig.extension }
-#        arguments: ['@session']
+    app.is_erasmus:
+        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
+        tags:
+          - { name: twig.extension }
+        arguments: ['@session']
 #    app.request_listener:
 #        class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
 #        tags:

@@ -1,0 +1,5 @@
+services:
+  tst.subscriber:
+    class: TheScienceTour\ProjectBundle\Subscriber\TSTQuerySubscriber
+    tags:
+    - { name: knp_paginator.subscriber }

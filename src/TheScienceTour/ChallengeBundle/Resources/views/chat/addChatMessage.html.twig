@@ -1,0 +1,44 @@
+{% set challengeHeader = true %}
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Challenge{% endtrans%}{% endblock %}
+
+{% block nav_challenges %} id="nav_challenges"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">
+	{% if newChat %}
+		{% trans %}Add a chat{% endtrans %}
+	{% else %}
+		{% trans %}Add a message{% endtrans %}
+	{% endif %}
+	</h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="project_chat_form_content" class="center">
+	<form class="w600p" action="{% if newChat %}{{ path('tst_challenge_add_chat', {'id' : challenge.id}) }}{% else %}{{ path('tst_challenge_add_message', {'id' : challenge.id, 'idchat': chat.id}) }}{% endif %}" method="post">
+		<div class="form-row">
+			<label class="label-big" for="message">Message</label>
+			{% if error_message %}
+				<div class="error">{{ error_message }}</div>
+			{% endif %}
+			<textarea rows="10" class="w99 tinymce" rows="5" name="message">{{ mess }}</textarea>
+		</div>
+		<div class="form-row txtright">
+			<input class="middle" type="submit" value="{% trans %}Send{% endtrans %}" />
+		</div>
+	</form>
+</div>
+
+{{ tinymce_init() }}
+{% endblock %}

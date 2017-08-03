@@ -1,0 +1,35 @@
+# TheScienceTourEventBundle/Resources/config/admin.yml
+services:
+    sonata.admin.event:
+        class: TheScienceTour\EventBundle\Admin\EventAdmin
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: calendar, label: "Event" }
+        arguments:
+            - ~
+            - TheScienceTour\EventBundle\Document\Event
+            - 'TheScienceTourEventBundle:EventAdmin'
+        calls:
+            - [setTranslationDomain, [TheScienceTourEventBundleAdmin]]
+
+    sonata.admin.label:
+        class: TheScienceTour\EventBundle\Admin\LabelAdmin
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: calendar, label: "Label" }
+        arguments:
+            - ~
+            - TheScienceTour\EventBundle\Document\Label
+            - 'TheScienceTourEventBundle:LabelAdmin'
+        calls:
+            - [setTranslationDomain, [TheScienceTourEventBundleAdmin]]
+
+    sonata.admin.label_type:
+        class: TheScienceTour\EventBundle\Admin\LabelTypeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: calendar, label: "Label Type" }
+        arguments:
+            - ~
+            - TheScienceTour\EventBundle\Document\LabelType
+            - 'TheScienceTourEventBundle:LabelTypeAdmin'
+        calls:
+            - [setTranslationDomain, [TheScienceTourEventBundleAdmin]]
+            

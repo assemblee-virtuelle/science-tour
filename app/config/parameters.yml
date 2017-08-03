@@ -10,7 +10,7 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: null
-    db_name: science-tour
+    db_name: sciencetour
     mailer_sender_address: contact@science-tour.org
     root_url: 'http://178.170/72.70:8080/st0/web/app.php'
     st_contact_mail: info@lesciencetour.fr

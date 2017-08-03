@@ -1,0 +1,184 @@
+/* LESS Document */
+
+#overall-header {
+	position: relative;
+	z-index: 1;
+	background-color: @mainBgColor;
+
+	#overall-header-login {
+		background-color: #BBBBBB;
+
+		ul {
+			margin: 0 auto;
+			width: @pageWidth;
+			text-align: right;
+
+			li {
+				display: inline-block;
+				padding-bottom: 2px;
+				vertical-align: top;
+
+				a {
+					padding: 0 9px 0 5px;
+					height: 25px;
+					color: @colorLight;
+					font-size: 11px;
+					font-weight: bold;
+					text-decoration: none;
+					line-height: 25px;
+
+					&:hover {
+						color: @linkColor;
+					}
+
+					i {
+						margin: 0 7px 0 2px;
+					}
+
+					img {
+						vertical-align: middle;
+						margin-right: 5px;
+					}
+				}
+
+				&:last-child {
+					a {
+						padding-right: 0;
+						i {
+							margin-right: 0;
+						}
+					}
+				}
+			}
+			#lang_switcher {
+				margin: 4px;
+				padding: 2px;
+				border-radius: 4px;
+				background: rgba(255,255,255,.3);
+				font-size: 12px;
+				border: 0;
+				cursor:pointer;
+			}
+			.addchallenge {
+				background-color: #AAAAAA;
+			}
+			.addproject {
+				background-color: rgba(255,255,255,.2);
+				a {
+					font-size: 12px;
+				}
+			}
+			.separator {
+				border-right: 1px solid #FFFFFF;
+			}
+		}
+	}
+
+	#overall-header-main {
+		height: 90px;
+		font-family: @font1;
+
+		#header_main_container {
+			width: @pageWidth;
+			margin: auto;
+			div {
+				float: left;
+				width: @logoDivWidth;
+				#logobadge {
+					position: absolute;
+					margin: -17px 0 0 -65px;
+				}
+				h1 {
+					font-size: @font1Big;
+					line-height: 30px;
+
+					display: inline-block;
+					vertical-align: middle;
+					margin: 18px 18px 0 84px;
+				}
+				#logopdeb {
+					display: inline-block;
+					margin-left: -10px;
+					vertical-align: middle;
+				}
+				#logost {
+					display: inline-block;
+					vertical-align: bottom;
+				}
+
+			}
+			nav {
+				float: right;
+				width: (@pageWidth - @logoDivWidth);
+				font-size: @font1Normal;
+				text-align: right;
+				padding-top: 30px;
+				ul {
+					li {
+						display: inline-block;
+						margin-left: 20px;
+						vertical-align: middle;
+						&:first-child {
+							margin-left: 0;
+						}
+						a {
+							color: @colorGrey1;
+							text-decoration: none;
+							&:hover {
+								color: @linkColor;
+							}
+						}
+						#searchbar {
+							position: relative;
+							width: auto;
+							margin-left: 5px;
+							input[type=text] {
+								width: 100px;
+								height: 30px;
+								border: none;
+								padding: 1px 5px 1px 30px;
+							}
+							input[type=submit] {
+								position: absolute;
+								top: 5px; left: 5px;
+								width: 20px; height: 20px;
+								cursor: pointer; border: none;
+								background: transparent url('pictos/search.png') no-repeat left center;
+							}
+						}
+
+					}
+					#nav_home {
+						border-bottom: 3px solid #36B0E3;
+					}
+					#nav_about {
+						border-bottom: 3px solid #78BA5D;
+					}
+					#nav_trucks {
+						border-bottom: 3px solid #FFCB53;
+					}
+					#nav_projects {
+						border-bottom: 3px solid #78BA5D;
+					}
+					#nav_challenges {
+						border-bottom: 3px solid #E31D22;
+					}
+					#nav_agenda {
+						border-bottom: 3px solid #FFCB53;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @pageWidth + 130px) {
+	#overall-header #overall-header-main #header_main_container div {
+		#logobadge {
+			margin: -17px 0 0 0;
+		}
+		h1 {
+			margin: 18px 18px 0 149px;
+		}
+	}
+}

@@ -1,0 +1,398 @@
+/* LESS Document */
+
+/* Fonts */
+/* ----- */
+@font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('fonts/BebasNeue-webfont.eot');
+    src: url('fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BebasNeue-webfont.woff') format('woff'),
+         url('fonts/BebasNeue-webfont.ttf') format('truetype'),
+         url('fonts/BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* inline-block */
+.inbl {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: -.25em;
+}
+
+/* alignments (blocks and inline) */
+/* ------------------------------ */
+
+/* left elements */
+.left {
+	float: left;
+}
+img.left {
+	margin-right: 1em;
+}
+
+/* right elements */
+.right {
+	float: right;
+}
+img.right {
+	margin-left: 1em;
+}
+
+img.left, img.right {
+	margin-bottom: 5px;
+}
+
+.center    { margin-left: auto; margin-right: auto; }
+.txtleft   { text-align: left; }
+.txtright  { text-align: right; }
+.txtcenter { text-align: center; }
+
+.middle { vertical-align: middle; }
+
+/* Paddings */
+/* -------- */
+.pad20p {
+	padding: 20px;
+}
+
+.pb0 { padding-bottom: 0px; }
+.pb14 { padding-bottom: 14px; }
+.pb22 { padding-bottom: 22px; }
+.pb25 { padding-bottom: 25px; }
+.pl30 { display: block; padding-left: 30px; }
+.pt15 { padding-top: 15px; }
+
+.vpad5 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.vpad10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.mgr2p { margin-right: 2px; }
+.mgr2p.has_notif { margin-right: 0}
+.mgr5p { margin-right: 5px; }
+.mgr10p { margin-right: 10px; }
+.mgl20p { margin-left: 20px; }
+
+/* blocks widths (percentages and pixels) */
+/* -------------------------------------- */
+.w10    { width: 10%; }
+.w15    { width: 15% }
+.w20    { width: 20%; }
+.w25    { width: 25%; }
+.w30    { width: 30%; }
+.w33    { width: 33.333%; }
+.w40    { width: 40%; }
+.w50    { width: 50%; }
+.w60    { width: 60%; }
+.w66    { width: 66.666%; }
+.w69	{ width: 69%; }
+.w70    { width: 70%; }
+.w75    { width: 75%; }
+.w79	{ width: 79%; }
+.w80    { width: 80%; }
+.w85    { width: 85%; }
+.w86    { width: 86%; }
+.w90    { width: 90%; }
+.w91    { width: 91%; }
+.w97	{ width: 97%; }
+.w99	{ width: 99%; }
+.w100   { width: 100%; }
+.mw20   { max-width: 20%; }
+
+.w30p   { width: 30px; }
+.w50p   { width: 50px; }
+.w100p  { width: 100px; }
+.w150p  { width: 150px; }
+.w200p  { width: 200px; }
+.w300p  { width: 300px; }
+.w350p  { width: 350px; }
+.w400p  { width: 400px; }
+.w500p  { width: 500px; }
+.w600p  { width: 600px; }
+.w700p  { width: 700px; }
+.w800p  { width: 800px; }
+.w950p  { width: 950px; }
+.mw950p { max-width: 950px; }
+
+/* Colors */
+/* ------ */
+
+/* Background colors */
+.bgWhite {
+	background: #fff;
+}
+
+.bgRed {
+	background: @colorRed;
+}
+
+.bgBlue {
+	background: @colorBlue;
+}
+
+.bgBlue2 {
+	background: @colorBlue2;
+}
+
+.bgBlueFacebook {
+	background: @colorBlueFacebook;
+}
+
+.bgBlueTwitter {
+	background: @colorBlueTwitter;
+}
+
+.bgGreen1 {
+	background: @colorGreen1;
+}
+
+.bgGrey {
+	background: @colorGrey3;
+}
+
+.bgLightGrey {
+	background: @colorGrey6;
+}
+
+/* Colors */
+.white {
+	color: #fff;
+}
+
+.red {
+	color: @colorRed;
+}
+
+.blue {
+	color: @colorBlue;
+}
+
+.blue2 {
+	color: @colorBlue;
+}
+
+.green1 {
+	color: @colorGreen1;
+}
+
+.darkGrey {
+	color: @colorGrey2;
+}
+
+.grey {
+	color: @colorGrey3;
+}
+
+/* ----------------------------- */
+/* ==tables                      */
+/* ----------------------------- */
+
+table,
+.table {
+	max-width : 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	vertical-align: top;
+}
+table {
+	width: 100%;
+}
+.table {
+	display: table;
+}
+caption {
+	padding: 10px;
+	color: #555;
+	font-style: italic;	
+}
+table {
+	&.bordered {
+		border: 1px solid #ccc;
+		
+		tr > * + * {
+			border-left: 1px solid #ccc;
+			
+			th, td {
+				border-bottom: 1px solid #ccc;
+			}
+		}
+	}
+	
+	&.aside-box-table {
+		th,
+		td {
+			padding: .3em .8em;
+			text-align: left;
+		}
+		td {
+			color: @colorGrey3;
+		}
+	}
+}
+
+/* alternate tables */
+.alternate, .noborder { border: 0; }
+.alternate tbody { 
+	border: 1px solid #ccc; 
+}
+.alternate thead tr > * + * {
+	border-left: 0;
+}
+.alternate tbody tr > * + * {
+	border-left: 1px solid #ccc;
+}
+
+/* alternate-vert tables */
+.alternate-vert { 
+	border: 0;
+	border-right: 1px solid #ccc;
+}
+.alternate-vert tr > :first-child {
+	border-bottom: 0;
+}
+.alternate-vert tr > * + * {
+	border-top: 1px solid #ccc;
+}
+
+/* striped tables */
+.striped tbody tr:nth-child(odd) {
+	background: @colorGrey8;
+}
+
+/* striped-vert tables */
+.striped-vert tr > :first-child {
+	background: @colorGrey8;
+}
+
+/* Miscellaneous */
+/* ------------- */
+a {
+	color: @colorGrey2;
+}
+
+a.block-link {
+	display: block;
+	text-decoration: none;
+}
+
+.btn {
+	padding: 5px 53px;
+	border: solid @shadowColor 1px;
+	.box-shadow();
+	background-color: @colorLight;
+	text-decoration: none;
+	color: @fontColor;
+	font-weight: bold;
+}
+
+.btn2 {
+	display: inline-block;
+	padding: 10px;
+	border: solid @shadowColor 1px;
+	.box-shadow();
+	background-color: @colorLight;
+	text-decoration: none;
+	font-family: @font1;
+	color: @colorGrey2;
+	font-size: 13px;
+	letter-spacing: 1px;
+	
+	i {
+		margin-right: 7px;
+	}
+}
+
+.shadowed {
+	border: solid @shadowColor 1px;
+	.box-shadow();
+}
+
+.txtshadowed {
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.flash-notice {
+	padding: 10px 22px 5px;
+	background: @colorGreen2;
+	.border-radius();
+	color: #fff;
+	margin-bottom: 15px;
+	
+	h2 {
+		color: #fff;
+		margin: 0;
+		font-size: @font1Normal;
+		
+		i {
+			margin-right: 7px;
+			color: @colorGreen1;
+			font-size: @font1Big;
+			vertical-align: middle;
+		}
+	}
+	
+	p {
+		font-size: @font1Small;
+	}
+}
+
+.error {
+	color: @colorRed;
+	margin: 10px 0;
+}
+
+.share-button {
+	font-size: 26px;
+	text-decoration: inherit;
+	vertical-align: middle;
+	margin-right: 12px;
+}
+.facebook-button {
+	color: @colorBlueFacebook;
+}
+.twitter-button {
+	color: @colorBlueTwitter;
+}
+.googleplus-button {
+	color: @colorRedGooglePlus;
+}
+.mail-button {
+	display: inline-block;
+	font-size: 13px;
+	margin-right: 0;
+	padding: 3px 5px 4px 5px;
+	border-radius: 5px;
+	background-color: @footerBgColor;
+	color: @mainBgColor;
+}
+.tinymce-content {
+	background: white;
+	ul {
+		list-style-type: disc;
+		margin: 12px 0;
+		padding-left: 40px;
+	}
+	pre {
+		background: #78BA5D;
+		color: white;
+		margin: 10px;
+		padding: 10px;
+		font-family: monospace;
+		overflow: auto;
+	}
+	a {
+		color: black;
+		text-decoration: none;
+		font-weight: bold;
+	}				
+}
+body.tinymce-content {
+	min-width: 300px;
+	padding: 8px;
+}

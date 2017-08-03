@@ -1,0 +1,63 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{%  block scripts %}
+<script>
+
+$(document).ready(function() {
+	var unread = $('.unread');
+	if (unread.length == 0) {
+		window.scroll(0,10000);
+	} else {
+		$('body,html').animate({
+		    'scrollTop':  unread.first().offset().top
+		}, 'slow');
+	}
+});
+
+</script>			
+{% endblock %}
+
+{% block banner %}
+{{ parent() }}
+
+<div class="profile_panel">
+	<div class="profile_panel_avatar">
+    {% if user.avatar is null %}
+		<img title="{{ user.username }}" width="120" height="120" src="{{ asset('img/test_avatar50.png') }}" alt="" />
+	{% else %}
+		{% thumbnail user.avatar, 'big' %}
+	{% endif %}
+	</div>
+	
+	<div class="profile_panel_content">
+		<a href="{{ path('fos_user_profile_edit') }}" class="profile_edit_link">{% trans %}Edit{% endtrans %}</a>
+		<header class="profile_panel_header">
+			<h1 class="profile_panel_username txtshadowed">{{ user.username }}</h1>
+			<p class="profile_panel_city txtshadowed">{{ user.city }}</p>
+		</header>
+		<p class="profile_panel_description txtshadowed">{{ user.description }}</p>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block fos_user_content %}
+
+<ul id="tabs" class="tabs">
+	<li class="active"><a href="{{ path('fos_user_profile_show', {'tab' : 'mychats'}) }}"><h1>{% trans %}My chats{% endtrans %}{% if app.user.numberOf("chat") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("chat")}}</div>{% endif %}</h1></a></li>
+	<li><a href="{{ path('fos_user_profile_show', {'tab' : 'myprojects'}) }}"><h1>{% trans %}My projects{% endtrans %}{% if app.user.numberOf("project") > 0 %} <div class="notif bgLightGrey">{{ app.user.numberOf("project")}}</div>{% endif %}</h1></a></li>
+	<li><a href="{{ path('fos_user_profile_show', {'tab' : 'mydrafts'}) }}"><h1>{% trans %}My drafts{% endtrans %}</h1></a></li>
+	{#<li><a href="{{ path('fos_user_profile_show', {'tab' : 'myskills'}) }}"><h1>{% trans %}My skills{% endtrans %}</h1></a></li>#}
+</ul>
+
+<div class="tab-container">
+	<div class="tab-container-inner">
+		
+		<h1><span class="admin_back"><a href="{{ path('fos_user_profile_show', {'tab' : 'mychats'}) }}" alt=""><i class="icon-long-arrow-left"></i></a></span>{{ chat.title }}</h1>
+		{{ render(controller('TheScienceTourMessageBundle:Message:chat', { 'chat': chat, 'request': app.request })) }}
+		
+	</div>
+</div>
+
+{% endblock fos_user_content %}

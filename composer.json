@@ -1,6 +1,6 @@
 {
     "name": "root/st0",
-    "license": "proprietary",
+    "license": "LGPL",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -29,6 +29,13 @@
         "exercise/htmlpurifier-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "2.2.0",
         "friendsofsymfony/user-bundle": "2.0.1",
+        "geocoder-php/cache-provider": "dev-master",
+        "geocoder-php/chain-provider": "dev-master",
+        "geocoder-php/common-http": "dev-master",
+        "geocoder-php/free-geoip-provider": "dev-master",
+        "geocoder-php/geo-plugin-provider": "dev-master",
+        "geocoder-php/google-maps-provider": "dev-master",
+        "geocoder-php/host-ip-provider": "dev-master",
         "guzzlehttp/guzzle": "^6.3",
         "incenteev/composer-parameter-handler": "dev-master",
         "jms/security-extra-bundle": "^1.6",
@@ -37,6 +44,8 @@
         "leafo/lessphp": "^0.5.0",
         "mongodb/mongodb": "^1.1",
         "nelmio/api-doc-bundle": "^2.13",
+        "php-http/guzzle6-adapter": "v1.1.1",
+        "php-http/message": "^1.6",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "sonata-project/doctrine-mongodb-admin-bundle": "dev-master",
@@ -49,7 +58,7 @@
         "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
         "symfony/symfony": "2.8.*",
         "twig/twig": "^1.0||^2.0",
-        "willdurand/geocoder": "^3.3"
+        "willdurand/geocoder": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -58,7 +67,7 @@
     "mininum-stability": "dev",
     "prefer-stable": true,
     "provide": {
-	"ext-mongo": "1.6.14"
+        "ext-mongo": "1.6.14"
     },
     "scripts": {
         "symfony-scripts": [

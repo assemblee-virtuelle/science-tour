@@ -1,0 +1,27 @@
+{%  extends "TheScienceTourProjectBundle::form.html.twig" %}
+{% block form_title %}<a href="{{ path('tst_project', {'id' : project.id}) }}">{{ project.title }}</a>{% endblock %}
+{% block form_js %}
+				if ($toolsContainer.children().length != 0) {
+					$toolsContainer.children().each(function() {
+						addDeleteToolLink($(this), $toolsContainer);
+					});
+				}
+				
+				if ($materialsContainer.children().length != 0) {
+					$materialsContainer.children().each(function() {
+						addDeleteMaterialLink($(this), $materialsContainer);
+					});
+				}
+				
+				if ($premisesContainer.children().length != 0) {
+					$premisesContainer.children().each(function() {
+						addDeletePremiseLink($(this), $premisesContainer);
+					});
+				}
+
+				if ($skillsContainer.children().length != 0) {
+					$skillsContainer.children().each(function() {
+						addDeleteSkillLink($(this), $skillsContainer);
+					});
+				}
+{% endblock %}

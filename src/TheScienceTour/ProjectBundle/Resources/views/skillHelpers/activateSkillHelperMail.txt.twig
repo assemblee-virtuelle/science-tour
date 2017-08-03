@@ -1,0 +1,7 @@
+Bonjour {{ helper.username|raw }} !
+
+Votre proposition d'aide en tant que "{{ skill.name|raw }}" au projet "{{ project.title|raw }}" a été acceptée.
+
+{{ url('tst_project', {'id' : project.id}) }}
+
+L'équipe du Science Tour.

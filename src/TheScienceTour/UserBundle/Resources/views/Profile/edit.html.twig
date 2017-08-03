@@ -1,0 +1,65 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Edit profile{% endtrans %}</h1>
+</div>
+{% endblock %}
+{%  block scripts %}
+<script>
+var myFile = document.getElementById('fos_user_profile_form_avatar_binaryContent');
+</script>
+<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/validImg.js') }}"></script>
+{% endblock %}
+{% block fos_user_content %}
+<div class="center w500p">
+	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+
+		<div class="form-row">
+			{{ form_errors(form.email) }}
+			<div class="w30 inbl">
+				{{ form_label(form.email, "Email"|trans, {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl txtright">
+				{{ form_widget(form.email, {'attr': { 'class': 'w80'} }) }}
+			</div>
+		</div>	
+	
+		<div class="form-row">
+			{{ form_errors(form.avatar) }}
+			<div class="w30 inbl">
+				{{ form_label(form.avatar, "Avatar"|trans, {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			{{ form_widget(form.avatar, {'attr': { 'class': 'w70 inbl txtright form-picture-element'} }) }}
+		</div>
+		
+		<div class="form-row">
+			{{ form_errors(form.description) }}
+			<div class="w30 inbl">
+				{{ form_label(form.description, "Description"|trans, {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl txtright">
+				{{ form_widget(form.description, {'attr': { 'class': 'w86'} }) }}
+			</div>
+		</div>
+		
+		<div class="form-row">
+			{{ form_errors(form.city) }}
+			<div class="w30 inbl">
+				{{ form_label(form.city, "Town"|trans, {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl txtright">
+				{{ form_widget(form.city) }}
+			</div>
+		</div>
+	
+		<div class="form-row txtright">
+	        <input type="submit" value="{% trans %}Edit{% endtrans %}" />
+	    </div>
+	    
+	    {{ form_rest(form) }}
+	    
+	</form>
+	<a href="{{ path('fos_user_change_password') }}">{% trans %}Change password{% endtrans %}</a>
+</div>
+{% endblock fos_user_content %}

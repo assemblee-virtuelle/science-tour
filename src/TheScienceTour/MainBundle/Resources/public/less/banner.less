@@ -1,0 +1,169 @@
+#banner {
+	background-color: @colorLight;
+	position: relative;
+	z-index: 0;
+	
+	&.banner-single-document {
+		#banner-container {
+			min-height: 108px;
+		}
+	}
+	
+	&.banner-bg-green {
+		background: url(../img/banner-bg-green.png) 0 0 repeat;
+	}
+	
+	&.banner-bg-purple {
+		background: url(../img/banner-bg-purple.png) 0 0 repeat;
+	}
+	
+	&.banner-bg-yellow {
+		background: url(../img/banner-bg-yellow.png) 0 0 repeat;
+	}
+	
+	&.banner-bg-blue {
+		background: url(../img/banner-bg-blue.png) 0 0 repeat;
+	}
+	
+	#banner-container {
+		position: relative;
+		margin: auto;
+		width: @pageWidth;
+		
+		img {
+			display: block;
+		}
+		
+		.banner-title {
+			position: absolute;
+			left: 0; bottom:0;
+			width: 100%;
+			
+			&.gradient {
+				background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0));
+			}
+			
+			h1 {
+				padding: 15px 240px 15px 0;
+				margin: 0;
+				font-family: @font1;
+				color: @colorLight;
+				line-height: 1em;
+				font-size: 36px;
+				a {
+					text-decoration: inherit;
+					color: inherit;
+				}
+				
+				&.pb0 {
+					padding-bottom: 0;
+				}
+			}
+			
+			&.gradient {
+				h1, p {
+					padding-left: 20px;
+				}
+			}
+		}
+		
+		.banner-little-man {
+			position: absolute;
+			right: 30px;
+			bottom: -5px;
+		}
+		
+		.banner-overlay {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 212px;
+			z-index: 32768;
+			
+			.banner-overlay-box {
+				background-color: @colorLight;
+				border: 1px solid @shadowColor;
+				margin-bottom: 10px;
+				padding: 15px 15px 8px;
+				max-height: 360px;
+				overflow: hidden;
+				h3 {
+					padding: 0;
+					line-height: 1em;
+					margin: 0;
+					color: @colorPurple;
+					font-family: @font1;
+					font-size: @font1Normal;
+				}
+				
+				p {
+					padding: 0;
+					color: @colorGrey2;
+				}
+				
+				.banner-overlay-nav {
+					li {
+						a, div {
+							display: block;
+							padding: 0;
+							line-height: 30px;
+							text-decoration: none;
+							color: @colorGrey3;
+							font-weight: bold;
+							font-size: @font1ExtraSmall;
+							
+							span {
+								display: block;
+								float: right;
+								text-align: right;
+							}
+							
+							i {
+								color: #9a9a9a;
+								margin-right: 10px;
+							}
+						}
+						a {
+							&:hover, &.active {
+								background-color: @colorGrey8;
+							}
+						}
+					}
+				}
+			}
+			
+			&.map-overlay, &.overlay-with-map {
+				.banner-overlay-box {
+					padding: 0;
+					
+					h3 {
+						padding: 15px;
+						padding-bottom: 3px;
+					}
+					
+					.banner-overlay-nav {
+						padding-top: 7px;
+						padding-bottom: 7px;
+						li {
+							a, div {
+								font-size: 14px;
+								padding: 0 15px;
+							}
+							.place {
+								line-height: 150%;
+								margin: 5px 0 4px 0;
+								i {
+									margin: 0 12px 0 2px;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			&.map-overlay {
+				top: 55px;
+			}
+		}
+	}
+}

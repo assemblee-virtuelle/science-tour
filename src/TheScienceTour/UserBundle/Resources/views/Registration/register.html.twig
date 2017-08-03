@@ -1,0 +1,67 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+{{ parent() }}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Registration{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block fos_user_content %}
+<div class="center w400p">
+	<div id="register_form_content">
+		<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+		    <div class="form-row">
+				{{ form_errors(form.username) }}
+		    	<div class="w30 inbl">
+					{{ form_label(form.username, "User"|trans, {'label_attr': {'class': 'label-big'}}) }}
+				</div>
+				<div class="w70 inbl txtright">
+					{{ form_widget(form.username, {'attr': { 'placeholder': 'Username'|trans ~ ' - ' ~ '4 chars min, 16 max'|trans, 'class': 'w80'} }) }}
+				</div>
+			</div>
+			<div class="form-row">
+				{{ form_errors(form.email) }}
+				<div class="w30 inbl">
+					{{ form_label(form.email, "Email"|trans, {'label_attr': {'class': 'label-big'}}) }}
+				</div>
+				<div class="w70 inbl txtright">
+					{{ form_widget(form.email, {'attr': { 'placeholder': 'Email address'|trans, 'class': 'w80'} }) }}
+				</div>
+			</div>
+			<div class="form-row">
+				{{ form_errors(form.plainPassword.first) }}
+				<div class="w30 inbl">
+					{{ form_label(form.plainPassword.first, "Password"|trans, {'label_attr': {'class': 'label-big'}}) }}
+				</div>
+				<div class="w70 inbl txtright">
+					{{ form_widget(form.plainPassword.first, {'attr': { 'placeholder': 'Password'|trans, 'class': 'w80 secu_password'} }) }}
+				</div>
+			</div>
+			<div class="form-row">
+				{{ form_errors(form.plainPassword.second) }}
+				<div class="w30 inbl">
+					{{ form_label(form.plainPassword.second, "Verification"|trans, {'label_attr': {'class': 'label-big'}}) }}
+				</div>
+				<div class="w70 inbl txtright">
+					{{ form_widget(form.plainPassword.second, {'attr': { 'placeholder': 'Password verification'|trans, 'class': 'w80'} }) }}
+				</div>
+			</div>
+			{{ form_rest(form) }}
+		    <div class="form-row txtright">
+		        <input type="submit" value="{% trans %}Register{% endtrans %}" />
+		    </div>
+		</form>
+	
+	</div>
+	<a href="{{ path('fos_user_security_login') }}">{% trans %}Log in{% endtrans %}</a>
+</div>
+{% endblock fos_user_content %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(function() {
+		$('.secu_password').pstrength();
+	});
+</script>
+{% endblock %}

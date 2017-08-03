@@ -1,0 +1,9 @@
+Bonjour {{ delegate.username|raw }} !
+
+L'utilisateur {{ project.creator.username|raw }} a envie de passer la main et vous propose de devenir administrateur de son projet "{{ project.title|raw }}".
+
+Pour accepter, veuillez suivre le lien suivant :
+{{ url('tst_project_activate_delegate', {'id': project.id}) }}
+
+
+L'équipe du Science Tour.

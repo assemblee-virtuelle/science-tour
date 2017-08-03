@@ -1,0 +1,323 @@
+{% set challengeHeader = true %}
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {{challenge.title}}{% endblock %}
+
+{%  block scripts %}
+<script>
+	function show(id) {
+	
+		var tabsul = document.getElementById('tabs');
+		var containers = document.getElementsByClassName('tab-container');
+		
+		for (var i=0; i<containers.length; i++) {
+			if (i==id) {
+				tabsul.children[i].className = 'active';
+				containers[i].style.display = 'block';
+			} else {
+				tabsul.children[i].className = '';
+				containers[i].style.display = 'none';
+			}
+		}
+	}
+	$(document).ready(function() {
+		$('.challenge_add_chat').click(function() {
+			var url = $(this).attr('href');
+			var $dialog = $('<div></div>').load(url+' #project_chat_form_content', function() {
+					var script1 = document.createElement('script');
+					script1.type = 'text/javascript';
+					script1.src = "{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/stfalcontinymce/vendor/tinymce/jquery.tinymce.min.js') }}";
+					$(this).append(script1);
+					initTinyMCE();
+				}
+
+			);
+			$dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+			$($dialog).dialog({
+				modal: true,
+				title: "{% trans %}Chat{% endtrans %}",
+				resizable: false,
+				draggable: false,
+				closeText: "{% trans %}Close{% endtrans %}",
+				width: 640,
+				height: 370,
+				close: function(event, ui) {
+					$(this).dialog('destroy');
+					tinymce.remove();
+				},
+			});
+			return false;
+		});
+		$.widget("ui.dialog", $.ui.dialog, {
+		    _allowInteraction: function(event) {
+		        return !!$(event.target).closest(".mce-container").length || this._super( event );
+		    }
+		});
+	});
+</script>
+<script>
+	function handlePaginatorNavLinks() {
+		$('#paginationDiv .navigation a').click(function() {
+			var url = $(this).attr('href');
+			$('#paginationDiv').load(url+' #paginationDiv', function() {
+				handlePaginatorNavLinks();
+			});
+			return false;
+		});
+	}
+
+	$(document).ready(function() {
+		handlePaginatorNavLinks();
+	});
+</script>			
+{% endblock %}
+
+{% block nav_challenges %} id="nav_challenges"{% endblock %}
+
+{% block banner %}
+{% thumbnail challenge.picture, 'banner' %}
+<div class="banner-title gradient">
+	<h1>{{ challenge.title }}</h1>
+</div>
+
+<div class="banner-overlay overlay-with-map">
+	<div class="banner-overlay-box">
+		<ul class="banner-overlay-nav">
+			{% if challenge.startedAt is not null %}
+			<li>
+				<div>
+					<i class="icon-play"></i>{% trans %}Start{% endtrans %}
+					<span>{{ challenge.startedAt | localizeddate('short', 'none') }}</span>
+				</div>
+			</li>
+			{% endif %}
+			{% if challenge.finishedAt is not null %}
+			<li>
+				<div>
+					<i class="icon-pause"></i>{% trans %}End{% endtrans %}
+					<span>{{ challenge.finishedAt | localizeddate('short', 'none') }}</span>
+				</div>
+			</li>
+			{% endif %}
+		</ul>
+		<div class="challenge_progress_bar">
+			<div style="width: {{ challenge.percentTime }}%;">
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% if isEditable %}
+<div class="settings"><a href="{{ path('tst_challenge_edit', {'id' : challenge.id}) }}" alt="{% trans %}Edition{% endtrans %}"><i class="icon-edit"></i>{% trans %}Edition{% endtrans %}</a></div>
+{% endif %}
+
+<ul id="tabs" class="tabs">
+	<li{% if tab == "about" %} class="active"{% endif %}><a href="javascript:show(0);"><h1>{% trans %}About{% endtrans %}</h1></a></li>
+	<li{% if tab == "rules" %} class="active"{% endif %}><a href="javascript:show(1);"><h1>{% trans %}Rules{% endtrans %}</h1></a></li>
+	<li{% if tab == "resources" %} class="active"{% endif %}><a href="javascript:show(2);"><h1>{% trans %}Resources{% endtrans %}</h1></a></li>
+	{% if app.user and app.user.numberOf("challenge-chats", challenge.id) %}
+	<li><a href="{{ path('tst_challenge', {'id' : challenge.id, 'tab' : "chats"}) }}"><h1>{% trans %}Chats{% endtrans %} <div class="notif bgLightGrey">{{ app.user.numberOf("challenge-chats", challenge.id) }}</div></h1></a></li>
+	{% else %}
+	<li{% if tab == "chats" %} class="active"{% endif %}><a href="javascript:show(3);"><h1>{% trans %}Chats{% endtrans %}</h1></a></li>
+	{% endif %}	
+</ul>
+
+<div class="tab-container"{% if tab != "about" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}Goal of the challenge{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ challenge.description|purify }}
+		</div>
+		<a class="contribute-link" href="{{ path('tst_project_add_challengeproject', {'idchallenge' : challenge.id}) }}" alt=""><div>{% trans %}Rise the challenge{% endtrans %}</div></a>
+	</div>
+</div>
+
+<div class="tab-container"{% if tab != "rules" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<h1>{% trans %}Rules of the challenge{% endtrans %}</h1>
+		<div class="tinymce-content">
+			{{ challenge.rules|purify }}
+		</div>
+	</div>
+</div>
+
+<div class="tab-container"{% if tab != "resources" %} style="display: none;"{% endif %}>
+
+
+	{% if challenge.tools.count > 0 or challenge.materials.count > 0%}
+	<div class="tab-container-inner">
+		<h1 class="tools">{% trans %}Tools{% endtrans %}/{% trans %}Materials{% endtrans %}</h1>
+	</div>
+	<table class="project-resources-items">
+		{% for tool in challenge.tools %}
+			<tr class="project-resource-row">
+				<td class="project-resource-quantity-cell">
+					<strong>{{ tool.number }}</strong> x
+				</td>
+				<td class="project-resource-name-cell">
+					{{ tool.name }}
+				</td>
+			</tr>
+		{% endfor %}
+		{% for material in challenge.materials %}
+			<tr class="project-resource-row">
+				<td class="project-resource-quantity-cell">
+					<strong>{{ material.number }}</strong> x
+				</td>
+				<td class="project-resource-name-cell">
+					{{ material.name }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+	
+	{% if challenge.premises.count > 0 %}
+	<div class="tab-container-inner">
+		<h1 class="tools">{% trans %}Premises{% endtrans %}</h1>
+	</div>
+	<table class="project-resources-items">
+		{% for premise in challenge.premises %}
+			<tr class="project-resource-row">
+				<td class="project-resource-quantity-cell">
+					<strong>{{ premise.number }}</strong> x
+				</td>
+				<td class="project-resource-name-cell">
+					{{ premise.name }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+	
+	{% if challenge.skills.count > 0 %}
+	<div class="tab-container-inner">
+		<h1 class="tools">{% trans %}Skills{% endtrans %}</h1>
+	</div>
+	<table class="project-resources-items">
+		{% for skill in challenge.skills %}
+			<tr class="project-resource-row">
+				<td class="project-resource-quantity-cell">
+					<strong>{{ skill.number }}</strong> x
+				</td>
+				<td class="project-resource-name-cell">
+					{{ skill.name }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+</div>
+
+<div class="tab-container"{% if tab != "chats" %} style="display: none;"{% endif %}>
+	<div class="tab-container-inner">
+		<div class="txtright">
+		<a href="{{ path('tst_challenge_add_chat', {'id' : challenge.id}) }}" alt="" class="btn2{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} challenge_add_chat{% endif %}"><i class="icon-plus"></i>{% trans %}Add a chat{% endtrans %}</a>
+		</div>
+		<div>
+			{% for chat in challenge.chats|reverse %}
+				{% for message in chat.messages %}
+					{% if loop.first %}
+						<div class="chat-message chat-first-message">
+							{% if isEditable %}
+								<a href="{{ path('tst_challenge_delete_chat', {'id' : challenge.id, 'idchat' : chat.id}) }}"><div class="chat-delete"></div></a>
+							{% endif %}
+							{% if message.author.avatar is null %}
+								<img title="{{ message.author.username }}" src="{{ asset('img/test_avatar50.png') }}" alt="" />
+							{% else %}
+								{% thumbnail message.author.avatar, 'normal' %}
+							{% endif %}
+							<h2>{{ message.author.username }}<span>{{ message.createdAt | localizeddate('medium', 'none') }}</span></h2>
+							<div class="tinymce-content">
+								{{ message.content|purify }}
+							</div>
+							<a class="reply{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} challenge_add_chat{% endif %}" href="{{ path('tst_challenge_add_message', {'id' : challenge.id, 'idchat' : chat.id}) }}" alt="" ><i class="icon-share-alt"></i>{% trans %}Reply{% endtrans %}</a>
+						</div>
+					{% else %}
+						<div class="chat-message">
+							{% if message.author.avatar is null %}
+								<img title="{{ message.author.username }}" src="{{ asset('img/test_avatar35.png') }}" alt="" />
+							{% else %}
+								{% thumbnail message.author.avatar, 'small' %}
+							{% endif %}
+							<h2>{{ message.author.username }}<span>{{ message.createdAt | localizeddate('medium', 'none') }}</span></h2>
+							<div class="tinymce-content">
+								{{ message.content|purify }}
+							</div>		
+						</div>
+					{% endif %}
+				{% endfor %}
+				{% if not loop.last %}
+				<hr>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{{ tinymce_init() }}
+
+{% if projects|length > 0 %}
+<h1 class="pt15">{% trans %}Involved projects{% endtrans %}</h1>
+<div id="paginationDiv">
+	{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': projects, 'nbByRow': 3, 'mgr': 10 })) }}
+	<div class="navigation">
+    {{ knp_pagination_render(projects) }}
+	</div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block aside %}
+<h1>{% if challenge.contributors|length > 0 %}{% trans %}Contributors{% endtrans %}{% endif %}</h1>
+<div class="team">
+	<dl class="team_list">
+		{% for contributor in challenge.contributors %}
+			<dd class="pb25{% if loop.first %} pt15{% endif %}">
+			{% if contributor.avatar is null %}
+				<img title="{{ contributor.username }}" src="{{ asset('img/test_avatar35.png') }}" alt="" />
+			{% else %}
+				{% thumbnail contributor.avatar, 'small' %}
+			{% endif %}
+				<span>{{ contributor.username }}</span>
+			</dd>
+		{% endfor %}
+	</dl>
+	<a href="{{ path('tst_project_add_challengeproject', {'idchallenge' : challenge.id}) }}" alt=""><div class="contribute">{% trans %}Rise the challenge{% endtrans %}</div></a>
+</div>
+
+<h1>{% trans %}Subscribers{% endtrans %}</h1>
+<div class="subscribers">
+	<ul>
+	{% if challenge.subscribers|length == 0 %} 
+		<li><p>{% trans %}Subscribe to receive news from this challenge.{% endtrans %}</p></li>
+	{% endif %}
+	{% for subscriber in challenge.subscribers %}
+		<li>
+		{% if subscriber.avatar is null %}
+			<img title="{{ subscriber.username }}" src="{{ asset('img/test_avatar35.png') }}" alt="" />
+		{% else %}
+			{% thumbnail subscriber.avatar, 'small' %}
+		{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+	{% if app.user in challenge.subscribers %}
+	<a href="{{ path('tst_challenge_unsubscribe', {'id' :challenge.id}) }}" alt=""><div class="subscribe">{% trans %}Unsubscribe{% endtrans %}</div></a>
+	{% else %}
+	<a href="{{ path('tst_challenge_subscribe', {'id' : challenge.id}) }}" alt=""><div class="subscribe">{% trans %}Subscribe{% endtrans %}</div></a>
+	{% endif %}
+</div>
+
+<a href="mailto:abus@lesciencetour.org?subject=Signalement sur le Science Tour !!" title="{% trans %}Contact the moderator{% endtrans %}" class="claim"><i class="icon-warning-sign"></i> {% trans %}Contact the moderator{% endtrans %}</a>
+	
+<h1>{% trans %}Share{% endtrans %}</h1>
+<a class="share-button facebook-button" target="_blank" title="Facebook" href="https://www.facebook.com/sharer.php?u={{ url('tst_challenge', {'id' : challenge.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="icon-facebook-sign"></i></a>
+<a class="share-button twitter-button" target="_blank" title="Twitter" href="https://twitter.com/share?url={{ url('tst_challenge', {'id' : challenge.id}) }}&text=Le Science Tour - Défi {{ challenge.title|url_encode(true) }}&hashtags=lesciencetour" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i class="icon-twitter-sign"></i></a>
+<a class="share-button googleplus-button" target="_blank" title="Google +" href="https://plus.google.com/share?url={{ url('tst_challenge', {'id' : challenge.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i class="icon-google-plus-sign"></i></a>
+<a class="share-button mail-button" title="Mail" href="mailto:?subject=Le Science Tour - Défi {{ challenge.title|replace({'&': '%26'}) }}&body={{ url('tst_challenge', {'id' : challenge.id}) }}" rel="nofollow"><i class="icon-envelope"></i></a>
+
+{% endblock %}

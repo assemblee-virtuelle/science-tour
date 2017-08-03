@@ -1,0 +1,9 @@
+Bonjour {{ project.creator.username|raw }} !
+
+L'utilisateur {{ user.username|raw }} a demandé à participer à votre projet "{{ project.title|raw }}".
+
+Pour accepter, veuillez suivre le lien suivant :
+{{ url('tst_project_activate_contributor', {'id': project.id, 'idcontrib': user.id}) }}
+
+
+L'équipe du Science Tour.

@@ -1,0 +1,181 @@
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
+
+{% block scripts %}
+    <script>
+        function show(id) {
+
+            var tabsul = document.getElementById('tabs');
+            var containers = document.getElementsByClassName('tab-container');
+            var asideContainers = document.getElementsByClassName('aside-container');
+
+            for (var i = 0; i < tabsul.children.length; i++) {
+                if (i == id) {
+                    tabsul.children[i].className = 'active';
+                    containers[i].style.display = 'block';
+                    asideContainers[i].style.display = 'block';
+                } else {
+                    tabsul.children[i].className = '';
+                    containers[i].style.display = 'none';
+                    asideContainers[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#form_language').change(function () {
+                alert('Changement de langue pour ' + $(this).val());
+                window.location.href = window.location.pathname + "?" + $.param({
+                            'lang': $(this).val()
+                        });
+            });
+
+            {% block form_js %}{% endblock %}
+
+
+            $("#form_picture input").attr('oninvalid', 'javascript:show(0);');
+
+            {% if form.goal.vars.errors|length > 0 or form.description.vars.errors|length > 0 %}
+            show(1);
+            {% endif %}
+
+        });
+    </script>
+    <script>
+        var myFile = document.getElementById('form_picture_binaryContent');
+    </script>
+    <script type="text/javascript"
+            src="{{ asset('bundles/thesciencetourmain/js/validImg.js') }}"></script>
+{% endblock %}
+
+{% block bodyid %}project-form{% endblock %}
+
+{% block nav_projects %}id="nav_projects"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+    <div class="banner-title">
+        <h1 class="txtshadowed">{% block form_title %}{% endblock %}</h1>
+    </div>
+    <div class="banner-little-man">
+        <img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}"
+             alt=""/>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <form class="project_form" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+
+        {% if form.publish is defined %}
+            {{ form_widget(form.publish) }}
+        {% endif %}
+        {% if form.draft is defined %}
+            {{ form_widget(form.draft) }}
+        {% endif %}
+        {% if form.save is defined %}
+            {{ form_widget(form.save) }}
+        {% endif %}
+
+        <ul id="tabs" class="tabs">
+            <li class="active"><a href="javascript:show(0);"><h1>{% trans %}
+                        Basic info{% endtrans %}</h1></a></li>
+            <li><a href="javascript:show(1);"><h1>{% trans %}The
+                        project{% endtrans %}</h1></a></li>
+            {% if isEditForm %}
+                <div class="translate-to-tab">
+                    {# form_label(form.language, "Project language") #}
+                    {# form_errors(form.language) #}
+                    {{ form_widget(form.language, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                </div>
+            {% endif %}
+        </ul>
+
+        <div class="tab-container">
+            <div class="tab-container-inner">
+                <div class="message">
+                    {{ message }}
+                </div>
+                <div>
+                    {{ form_label(form.title, "Project title", { 'label_attr': {'class': 'red-asterisk'} }) }}
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title, { 'attr': {'oninvalid': 'javascript:show(0);'} }) }}
+                </div>
+                <div>
+                // TODO: Afficher les valeurs de l'original
+                </div>
+                <div class="place_form">
+                // TODO: Afficher les valeurs de l'original
+                </div>
+                <div>
+                // TODO: Afficher les valeurs de l'original
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-container" style="display: none;">
+            <div class="tab-container-inner">
+                <div>
+                    {{ form_label(form.goal, "Goal of the game", { 'label_attr': {'class': 'orange-asterisk'} }) }}
+                    {{ form_errors(form.goal) }}
+                    {{ form_widget(form.goal, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce'} }) }}
+                </div>
+                <div>
+                    {{ form_label(form.description, "Rules of the game", { 'label_attr': {'class': 'orange-asterisk'} }) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, { 'attr': {'oninvalid': 'javascript:show(1);', 'class': 'tinymce', 'data-theme': 'bbcode'} }) }}
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+
+    </form>
+    {{ tinymce_init() }}
+{% endblock %}
+
+{% block aside %}
+    <div class="aside-container">
+        <h1><span>1</span>COMMENCER PAR LES BASES</h1>
+        <p>
+            Pour créer ton projet, il faut surtout lui donner un nom (clair et
+            pas trop long).
+            Ensuite, il faut que tout le monde sache où tu vas faire ton projet
+            et combien de temps il va durer.
+            Pour finir, il faut penser à mettre une belle image, histoire de
+            donner envie aux autres de participer à ton projet !
+        </p>
+        <p>
+            <b>Si tu veux juste annoter une idée de projet sans le publier, </b><br/>
+            commence à remplir le formulaire et garde-le dans tes brouillons.
+        </p>
+    </div>
+
+    <div class="aside-container" style="display: none;">
+        <h1><span>2</span>EXPLIQUER MIEUX TON PROJET</h1>
+        <p>
+            Maintenant il faut en dire plus.
+            Prends ton temps pour expliquer le contenu de ton projet et quel est
+            son objectif final.
+        </p>
+    </div>
+
+    <div class="aside-container" style="display: none;">
+        <h1><span>3</span>RECETTE ET LISTE DES COURSES</h1>
+        <p>
+            Cette page te permet d'indiquer tout ce qu'il faut pour ton projet.
+            Dans la colonne "Nécessaire", il faut indiquer la quantité
+            nécessaire pour chaque élément, comme une recette.
+            Si tu en possèdes déjà une certaine quantité, tu peux l'indiquer
+            dans la deuxième colonne, pour que les gens puissent te proposer un
+            bien dans la juste quantité.
+        </p>
+    </div>
+{% endblock %}

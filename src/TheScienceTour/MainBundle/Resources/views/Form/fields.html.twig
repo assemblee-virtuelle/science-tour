@@ -1,0 +1,30 @@
+{% block colorpicker_widget %}
+	<link href="http://labs.abeautifulsite.net/jquery-minicolors/jquery.minicolors.css" type="text/css" rel="stylesheet" />
+	<style>
+	
+		.minicolors-theme-tst input[type=text] {
+			padding-left: 30px;
+			padding-right: 0;
+			width: initial;
+		}
+		.minicolors-theme-tst .minicolors-swatch {
+			position: absolute;
+			left: 4px;
+			top: 4px;
+			z-index: 2;
+		}
+		.minicolors-theme-tst .minicolors-panel {
+			top: 30px;
+			z-index: 3;
+		}
+	</style>
+    <input class="minicolors minicolors-input" type="text" {{ block('widget_attributes') }} value="{{ value }}" />
+    <script>
+		$(document).ready( function() {
+			$('div.tab-content').removeClass('tab-content');
+		});
+		$.getScript('http://labs.abeautifulsite.net/jquery-minicolors/jquery.minicolors.js', function() {
+			$('input.minicolors').minicolors({letterCase: 'uppercase', theme: 'tst'});
+		});
+    </script>
+{% endblock %}

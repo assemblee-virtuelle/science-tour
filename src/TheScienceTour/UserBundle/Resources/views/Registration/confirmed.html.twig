@@ -1,0 +1,14 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+{{ parent() }}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Confirmation{% endtrans %}</h1>
+</div>
+{% endblock %}
+
+{% block fos_user_content %}
+	<p class="txtcenter message">
+		{% trans %}Congrats{% endtrans %} {{ user.username }}, {% trans %}your account is now activated.{% endtrans %}
+	</p>
+{% endblock fos_user_content %}

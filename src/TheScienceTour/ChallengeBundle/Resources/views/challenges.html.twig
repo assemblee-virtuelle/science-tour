@@ -1,0 +1,123 @@
+{% set challengeHeader = true %}
+{% extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+{% endblock %}
+
+{% block scripts %}
+<script>
+	function handlePaginatorNavLinks() {
+		$('#paginationDiv .navigation a').click(function() {
+			var url = $(this).attr('href');
+			$('#paginationDiv').load(url+' #paginationDiv', function() {
+				handlePaginatorNavLinks();
+			});
+			return false;
+		});
+	}
+
+	$(document).ready(function() {
+		handlePaginatorNavLinks();
+	});
+</script>
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
+{% endblock %}
+
+{% block title %}{{ parent() }} - {% trans %}Challenges{% endtrans %}{% endblock %}
+
+{% block nav_challenges %} id="nav_challenges"{% endblock %}
+
+{% block banner %}
+	<img src="{{ asset('img/test_challengebanner.png') }}" alt="" />
+	<div class="banner-overlay">
+		<div class="banner-overlay-box">
+			<h3 style="color: #f76964;">{% trans %}Challenges{% endtrans %}</h3>
+			<p>{% trans %}Here are the challenges facing regularly.{% endtrans %}</p>
+			<p>{% trans %}By clicking on a challenge, you can see in detail the rules of the challenge.{% endtrans %}</p>
+			<p>{% trans %}A forum is provided to discuss with the organizers.{% endtrans %}</p>
+			<p>{% trans %}To challenge, contact the Science Tour moderator.{% endtrans %}</p>
+		</div>
+	</div>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans %}In progress challenges{% endtrans %}</h1>
+
+{% if inProgressChallenges|length > 0  %}
+	{% for inProgressChallenge in inProgressChallenges %}
+		<div class="challenge-panel{% if app.user and app.user.numberOf("challenge", inProgressChallenge.id) > 0 %} has_notif{% endif %}">
+			<a href="{{ path('tst_challenge', {'id': inProgressChallenge.id }) }}" title="{{ inProgressChallenge.title }}" class="block-link">
+				<figure class="challenge-panel-figure">
+					{% thumbnail inProgressChallenge.picture, 'inprogress' %}
+				</figure>
+			</a>
+			<div class="challenge-panel-content-wrapper">
+				<div class="challenge-panel-content">
+					<a href="{{ path('tst_challenge', {'id': inProgressChallenge.id }) }}" title="{{ inProgressChallenge.title }}" class="block-link">
+						<h2 class="challenge-panel-title">{{ inProgressChallenge.title }}</h2>
+					</a>
+					<p class="challenge-panel-description">
+						{% set maxLength = 350 %}
+						{{ inProgressChallenge.description|purify('no_html')|length > maxLength ? inProgressChallenge.description|purify('no_html')[:maxLength] ~ '…' : inProgressChallenge.description|purify('no_html') }}
+					</p>
+				</div>
+			</div>
+			<div class="challenge-panel-footer">
+				<strong>{{ inProgressChallenge.projects|length }}</strong> {{ "projectnb"|transchoice(inProgressChallenge.projects|length) }}
+				<span>
+				{% if inProgressChallenge.percentTime == 0 %}
+				{% trans %}Unstarted{% endtrans %}
+				{% elseif inProgressChallenge.remainingTime.invert %}
+				{% trans %}Finished{% endtrans %}
+				{% elseif inProgressChallenge.remainingTime.m > 0 %}
+				<i class="icon-time"></i>M-{{ inProgressChallenge.remainingTime.m }}
+				{% elseif inProgressChallenge.remainingTime.d > 0 %}
+				<i class="icon-time"></i>J-{{ inProgressChallenge.remainingTime.d }}
+				{% else %}
+				<i class="icon-time"></i>H-{{ inProgressChallenge.remainingTime.h }}
+				{% endif %}
+				</span>
+			</div>
+			{% if app.user and app.user.numberOf("challenge", inProgressChallenge.id) > 0 %}
+			<div class="notif bgRed">{{ app.user.numberOf("challenge", inProgressChallenge.id) }}</div>
+			{% endif %}
+		</div>
+	{% endfor %}
+{% else %}
+<p>Aucun défi en cours</p>
+{% endif %}
+
+{% if pastChallenges|length > 0 %}
+<h1>{% trans %}Past challenges{% endtrans %}</h1>
+<div id="paginationDiv">
+	{{ render(controller('TheScienceTourChallengeBundle:Challenge:challengePanels', { 'challengeList': pastChallenges, 'nbByRow': 3, 'mgr': 10, 'language': askedForTranslation })) }}
+	<div class="navigation">
+    {{ knp_pagination_render(pastChallenges) }}
+	</div>
+</div>
+{% endif %}
+
+{% if inProgressProjects and inProgressProjects|length > 0 %}
+<h1>{% trans %}Projects involved in the challenges{% endtrans %}</h1>
+{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': inProgressProjects, 'nbByRow': 3, 'mgr': 10 })) }}
+{% endif %}
+
+{% endblock %}
+
+{% block aside %}
+<h1>{% trans %}Around me{% endtrans %}</h1>
+<div class="colored-box bgRed">
+	{{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': inProgressProjects, 'zoom': 8 })) }}
+</div>
+
+<h1>{% trans %}Agenda{% endtrans %}</h1>
+{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+{% endblock %}

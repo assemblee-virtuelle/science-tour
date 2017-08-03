@@ -1,0 +1,12 @@
+Bonjour !
+
+{% if author is null %}
+Vous avez reçu un nouveau message automatique sur la conversation "{{ chat.title|raw }}".
+{% else %}
+L'utilisateur {{ author.username|raw }} vous a envoyé un nouveau message sur la conversation "{{ chat.title|raw }}".
+{% endif %}
+
+{{ url('fos_user_profile_chat', {'id': chat.id}) }}
+
+
+L'équipe du Science Tour.

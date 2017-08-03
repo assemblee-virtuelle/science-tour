@@ -1,0 +1,70 @@
+{%  extends "TheScienceTourMainBundle::main-bigcontent.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}CGU{% endtrans %}{% endblock %}
+
+{% block nav_about %} id="nav_about"{% endblock %}
+
+{% block banner %}
+<img src="{{ asset('bundles/thesciencetourmain/img/about-banner.png') }}" alt="" />
+<div class="banner-title gradient">
+	<h1 class="pb0">LE SCIENCE TOUR</h1>
+	<p class="white">est un dispositif itinérant et numérique constitué de bus et de différents outils pédagogiques,<br />
+	permettant de rendre les sciences accessibles à tous, tout en s'amusant.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="about-page">
+	<div class="about-line">
+		<div class="about-column">
+			<div class="about-column-inner">
+				<h3><img src="{{ asset('bundles/thesciencetourmain/img/logo-petits-debs-129x110.png') }}" alt="" /><br />
+				{% trans %}The association{% endtrans %}</h3>
+				{% include "TheScienceTourMainBundle:Static:aboutAssociation_"~app.request.locale~".html.twig" %}
+			</div>
+		</div>
+		<div class="about-column">
+			<div class="about-column-inner">
+				<h3><img src="{{ asset('bundles/thesciencetourmain/img/erlenmeyer-59x110.png') }}" alt="" /><br />
+				{% trans %}The projects{% endtrans %}</h3>
+				{% include "TheScienceTourMainBundle:Static:aboutProjet_"~app.request.locale~".html.twig" %}
+			</div>
+		</div>
+		<div class="about-column">
+			<div class="about-column-inner">
+				<h3><img src="{{ asset('bundles/thesciencetourmain/img/test-tube-truck-155x102.png') }}" alt="" />
+					<br />{% trans %}The trucks{% endtrans %}</h3>
+					{% include "TheScienceTourMainBundle:Static:aboutCamions_"~app.request.locale~".html.twig" %}
+			</div>
+		</div>
+	</div>
+
+	<div class="about-line">
+		<h2 class="txtcenter">LES PARTENAIRES</h2>
+		<div class="about-logo-line">
+			<img src="{{ asset('bundles/thesciencetourmain/img/logo-investissements-d-avenir-79x79.png') }}" alt="" />
+			<img src="{{ asset('bundles/thesciencetourmain/img/logo-hop-139x35.png') }}" alt="" />
+			<img src="{{ asset('bundles/thesciencetourmain/img/logo-france-televisions-126x62.png') }}" alt="" />
+			<img src="{{ asset('bundles/thesciencetourmain/img/logo-francetv-education-236x21.png') }}" alt="" />
+			<img src="{{ asset('bundles/thesciencetourmain/img/logo-c-est-pas-sorcier-155x62.png') }}" alt="" />
+		</div>
+		<div class="w50 left">
+			<h3>PARTENAIRES SCIENTIFIQUES</h3>
+			<div class="about-logo-line">
+				<img src="{{ asset('bundles/thesciencetourmain/img/logo-insee-80x92.png') }}" alt="" />
+				<img src="{{ asset('bundles/thesciencetourmain/img/logo-inserm-186x47.png') }}" alt="" />
+			</div>
+		</div>
+		<div class="w50 left">
+			<h3>PARTENAIRES EXECUTIFS</h3>
+			<div class="about-logo-line">
+				<img src="{{ asset('bundles/thesciencetourmain/img/logo-agence-h-66x64.png') }}" alt="" />
+				<img src="{{ asset('bundles/thesciencetourmain/img/logo-nodesign-154x29.png') }}" alt="" />
+				<img src="{{ asset('bundles/thesciencetourmain/img/logo-g2cw2c-137x27.png') }}" alt="" />
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+tst_agenda_day:
+    path:  /{_locale}/agenda/day/{date}/{center}
+    defaults: { _controller: "TheScienceTourEventBundle:Default:day", _locale: fr, center: all }
+    requirements:
+        _locale: en|fr
+
+tst_agenda:
+    path:  /{_locale}/agenda/{filter}/{center}
+    defaults: { _controller: "TheScienceTourEventBundle:Default:agenda", _locale: fr, filter: front-page, center: all }
+    requirements:
+        _locale: en|fr
+
+tst_event:
+    path:  /{_locale}/event/{id}
+    defaults: { _controller: "TheScienceTourEventBundle:Default:show", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_event_favorites:
+    path:  /{_locale}/event/{id}/favorites/{action}
+    defaults: { _controller: "TheScienceTourEventBundle:Default:favorites", _locale: fr, action: add }
+    requirements:
+        _locale: en|fr

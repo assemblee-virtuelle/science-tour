@@ -1,0 +1,208 @@
+tst_projects:
+    path: /{_locale}/projects/{filter}/{center}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:projects", _locale: fr, filter: youngest, center: all }
+    requirements:
+        _locale: en|fr
+
+tst_project_add:
+    path: /{_locale}/project/add
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:addProject", idchallenge: null, _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_add_challengeproject:
+    path: /{_locale}/project/add/{idchallenge}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:addProject", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_edit:
+    path: /{_locale}/project/{id}/edit
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:editProject", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_admin:
+    path: /{ _locale}/project/{id}/admin/{tab}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:adminProject", _locale: fr, tab: proposals }
+    requirements:
+        _locale: en|fr
+        tab: proposals|team
+
+tst_project_admin_chat:
+    path: /{ _locale}/project/{id}/adminchat/{idres}/{idhelp}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:adminProjectChat", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_edit_news:
+    path: /{_locale}/project/{id}/editnews/{idnews}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:editNews", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_add_news:
+    path: /{_locale}/project/{id}/addnews
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:addNews", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_delete_news:
+    path: /{_locale}/project/{id}/deletenews/{idnews}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:deleteNews", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project:
+    path: /{_locale}/project/{id}/{tab}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:project", _locale: fr, tab: about }
+    requirements:
+        _locale: en|fr
+        tab: about|resources|news|chats
+
+tst_project_contribute:
+    path: /{_locale}/project/{id}/contribute
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:contribute", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_activate_contributor:
+    path: /{_locale}/project/{id}/activation/{idcontrib}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:activateContributor", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_uncontribute:
+    path: /{_locale}/project/{id}/uncontribute
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:uncontribute", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_subscribe:
+    path: /{_locale}/project/{id}/subscribe
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:subscribe", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_unsubscribe:
+    path: /{_locale}/project/{id}/unsubscribe
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:unsubscribe", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_skill_help:
+    path: /{_locale}/project/{id}/skillhelp/{idskill}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:skillHelp", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_activate_skill_helper:
+    path: /{_locale}/project/{id}/shactivation/{idskill}/{idhelper}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:activateSkillHelper", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_skill_unhelp:
+    path: /{_locale}/project/{id}/skillunhelp/{idskill}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:skillUnhelp", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_res_help:
+    path: /{_locale}/project/{id}/reshelp/{idres}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:resHelp", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_res_unhelp:
+    path: /{_locale}/project/{id}/resunhelp/{idres}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:resUnhelp", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_res_help_show:
+    path: /{_locale}/project/{id}/reshelpshow/{idres}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:resHelpShow", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_delegate:
+    path: /{_locale}/project/{id}/delegate
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:delegate", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_activate_delegate:
+    path: /{_locale}/project/{id}/activatedelegate
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:activateDelegate", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_add_chat:
+    path: /{_locale}/project/{id}/addchat
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:addChat", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_add_message:
+    path: /{_locale}/project/{id}/addmessage/{idchat}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:addMessage", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_delete_chat:
+    path: /{_locale}/project/{id}/deletechat/{idchat}
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:deleteChat", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_sponsor:
+    path: /{_locale}/project/{id}/sponsor
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:sponsor", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+tst_project_unsponsor:
+    path: /{_locale}/project/{id}/unsponsor
+    defaults: { _controller: "TheScienceTourProjectBundle:Project:unsponsor", _locale: fr }
+    requirements:
+        _locale: en|fr
+
+# Gestion des traductions
+
+tst_project_add_translation:
+    path: /{_locale}/project/translation/add/{original}/{language}
+    defaults: { _controller: "TheScienceTourProjectBundle:ProjectTranslation:addProjectTranslation"}
+    requirements:
+        _locale: en|fr
+        original: \w+
+
+tst_project_edit_translation:
+    path: /{_locale}/project/translation/edit/{id}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:editProjectTranslation"
+    requirements:
+        _locale: en|fr
+        id: \w+
+
+tst_project_persist_translation:
+    path: /{_locale}/project/translation/persist/{id}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:persistProjectTranslation"
+        _locale: fr
+        id: null
+    requirements:
+        _locale: en|fr
+        original: \w+
+
+tst_project_translation:
+    path: /{_locale}/project/{id}/{language}/{tab}
+    defaults:
+        _controller: "TheScienceTourProjectBundle:ProjectTranslation:project"
+        _locale: fr
+        # language: en
+        tab: about
+    requirements:
+        _locale: en|fr
+        language: en|fr
+        tab: about|resources|news|chats

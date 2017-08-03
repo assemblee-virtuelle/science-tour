@@ -1,0 +1,101 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Add a role{% endtrans %}</h1>
+</div>
+{% endblock %}
+{%  block scripts %}
+<script>
+var myFile = document.getElementById('form_picture_binaryContent');
+$(document).ready(function() {
+	var $pictures = $('.picture_selector a');
+	var $pic_id = $('#pic_id');
+	
+	$pictures.click(function() {
+		if ($(this).hasClass('selected')) {
+			$pictures.removeClass('selected');
+			$pic_id.val(null);
+		} else {
+			$pictures.removeClass('selected');
+			$(this).addClass('selected');
+			$pic_id.val($(this).attr('id'));
+		}
+		$('#new_pic').removeClass('expanded');
+		$('#form_picture').hide();
+		return false;
+	});
+
+	$('#new_pic').click(function() {
+		if ($(this).hasClass('expanded')) {
+			$(this).removeClass('expanded');
+			$('#form_picture').hide();
+		} else {
+			$(this).addClass('expanded');
+			$('#form_picture').show();
+		}
+		$pictures.removeClass('selected');
+		$pic_id.val(null);
+		return false;
+	});
+
+	{% if pictureList|length > 0 %}
+		$('#form_picture').hide();
+	{% endif %}
+	
+});
+</script>
+<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/validImg.js') }}"></script>
+{% endblock %}
+{% block fos_user_content %}
+<div class="center w500p">
+	<form action="{{ path('fos_user_profile_add_role') }}" {{ form_enctype(form) }} method="POST" class="profile_add_role">
+
+		<div class="form-row">
+			{{ form_errors(form.organization) }}
+			<div class="w30 inbl">
+				{{ form_label(form.organization, "Organization", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl txtright">
+				{{ form_widget(form.organization, {'attr': { 'style': 'width: 234px'} }) }}
+			</div>
+		</div>
+		
+		<div class="form-row">
+			{{ form_errors(form.job) }}
+			<div class="w30 inbl">
+				{{ form_label(form.job, "Job", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl txtright">
+				{{ form_widget(form.job, {'attr': { 'style': 'width: 234px'} }) }}
+			</div>
+		</div>
+	
+		<div class="form-row">
+			{{ form_errors(form.picture) }}
+			<div class="w30 inbl">
+				{{ form_label(form.picture, "Picture", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div class="w70 inbl">
+				{% if pictureList|length > 0 %}
+				<div class="picture_selector">
+					{% for pic in pictureList %}
+						<a href="" id="{{ pic.id }}">{% thumbnail pic, 'small' %}</a>
+					{% endfor %}
+				</div>
+				<div id="new_pic_div"><a href="" id="new_pic"><i class="icon-ico"></i>{% trans %}New picture{% endtrans %}</a></div>
+				{% endif %}
+				{{ form_widget(form.picture, {'attr': { 'class': 'txtright form-picture-element'} }) }}
+			</div>
+		</div>
+	
+		<div class="form-row txtcenter">
+	        <input type="submit" value="{% trans %}Save{% endtrans %}" />
+	    </div>
+	    
+		<input type="hidden" name="pic_id" id="pic_id">
+
+	    {{ form_rest(form) }}
+	</form>
+</div>
+{% endblock fos_user_content %}

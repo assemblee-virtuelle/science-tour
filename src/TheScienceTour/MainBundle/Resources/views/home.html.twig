@@ -1,0 +1,139 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Home{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+	{% stylesheets
+		'bundles/thesciencetourmain/css/jcarousel-skins/tst-banner/skin.css'
+		filter='cssrewrite' output='css/compiled/home.css'
+	%}
+		<link rel="stylesheet" href="{{ asset_url }}">
+	{% endstylesheets %}
+{% endblock %}
+
+{% block nav_home %}id="nav_home"{% endblock %}
+
+{% block banner %}
+	{% if projectList %}
+	<ul id="home-banner-carousel" class="jcarousel-skin-tst-banner">
+		{% for project in projectList %}
+		<li>
+			<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
+				{% if loop.first %}
+				{% thumbnail project.picture, 'banner'  %}
+				{% else %}
+				<img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" height="405" width="950" delayed-src="{% path project.picture, 'banner' %}" class="lazy-load" alt="" />
+				{% endif %}
+				<div class="banner-overlay">
+					<div class="banner-overlay-box">
+						<h3>{{ project.title }}</h3>
+						<p>
+							{% set maxLength = 300 %}
+							{{ project.description|purify('no_html')|length > maxLength ? project.description|purify('no_html')[:maxLength] ~ '…' : project.description|purify('no_html') }}
+						</p>
+					</div>
+				</div>
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<img src="{{ asset('img/test_homebanner.png') }}" alt="" />
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<section>
+	<h1>{% trans %}Youngest projects{% endtrans %}</h1>
+	{{ render(controller('TheScienceTourProjectBundle:Project:panels', { 'projectList': projectList, 'nbByRow': 3, 'mgr': 10 })) }}
+	<div class="txtcenter" style="margin-left: -14px">
+		<a href="{{ path('tst_projects') }}" class="btn">{% trans %}See all projects{% endtrans %}</a>
+	</div>
+</section>
+{% endblock %}
+
+{% block aside %}
+<h1>{% trans %}Agenda{% endtrans %}</h1>
+{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+
+<h1>{% trans %}Around me{% endtrans %}</h1>
+<div class="colored-box bgRed">
+	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': aroundMeProjects, 'zoom': 8 })) }#}
+</div>
+
+<h1 class="trucks_h1">{% trans %}Trucks{% endtrans %}<a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}See all{% endtrans %}</a></h1>
+<div class="colored-box bgBlue">
+	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': trucksList, 'htmlContainerId' : 'trucks-canvas' })) }#}
+	<div class="events-list">
+		<table class="striped bgWhite aside-box-table">
+			{% for event in trucksList %}
+			<tr>
+				<th class="darkGrey w20" style="padding-right:0"><a href="{{ path('tst_event', {'id' : event.id }) }}" class="block-link">{{ event.startDate|date('d/m') }}</a></th>
+				<td><a href="{{ path('tst_event', {'id' : event.id }) }}" class="block-link">{{ event.title|truncate(35) }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
+
+	<!--
+	  jCarousel library
+	-->
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.min.js') }}"></script>
+
+	<script type="text/javascript">
+
+	function mycarousel_initCallback(carousel, state)
+	{
+	    // Disable autoscrolling if the user clicks the prev or next button.
+	    carousel.buttonNext.bind('click', function() {
+	        carousel.startAuto(0);
+	    });
+
+	    carousel.buttonPrev.bind('click', function() {
+	        carousel.startAuto(0);
+	    });
+
+	    // Pause autoscrolling if the user moves with the cursor over the clip.
+	    carousel.clip.hover(function() {
+	        carousel.stopAuto();
+	    }, function() {
+	        carousel.startAuto();
+	    });
+	};
+
+	function mycarousel_onBeforeAnimationCallback(carousel, listItem, listItemIndex, action) {
+		if (action != 'prev') {
+			$(listItem).next('li').find('img.lazy-load').each(function() {
+				$(this).attr('src', $(this).attr('delayed-src'));
+				$(this).removeClass('lazy-load');
+			});
+		}
+	}
+
+	$(document).ready(function() {
+	    jQuery('#home-banner-carousel').jcarousel({
+		    scroll: 1,
+	        auto: 10,
+	        wrap: 'last',
+	        initCallback: mycarousel_initCallback,
+	        itemVisibleInCallback: {
+				onBeforeAnimation: mycarousel_onBeforeAnimationCallback
+			}
+		});
+	});
+
+	</script>
+{% endblock %}

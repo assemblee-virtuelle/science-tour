@@ -1,0 +1,11 @@
+{{ google_map_container(map) }}
+{{ google_map_js(map) }}
+<script>
+var listener_{{ map.javascriptVariable }} = google.maps.event.addListener({{ map.javascriptVariable }}, "idle", function() {
+	if ({{ map.javascriptVariable }}.getCenter().toUrlValue() == "0,180")
+		{{ map.javascriptVariable }}.fitBounds({{ map.bound.javascriptVariable }});
+	if ({{ map.javascriptVariable }}.getZoom() > {{ zoomMax }})
+		{{ map.javascriptVariable }}.setZoom({{ zoomMax }});
+	google.maps.event.removeListener(listener_{{ map.javascriptVariable }});
+});
+</script>

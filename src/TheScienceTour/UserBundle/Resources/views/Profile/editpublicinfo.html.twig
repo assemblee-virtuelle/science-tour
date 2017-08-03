@@ -1,0 +1,45 @@
+{% extends "TheScienceTourUserBundle::layout.html.twig" %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed">{% trans %}Edit my public information{% endtrans %}</h1>
+</div>
+{% endblock %}
+{% block fos_user_content %}
+<div class="center w600p">
+	<form action="{{ path('fos_user_profile_edit_publicinfo') }}" {{ form_enctype(form) }} method="POST">
+		<div class="form-row">
+			{{ form_errors(form.info1) }}
+			<div class="w30 inbl">
+				{{ form_label(form.info1, "Education", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div>
+				{{ form_widget(form.info1, {'attr': { 'class': 'w91 tinymce', 'rows' : '15'} }) }}
+			</div>
+		</div>
+		<div class="form-row">
+			{{ form_errors(form.info2) }}
+			<div class="w30 inbl">
+				{{ form_label(form.info2, "Research topics", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div>
+				{{ form_widget(form.info2, {'attr': { 'class': 'w91 tinymce', 'rows' : '15'} }) }}
+			</div>
+		</div>
+		<div class="form-row">
+			{{ form_errors(form.info3) }}
+			<div class="w30 inbl">
+				{{ form_label(form.info3, "Availability", {'label_attr': {'class': 'label-big'}}) }}
+			</div>
+			<div>
+				{{ form_widget(form.info3, {'attr': { 'class': 'w91 tinymce', 'rows' : '15'} }) }}
+			</div>
+		</div>
+		<div class="form-row txtright">
+	        <input type="submit" value="{% trans %}Save{% endtrans %}" />
+	    </div>
+	    {{ form_rest(form) }}
+	</form>
+</div>
+{{ tinymce_init() }}
+{% endblock fos_user_content %}

@@ -1,0 +1,65 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ event.title }}{% endblock %}
+
+{%  block bodyid %}event{% endblock %}
+
+{% block nav_agenda %} id="nav_agenda"{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-yellow"{% endblock %}
+
+{% block banner %}
+<div class="banner-title with-little-man">
+	<h1 class="txtshadowed">{{ event.title }}</h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/event-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+<article class="event-container">
+	<figure>
+		{% if event.picture %}
+		{% thumbnail event.picture, 'medium' %}
+		{% elseif event.label and event.label.LabelType and event.label.labelType.picture %}
+		{% thumbnail event.label.labelType.picture, 'medium'  %}
+		{% else %}
+		<i class="icon-calendar" style="padding: 0 2px; font-size: 212px; color: {% if event.label and event.label.backgroundColor %}{{ event.label.backgroundColor }}{% else %}#6da854{% endif %};"></i>
+		{% endif %}
+	</figure>
+	<p>{{ event.description }}</p>
+</article>
+{% endblock %}
+
+{% block aside %}
+<div class="bgWhite shadowed">
+	{{ render(controller('TheScienceTourMapBundle:Map:asideMap',
+		{ 'documentList': event, 'sizes': { 'width': '218px', 'height': '163px' } })) }}
+	<table class="aside-box-table">
+		<tr>
+			<td class="w10"><i class="icon-time"></i></td>
+			<td>du {{ event.startDate|format_date('dd MMM') }} au {{ event.endDate|format_date('dd MMM YYYY') }}</td>
+		</tr>
+		<tr>
+			<td class="w10"><i class="icon-map-marker"></i></td>
+			<td>{{ event.place }}</td>
+		</tr>
+	</table>
+	
+	{% if event in userFavoriteEvents %}
+	<a href="{{ path('tst_event_favorites', {'id' : event.id, 'action': 'remove' }) }}" class="aside-button bgLightGrey">
+		{% trans %}Remove from favorites{% endtrans %}
+	</a>
+	{% else %}
+	<a href="{{ path('tst_event_favorites', {'id' : event.id, 'action': 'add' }) }}" class="aside-button bgLightGrey">
+		{% trans %}Add to favorites{% endtrans %}
+	</a>
+	{% endif %}
+</div>
+<h1>{% trans %}Share{% endtrans %}</h1>
+	<a class="share-button facebook-button" target="_blank" title="Facebook" href="https://www.facebook.com/sharer.php?u={{ url('tst_event', {'id' : event.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><i class="icon-facebook-sign"></i></a>
+	<a class="share-button twitter-button" target="_blank" title="Twitter" href="https://twitter.com/share?url={{ url('tst_event', {'id' : event.id}) }}&text=Le Science Tour - Événement {{ event.title|url_encode(true) }}&hashtags=lesciencetour" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><i class="icon-twitter-sign"></i></a>
+	<a class="share-button googleplus-button" target="_blank" title="Google +" href="https://plus.google.com/share?url={{ url('tst_event', {'id' : event.id}) }}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><i class="icon-google-plus-sign"></i></a>
+	<a class="share-button mail-button" title="Mail" href="mailto:?subject=Le Science Tour - Événement {{ event.title|replace({'&': '%26'}) }}&body={{ url('tst_event', {'id' : event.id}) }}" rel="nofollow"><i class="icon-envelope"></i></a>
+{% endblock %}

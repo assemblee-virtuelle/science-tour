@@ -1,0 +1,24 @@
+{%  extends "TheScienceTourMainBundle::main-layout.html.twig" %}
+
+{% block main %}
+			<div id="content" class="normalcontent">
+				{% for flashMessage in app.session.flashbag.get('notice') %}
+			    <div class="flash-notice">
+			    	<h2><i class="icon-info-sign"></i>{% trans %}Notice{% endtrans %}</h2>
+			        <p>{{ flashMessage }}</p>
+			    </div>
+				{% endfor %}
+				
+				{% block content %}{% endblock %}
+			</div>
+			
+			<aside>
+				{% block aside %}{% endblock %}
+			</aside>
+{% endblock %}
+
+{% block footer_stuff %}
+				<div class="footer-little-man">
+					<img src="{{ asset('bundles/thesciencetourmain/img/common-footer-man.png') }}" alt="" />
+				</div>
+{% endblock %}

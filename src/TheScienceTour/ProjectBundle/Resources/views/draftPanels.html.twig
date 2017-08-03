@@ -1,0 +1,44 @@
+<section class="event-items">
+	{% for project in projectList %}
+	<article class="event-panel">
+		{% if search %}
+			<a href="{{ path('tst_project', {'id' : project.id }) }}" title="{{ project.title }}" class="block-link">
+		{% else %}
+			<a href="{{ path('tst_project_edit', {'id' : project.id }) }}" title="{{ project.title }}" class="block-link">
+		{% endif %}
+			<figure class="event-panel-figure">
+				{% if project.picture is null %}
+				<img src="{{ asset('img/test_draft.png') }}" alt="" />
+				{% else %}
+				{% thumbnail project.picture, 'idea'  %}
+				{% endif %}
+			</figure>
+		</a>
+		<div class="event-panel-content-wrapper">
+			<div class="event-panel-content">
+				<header class="event-panel-header">
+				{% if search %}
+					<a href="{{ path('tst_project', {'id' : project.id }) }}" title="{{ project.title }}" class="block-link">
+				{% else %}
+					<a href="{{ path('tst_project_edit', {'id' : project.id }) }}" title="{{ project.title }}" class="block-link">
+				{% endif %}
+						<h2 class="event-panel-title">{{ project.title }}</h2>
+					</a>
+					<div class="event-panel-metadata">
+						<span class="date">{% trans %}created{% endtrans %} {{ project.createdAt | localizeddate('medium', 'none') }}</span>
+					</div>
+				</header>
+				<p class="event-panel-description">
+					{% set maxLength = 350 %}
+					{{ project.description|purify('no_html')|length > maxLength ? project.description|purify('no_html')[:maxLength] ~ '…' : project.description|purify('no_html') }}
+				</p>
+			</div>
+		</div>
+		{% if project.challenge %}
+		<div class="challenge-label">
+			<div>{% trans %}Challenge{% endtrans %}</div>
+		</div>
+		{% endif %}
+	</article>
+	{% endfor %}
+</section>

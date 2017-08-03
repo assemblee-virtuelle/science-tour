@@ -1,0 +1,30 @@
+fos_user_profile_show:
+    path: /{tab}
+    defaults: { _controller: "FOSUserBundle:Profile:show", tab: myprojects }
+    requirements:
+      methods: get
+      tab: mychats|myprojects|mydrafts|myskills|mychallenges|mypublicinfo
+
+fos_user_profile_chat:
+    path: /{tab}
+    defaults: { _controller: "FOSUserBundle:Profile:chat" }
+
+fos_user_profile_edit:
+    path: /edit
+    defaults: { _controller: "FOSUserBundle:Profile:chat" }
+
+fos_user_profile_edit_publicinfo:
+    path: /edit
+    defaults: { _controller: "FOSUserBundle:Profile:edit" }
+
+fos_user_profile_public:
+    path: /public/{nickname}
+    defaults: { _controller: "TheScienceTourUserBundle:Profile:publicProfile" }
+
+fos_user_profile_add_role:
+    path: /addrole
+    defaults: { _controller: "TheScienceTourUserBundle:Profile:addRole" }
+
+fos_user_profile_delete_role:
+    path: /deleterole/{idrole}
+    defaults: { _controller: "TheScienceTourUserBundle:Profile:deleteRole" }

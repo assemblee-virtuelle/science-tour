@@ -1,0 +1,7 @@
+parameters:
+#    the_science_tour_document.example.class: TheScienceTour\DocumentBundle\Example
+
+services:
+#    the_science_tour_document.example:
+#        class: %the_science_tour_document.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

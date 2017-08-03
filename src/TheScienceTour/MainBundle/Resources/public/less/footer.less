@@ -1,0 +1,122 @@
+/* LESS Document */
+
+.overall-footer {
+	height: 220px;
+	background-color: @footerBgColor;
+	font-family: @font2;
+	font-weight: bold;
+	color: @colorLight;
+	font-size: 12px;
+	
+	#overall-footer-container {
+		width: @pageWidth;
+		height: 190px;
+		padding: 15px 0;
+		margin: auto;
+		position: relative;
+		
+		.footer-little-man {
+			position: absolute;
+			right: 30px;
+			top: (5 - @commonFooterManHeight);
+		}
+		
+		h1 {
+			color: @colorLight;
+			font-size: @font1Small;
+			margin-right: 85px;
+		}
+		ul {
+			li {
+				margin: 5px 0;
+			}
+			a {
+				color: @colorLight;
+				text-decoration: none;
+				&:hover {
+					color: @linkColor;
+				}
+			}
+		}
+		.overall-footer-item {
+			display: inline-block;
+			vertical-align: top;
+			img {
+				margin-right: 8px;
+			}
+		}
+		.overall-footer-right {
+			width: 220px;
+			float: right;
+			#copyright {
+				padding-top: 70px;
+				.pdeb-logo {
+					display: inline-block;
+					float: left;
+					margin-right: 25px;
+					width: 55px;
+					height: 45px;
+					background: url("../img/pdeb_white.png") 0 0 repeat;
+					&:hover {
+						background-image: url("../img/pdeb_hover.png");
+					}
+				}
+				a {
+					text-decoration: inherit;
+					color: @colorLight;
+				}
+			}
+		}
+		.overall-footer-credits {
+			position: absolute;
+			bottom: 0;
+			margin: 7px 0;
+			width: 730px;
+			.nodesign-logo {
+				display: inline-block;
+				margin: 0 15px -4px 5px;
+				width: 92px;
+				height: 16px;
+				background: url("../img/nodesign_white.png") 0 0 no-repeat;
+				&:hover {
+					background-image: url("../img/nodesign_hover.png");
+				}
+			}
+			.g2cw2c-logo {
+				display: inline-block;
+				margin: 0 0 -2px 5px;
+				width: 82px;
+				height: 16px;
+				background: url("../img/g2cw2c_white.png") 0 0 no-repeat;
+				&:hover {
+					background-image: url("../img/g2cw2c_hover.png");
+				}
+			}
+		}
+		.facebook-button {
+			color: @mainBgColor;
+			&:hover {
+				color: @colorBlueFacebook;
+			}
+		}
+		.twitter-button {
+			color: @mainBgColor;
+			&:hover {
+				color: @colorBlueTwitter;
+			}
+		}
+		.googleplus-button {
+			color: @mainBgColor;
+			&:hover {
+				color: @colorRedGooglePlus;
+			}
+		}
+		.mail-button {
+			color: @footerBgColor;
+			background-color: @mainBgColor;
+			&:hover {
+				background-color: @colorLight;
+			}
+		}
+	}
+}

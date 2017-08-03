@@ -1,0 +1,130 @@
+{%  extends "TheScienceTourMainBundle::main.html.twig" %}
+
+{% block title %}{{ parent() }} - {% trans %}Project{% endtrans %}{% endblock %}
+
+{%  block scripts %}
+<script>
+
+	function stop(id) {
+		var div = document.getElementById(id);
+		var hidden = document.getElementById("delete_"+id);
+		
+		if (hidden.value == "0") {
+			div.style.opacity = .2;
+			hidden.value = "1";
+		} else {			
+			div.style.opacity = 1;
+			hidden.value = "0";
+		}
+
+	}
+	$(document).ready(function() {
+		$('#delegate_btn').click(function() {
+			var url = $(this).attr('href');
+			var $dialog = $('<div></div>').load(url+' #delegate_form_content');
+			$dialog.append($('<p class="popuplink">{% trans %}Loading...{% endtrans %}</p>'));
+			$($dialog).dialog({
+				modal: true,
+				title: '{% trans %}Delegate{% endtrans %}',
+				resizable: false,
+				draggable: false,
+				closeText: "{% trans %}Close{% endtrans %}",
+				width: 350
+			});
+			return false;
+		});
+	});
+</script>
+
+{% endblock %}
+
+{% block banner_attributes %} class="banner-single-document banner-bg-green"{% endblock %}
+
+{% block banner %}
+<div class="banner-title">
+	<h1 class="txtshadowed"><a href="{{ path('tst_project', {'id' : project.id}) }}">{{ project.title }}</a></h1>
+</div>
+<div class="banner-little-man">
+	<img src="{{ asset('bundles/thesciencetourmain/img/project-form-banner-man.png') }}" alt="" />
+</div>
+{% endblock %}
+
+{% block content %}
+
+<form class="project_form" method="post">
+
+	<button type="submit" class="button orange_button" />Sauvegarder</button>
+
+	<ul id="tabs" class="tabs">
+		<li><a href="{{ path('tst_project_admin', {'id' : project.id }) }}"><h1>{% trans %}Proposals{% endtrans %}</h1></a></li>
+		<li class="active"><h1>{% trans %}Team{% endtrans %}</h1></li>
+	</ul>
+
+	<div class="tab-container">
+		<div class="tab-container-inner">
+			<a href="{{ path('tst_project_delegate', {'id' : project.id }) }}" class="button" id="delegate_btn">{% trans %}Delegate{% endtrans %}</a>
+			<div class="admin_creator">
+				{% if project.creator.avatar is null %}
+				<img src="{{ asset('img/test_avatar50.png') }}" alt="" />
+				{% else %}
+				{% thumbnail project.creator.avatar, 'normal' %}
+				{% endif %}
+				<p>{% trans %}Administrator{% endtrans %}</p>
+				<h2>{{ project.creator.username }}</h2>	
+			</div>
+
+			<h1>{% trans %}Contributors{% endtrans %}</h1>
+			<ul class="admin_list">
+				{% if project.contributors.count == 0 %}
+				<li>Il n'y a pas de participants</li>
+				{% else %}
+					{% for contributor in project.contributors %}
+					<li>
+						<div id="contributor[{{ loop.index0 }}]" class="admin_helper w600p">
+							{% if contributor.avatar is null %}
+							<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+							{% else%}
+							{% thumbnail contributor.avatar, 'small' %}
+							{% endif %}
+							<h2>{{ contributor.username }}</h2>
+							<p>{{ contributor.city }}</p>		
+						</div>
+						<input class="stop" type="button" onClick="javascript:stop('contributor[{{ loop.index0 }}]');" value="#">
+						<input type="hidden" id="delete_contributor[{{ loop.index0 }}]" name="deleteContributors[{{ loop.index0 }}]" value="0" />
+					</li>
+					{% endfor %}
+				{% endif %}
+			</ul>
+			
+			<h1>{% trans %}Skills{% endtrans %}</h1>
+			<ul class="admin_list">
+			{% set nbHelpers = 0 %}
+				{% for skill in project.skills %}
+					{% set skillIndex = loop.index0 %}
+					{% for helper in skill.helpers %}
+					{% set nbHelpers = nbHelpers + 1 %}
+					<li>
+						<div id="helper[{{ skillIndex }}][{{ loop.index0 }}]" class="admin_helper w600p">
+							{% if helper.avatar is null %}
+							<img src="{{ asset('img/test_avatar35.png') }}" alt="" />
+							{% else%}
+							{% thumbnail helper.avatar, 'small' %}
+							{% endif %}
+							<h2>{{ helper.username }}<span>{{ skill.name }}</span></h2>
+							<p>{{ helper.city }}</p>	
+						</div>
+						<input class="stop" type="button" onClick="javascript:stop('helper[{{ skillIndex }}][{{ loop.index0 }}]');" value="#">
+						<input type="hidden" id="delete_helper[{{ skillIndex }}][{{ loop.index0 }}]" name="deleteHelpers[{{ skillIndex }}][{{ loop.index0 }}]" value="0" />
+					</li>
+					{% endfor %}
+				{% endfor %}
+				{% if nbHelpers == 0 %}
+				<li>Il n'y a pas d'aides pour les compétences</li>
+				{% endif %}
+			</ul>
+			
+		</div>
+	</div>
+</form>
+
+{% endblock %}
