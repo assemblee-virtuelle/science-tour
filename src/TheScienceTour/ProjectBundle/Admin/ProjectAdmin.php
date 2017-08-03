@@ -2,7 +2,7 @@
 
 namespace TheScienceTour\ProjectBundle\Admin;
 
-use Sonata\AdminBundle\AbstractAdmin;
+use Sonata\AdminBundle\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
