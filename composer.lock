@@ -2,8 +2,7 @@
     "_readme": [
         "This file locks the dependencies of your project to a known state",
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically",
-        "----"
+        "This file is @generated automatically"
     ],
     "content-hash": "0830de82e2a54ab11e78e54abdf9db41",
     "packages": [
@@ -59,7 +58,7 @@
                 "fullcalendar",
                 "jquery calendar"
             ],
-            "time": "2017-04-30T15:50:57+00:00"
+            "time": "2017-04-30 15:50:57"
         },
         {
             "name": "alcaeus/mongo-php-adapter",
@@ -1511,7 +1510,7 @@
             "keywords": [
                 "htmlpurifier"
             ],
-            "time": "2017-03-31T09:29:59+00:00"
+            "time": "2017-03-31 09:29:59"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1880,18 +1879,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/cache-provider.git",
-                "reference": "4dfb44dfccb627bea15d4af9c7bc3cdba9809d2f"
+                "reference": "513dd2b90bc44719525509015706ece2b1a2bace"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/cache-provider/zipball/4dfb44dfccb627bea15d4af9c7bc3cdba9809d2f",
-                "reference": "4dfb44dfccb627bea15d4af9c7bc3cdba9809d2f",
+                "url": "https://api.github.com/repos/geocoder-php/cache-provider/zipball/513dd2b90bc44719525509015706ece2b1a2bace",
+                "reference": "513dd2b90bc44719525509015706ece2b1a2bace",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
                 "psr/simple-cache": "^1.0",
-                "willdurand/geocoder": "^4.0.0-beta2"
+                "willdurand/geocoder": "^4.0.0"
             },
             "provide": {
                 "geocoder-php/provider-implementation": "1.0"
@@ -1925,7 +1924,7 @@
             ],
             "description": "Cache the result of a provider",
             "homepage": "http://geocoder-php.org/Geocoder/",
-            "time": "2017-06-30 08:02:28"
+            "time": "2017-08-01 07:24:07"
         },
         {
             "name": "geocoder-php/chain-provider",
@@ -1933,12 +1932,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/chain-provider.git",
-                "reference": "0e685a29161db07224e84804fd9368120fea1088"
+                "reference": "c327807dc455c2fee8c951d8fadbb5a60cfdcd48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/chain-provider/zipball/0e685a29161db07224e84804fd9368120fea1088",
-                "reference": "0e685a29161db07224e84804fd9368120fea1088",
+                "url": "https://api.github.com/repos/geocoder-php/chain-provider/zipball/c327807dc455c2fee8c951d8fadbb5a60cfdcd48",
+                "reference": "c327807dc455c2fee8c951d8fadbb5a60cfdcd48",
                 "shasum": ""
             },
             "require": {
@@ -1982,7 +1981,7 @@
             ],
             "description": "Geocoder chain adapter",
             "homepage": "http://geocoder-php.org/Geocoder/",
-            "time": "2017-06-30 07:00:28"
+            "time": "2017-08-01 07:23:53"
         },
         {
             "name": "geocoder-php/common-http",
@@ -1990,12 +1989,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/php-common-http.git",
-                "reference": "0ff2079db7f64b2f3bfdfafaab17af8058cdbfde"
+                "reference": "a469c06658e4aadf034f793cf6e398d44482491e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/php-common-http/zipball/0ff2079db7f64b2f3bfdfafaab17af8058cdbfde",
-                "reference": "0ff2079db7f64b2f3bfdfafaab17af8058cdbfde",
+                "url": "https://api.github.com/repos/geocoder-php/php-common-http/zipball/a469c06658e4aadf034f793cf6e398d44482491e",
+                "reference": "a469c06658e4aadf034f793cf6e398d44482491e",
                 "shasum": ""
             },
             "require": {
@@ -2044,7 +2043,7 @@
             "keywords": [
                 "http geocoder"
             ],
-            "time": "2017-07-09 14:51:59"
+            "time": "2017-08-01 06:58:52"
         },
         {
             "name": "geocoder-php/free-geoip-provider",
@@ -2095,7 +2094,7 @@
             ],
             "authors": [
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com"
                 }
             ],
@@ -2167,12 +2166,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/google-maps-provider.git",
-                "reference": "0d6d3378427deeb7f794a89f4311be494ec9a1a6"
+                "reference": "5d031ba8b4df2bcadf4d4ce6fa96da5dba4b0669"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/google-maps-provider/zipball/0d6d3378427deeb7f794a89f4311be494ec9a1a6",
-                "reference": "0d6d3378427deeb7f794a89f4311be494ec9a1a6",
+                "url": "https://api.github.com/repos/geocoder-php/google-maps-provider/zipball/5d031ba8b4df2bcadf4d4ce6fa96da5dba4b0669",
+                "reference": "5d031ba8b4df2bcadf4d4ce6fa96da5dba4b0669",
                 "shasum": ""
             },
             "require": {
@@ -2216,7 +2215,7 @@
             ],
             "description": "Geocoder GoogleMaps adapter",
             "homepage": "http://geocoder-php.org/Geocoder/",
-            "time": "2017-07-14 18:19:53"
+            "time": "2017-07-25 06:30:36"
         },
         {
             "name": "geocoder-php/host-ip-provider",
@@ -2607,7 +2606,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2015-11-10T17:04:01+00:00"
+            "time": "2015-11-10 17:04:01"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -3115,17 +3114,16 @@
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "1.5.0",
-            "target-dir": "JMS/SerializerBundle",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "85ee039a2b7f89d77c403e33cee7b43a875c31e5"
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/85ee039a2b7f89d77c403e33cee7b43a875c31e5",
-                "reference": "85ee039a2b7f89d77c403e33cee7b43a875c31e5",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/90373f0ed225b204bed66cc3f6837746c5902ac5",
+                "reference": "90373f0ed225b204bed66cc3f6837746c5902ac5",
                 "shasum": ""
             },
             "require": {
@@ -3156,19 +3154,26 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "JMS\\SerializerBundle": ""
-                }
+                "psr-4": {
+                    "JMS\\SerializerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com"
@@ -3183,7 +3188,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-05-10T10:17:17+00:00"
+            "time": "2017-05-17T10:26:43+00:00"
         },
         {
             "name": "knplabs/gaufrette",
@@ -4017,16 +4022,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0"
+                "reference": "7b50ab4d6c9fdaa1ed53ae310c955900af6e3372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/6b33475a3239439bc7ced287d0de0bb82e04d2f0",
-                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/7b50ab4d6c9fdaa1ed53ae310c955900af6e3372",
+                "reference": "7b50ab4d6c9fdaa1ed53ae310c955900af6e3372",
                 "shasum": ""
             },
             "require": {
@@ -4075,7 +4080,7 @@
                 "message",
                 "psr7"
             ],
-            "time": "2017-03-02T06:56:00+00:00"
+            "time": "2017-08-03T10:12:53+00:00"
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -5212,12 +5217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineMongoDBAdminBundle.git",
-                "reference": "385b579081e66f960904fafdf81c2566ee6914c4"
+                "reference": "8da1b9c66d2b75e3b21f3b64c7fe21f81cf7b3a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineMongoDBAdminBundle/zipball/385b579081e66f960904fafdf81c2566ee6914c4",
-                "reference": "385b579081e66f960904fafdf81c2566ee6914c4",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineMongoDBAdminBundle/zipball/8da1b9c66d2b75e3b21f3b64c7fe21f81cf7b3a7",
+                "reference": "8da1b9c66d2b75e3b21f3b64c7fe21f81cf7b3a7",
                 "shasum": ""
             },
             "require": {
@@ -5277,7 +5282,7 @@
                 "mongodb",
                 "sonata"
             ],
-            "time": "2017-06-07 00:00:13"
+            "time": "2017-08-03 00:00:46"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -5486,27 +5491,28 @@
         },
         {
             "name": "sonata-project/media-bundle",
-            "version": "3.5.1",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "e2900b01768e14afc7c2eeab3ca902705070369f"
+                "reference": "31a7250eaba6a4bba9b3ccf5d82409bf2a959240"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/e2900b01768e14afc7c2eeab3ca902705070369f",
-                "reference": "e2900b01768e14afc7c2eeab3ca902705070369f",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/31a7250eaba6a4bba9b3ccf5d82409bf2a959240",
+                "reference": "31a7250eaba6a4bba9b3ccf5d82409bf2a959240",
                 "shasum": ""
             },
             "require": {
                 "imagine/imagine": "^0.6",
-                "jms/serializer-bundle": "^0.13 || ^1.0",
+                "jms/serializer-bundle": "^0.13 || ^1.0 || ^2.0",
                 "knplabs/gaufrette": "^0.1.6 || ^0.2 || ^0.3",
                 "kriswallsmith/buzz": "^0.15",
                 "php": "^5.3 || ^7.0",
+                "psr/log": "^1.0",
                 "sonata-project/core-bundle": "^3.2",
                 "sonata-project/doctrine-extensions": "^1.0",
-                "sonata-project/easy-extends-bundle": "^2.1",
+                "sonata-project/easy-extends-bundle": "^2.2",
                 "sonata-project/notification-bundle": "^3.0",
                 "symfony/config": "^2.3.9 || ^3.0",
                 "symfony/console": "^2.3 || ^3.0",
@@ -5554,6 +5560,7 @@
                 "sonata-project/classification-bundle": "If you want to categorize your media items.",
                 "sonata-project/doctrine-orm-admin-bundle": "^3.0",
                 "sonata-project/seo-bundle": "^2.1",
+                "symfony/monolog-bundle": "^2.4",
                 "tilleuls/ckeditor-sonata-media-bundle": "^1.0"
             },
             "type": "symfony-bundle",
@@ -5597,7 +5604,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2017-03-31T09:42:40+00:00"
+            "time": "2017-08-01T08:39:11+00:00"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -6568,16 +6575,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.8.25",
+            "version": "v2.8.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "c2452af5659d0492a43268c389bb211295c5e4c9"
+                "reference": "33553101754e0888a1a1fecc46d7a7f10f6f9580"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/c2452af5659d0492a43268c389bb211295c5e4c9",
-                "reference": "c2452af5659d0492a43268c389bb211295c5e4c9",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/33553101754e0888a1a1fecc46d7a7f10f6f9580",
+                "reference": "33553101754e0888a1a1fecc46d7a7f10f6f9580",
                 "shasum": ""
             },
             "require": {
@@ -6702,7 +6709,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-07-17T18:00:19+00:00"
+            "time": "2017-08-01T09:05:29+00:00"
         },
         {
             "name": "twig/extensions",
@@ -6832,12 +6839,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/geocoder-php/php-common.git",
-                "reference": "79e53cebf849fb1ceb8ebe7635f20c61278c20ee"
+                "reference": "272924a1bed1bd138c747736d809744bd0a0d2f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/79e53cebf849fb1ceb8ebe7635f20c61278c20ee",
-                "reference": "79e53cebf849fb1ceb8ebe7635f20c61278c20ee",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/272924a1bed1bd138c747736d809744bd0a0d2f4",
+                "reference": "272924a1bed1bd138c747736d809744bd0a0d2f4",
                 "shasum": ""
             },
             "require": {
@@ -6883,7 +6890,7 @@
                 "geocoding",
                 "geoip"
             ],
-            "time": "2017-07-17 16:01:24"
+            "time": "2017-08-01 06:58:52"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -7098,7 +7105,7 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v2.8.25",
+            "version": "v2.8.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
