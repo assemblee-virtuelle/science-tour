@@ -3,11 +3,7 @@
 
 namespace TheScienceTour\UserBundle\Admin;
 
-<<<<<<< HEAD
 use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
-=======
-use Sonata\AdminBundle\AbstractAdmin as Admin;
->>>>>>> refontemarie
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
