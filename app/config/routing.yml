@@ -54,6 +54,12 @@ fos_user_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     prefix: /
 
+fullcalendar_loader:
+    path: /fc-load-events
+    defaults: { _controller: ADesignsCalendarBundle:Calendar:loadCalendar }
+    options:
+        expose: true
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
