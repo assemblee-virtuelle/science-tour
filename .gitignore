@@ -24,7 +24,10 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+<<<<<<< HEAD
+=======
 /web/css/
+>>>>>>> refontemarie
 
 # PHPUnit
 /app/phpunit.xml

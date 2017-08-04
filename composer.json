@@ -1,6 +1,6 @@
 {
     "name": "root/st0",
-    "license": "proprietary",
+    "license": "LGPL",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -67,7 +67,7 @@
     "mininum-stability": "dev",
     "prefer-stable": true,
     "provide": {
-	"ext-mongo": "1.6.14"
+        "ext-mongo": "1.6.14"
     },
     "scripts": {
         "symfony-scripts": [

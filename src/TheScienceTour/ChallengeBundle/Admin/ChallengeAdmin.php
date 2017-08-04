@@ -2,7 +2,7 @@
 
 namespace TheScienceTour\ChallengeBundle\Admin;
 
-use Sonata\AdminBundle\AbstractAdmin as Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin as Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -11,12 +11,22 @@ use Ivory\GoogleMap\Places\AutocompleteType;
 
 class ChallengeAdmin extends Admin {
 
-	protected function configureRoutes(RouteCollection $collection) {
+    /**
+     * configureRoutes
+     *
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection) {
 		$collection
 			->remove('create')
 		;
 	}
 
+    /**
+     * configureFormFields
+     *
+     * @param FormMapper $formMapper
+     */
 	protected function configureFormFields(FormMapper $formMapper) {
 		$formMapper
 			->add('title')

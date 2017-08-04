@@ -40,8 +40,17 @@ framework:
 
 # Twig Configuration
 twig:
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'TheScienceTourMainBundle:Form:fields.html.twig'
+            - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
+    globals:
+        tst_version: %tst_version%
+        erasmusLanguages: %erasmusLanguages%
+        st_contact_mail: %st_contact_mail%
+        ycfc_contact_mail: %ycfc_contact_mail%
 
 # Assetic Configuration
 assetic:
@@ -246,16 +255,6 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-    app.is_erasmus:
-        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
-        tags:
-          - { name: twig.extension }
-        arguments: ['@session']
-#    app.request_listener:
-#        class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.request }
-#        arguments: ['@router', '%erasmusDomains%', '%erasmusLanguages%']
 
 parameters:
     sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
