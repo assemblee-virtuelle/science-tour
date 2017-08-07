@@ -13,9 +13,13 @@ web_profiler:
 
 assetic:
     debug:          '%kernel.debug%'
-    use_controller: false
+    use_controller: true
     filters:
         cssrewrite: ~
+
+# Twig Configuration
+twig:
+    cache:            false
 
 monolog:
     handlers:
