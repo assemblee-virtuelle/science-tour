@@ -1,0 +1,11 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+
+before_install: phpenv config-add science-tour.ini
+
+before_script: composer install
+
+script: phpunit -c app
