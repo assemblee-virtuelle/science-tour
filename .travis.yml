@@ -4,8 +4,19 @@ php:
   - 7.0
   - 7.1
 
+env:
+  - SYMFONY_VERSION="2.8.*" DB=mongodb
+  - SYMFONY_VERSION="3.1.*" DB=mongodb
+
 before_install: phpenv config-add science-tour.ini
 
 before_script: composer install
+
+matrix:
+    exclude:
+    - php: 5.6
+      env: SYMFONY_VERSION="2.8.*" DB=mongodb
+    - php: 7.0
+      env: SYMFONY_VERSION="2.8.*" DB=mongodb
 
 script: phpunit -c app
