@@ -534,7 +534,7 @@
             },
             "require": {
                 "doctrine/common": ">=2.1.0,<2.5-dev",
-                "ext-mongo": ">=1.2.12,<1.6-dev",
+                "ext-mongo": ">=1.2.12,<=1.6.12",
                 "php": ">=5.3.2"
             },
             "require-dev": {

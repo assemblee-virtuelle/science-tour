@@ -1,12 +1,9 @@
-Symfony Standard Edition
+The science tour application
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+[![Build Status](https://travis-ci.org/balessan/science-tour.svg?branch=master)](https://travis-ci.org/balessan/science-tour)
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+Welcome to the Symfony-based application dedicated to the Petits-debrouillards association Science-Tour initiative !
 
 1) Installing the Standard Edition
 ----------------------------------
