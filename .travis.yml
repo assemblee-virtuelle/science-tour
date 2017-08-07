@@ -20,3 +20,4 @@ matrix:
       env: SYMFONY_VERSION="2.8.*" DB=mongodb
 
 script: phpunit -c app
+# script: phpunit tests/AppBundle/Util —— Classes de tests de Symfony
