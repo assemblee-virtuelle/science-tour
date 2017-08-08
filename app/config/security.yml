@@ -2,7 +2,10 @@ jms_security_extra:
     secure_all_services: false
     expressions: true
 
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
 security:
+
     encoders:
         TheScienceTour\UserBundle\Document\User: sha512
 
@@ -41,28 +44,33 @@ security:
           - ROLE_ADMIN
           - ROLE_ALLOWED_TO_SWITCH
 
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         main:
             id: fos_user.user_provider.username
 
     firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
-            pattern:    ^/
-            anonymous:  true
-            provider:   main
-            form_login:
-                login_path: fos_user_security_login
-                check_path: fos_user_security_check
-                default_target_path: tst_home
-            logout:
-                path: fos_user_security_logout
-                target: /
-            remember_me:
-                secret:  '%secret%'
+             pattern:    ^/
+             anonymous:  true
+             provider:   main
+             form_login:
+                 login_path: fos_user_security_login
+                 check_path: fos_user_security_check
+                 default_target_path: tst_home
+             logout:
+                 path: fos_user_security_logout
+                 target: /
+             remember_me:
+                 key:  %secret%
 
     access_control:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/projects/add, role: ROLE_USER }
+

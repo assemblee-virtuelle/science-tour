@@ -7,6 +7,13 @@ imports:
     # - {resource: @SonataDoctrineMongoDBAdminBundle/Resources/config/doctrine_mongo.xml}
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.is_erasmus:
+        class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
+        tags:
+          - { name: twig.extension }
+        arguments: ['@session']
+    app.request_listener:
+        class: TheScienceTour\MainBundle\Listener\TheScienceTourRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+        arguments: ['@router', '%erasmusDomains%', '%erasmusLanguages%']
