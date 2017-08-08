@@ -23,7 +23,7 @@ parameters:
 
     mailer_sender_address: contact@science-tour.org
 
-    root_url: http://178.170/72.70:8080/st0/web/app.php
+    root_url: http://178.170.72.70:8080/st0/web/app.php
 
     # Informations pour l'application Erasmus
     st_contact_mail: info@lesciencetour.fr

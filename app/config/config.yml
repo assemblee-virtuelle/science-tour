@@ -15,10 +15,12 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
+    tst_version: 'V1.2'
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.root_dir%/config/routing.yml'
@@ -61,7 +63,53 @@ assetic:
         cssrewrite: ~
         lessphp:
             file: "%kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php"
-            apply_to: "\.less$"
+            apply_to: "\\.less$"
+
+
+# Ivory Google Map Configuration
+# ivory_google_map:
+    # geocoder:
+        # api_key: "AIzaSyB5Vk8O4J2IiMvqBSjPKpCxtSG3hayFrwA"
+        # format: json
+        # client: httplug.client.default
+        # message_factory: httplug.message_factory.default
+    # map:
+        # api_key: "AIzaSyB5Vk8O4J2IiMvqBSjPKpCxtSG3hayFrwA"
+        # language: ~
+        # debug: true
+
+        # If this flag is enabled, the map will autozoom on the overlays added
+        # auto_zoom: false
+
+        # Center coordinate of the map
+        # If the autozoom flag is enabled, the center is not used
+        # center:
+        #     latitude: 48.8613
+        #     longitude: 2.353
+        #     no_wrap: true
+
+        # Zoom of the map
+        # If the autozoom flag is enabled, the zoom is not used
+        # zoom: 11
+
+        # Default map type
+        # Available map type : hybrid, roadmap, satellite, terrain
+        # type: "roadmap"
+
+        # Map width
+        # width: "950px"
+
+        # Map height
+        # height: "405px"
+
+        # Custom stylesheet options
+        # By default, there is no stylesheet options except width & height
+        # stylesheet_options:
+        #     border: "1px solid #000"
+        #     background-color: "#fff"
+
+        # google map Api language, default en
+        # language: fr
 
 # Doctrine MongoDB Configuration
 doctrine_mongodb:
@@ -78,9 +126,12 @@ doctrine_mongodb:
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
+#    encryption: "%mailer_encryption%"
+#    auth_mode: "%mailer_auth_mode%"
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
+    sender_address: "%mailer_sender_address%"
     spool: { type: memory }
 
 # FOSUser Configuration
@@ -255,7 +306,3 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
-
-parameters:
-    sonata.media.resizer.square.class: TheScienceTour\MediaBundle\Resizer\FRiZResizer
-    tst_version: 'V1.2'

@@ -62,3 +62,8 @@ tst_search:
          _locale: fr
     requirements:
         _locale: en|fr
+
+test_fos_login:
+  path: "test_fos_login"
+  defaults:
+    _controller: "FOSUserBundle:Security:login"
