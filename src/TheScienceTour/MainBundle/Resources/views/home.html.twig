@@ -91,7 +91,7 @@
 	<!--
 	  jCarousel library
 	-->
-	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.js') }}"></script>
 
 	<script type="text/javascript">
 
@@ -124,15 +124,7 @@
 	}
 
 	$(document).ready(function() {
-	    jQuery('#home-banner-carousel').jcarousel({
-		    scroll: 1,
-	        auto: 10,
-	        wrap: 'last',
-	        initCallback: mycarousel_initCallback,
-	        itemVisibleInCallback: {
-				onBeforeAnimation: mycarousel_onBeforeAnimationCallback
-			}
-		});
+	    jQuery('#home-banner-carousel').jcarousel();
 	});
 
 	</script>

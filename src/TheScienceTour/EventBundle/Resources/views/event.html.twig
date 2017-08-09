@@ -6,9 +6,8 @@
 
 {% block nav_agenda %} id="nav_agenda"{% endblock %}
 
-{% block banner_attributes %} class="banner-single-document banner-bg-yellow"{% endblock %}
+{% block banner_attributes %}banner-single-document banner-bg-yellow{% block banner %}
 
-{% block banner %}
 <div class="banner-title with-little-man">
 	<h1 class="txtshadowed">{{ event.title }}</h1>
 </div>

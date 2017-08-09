@@ -26,6 +26,8 @@
 /web/uploads/
 /web/css/
 /web/img/
+/web/carousel.html
+
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml
