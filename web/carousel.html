@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="bundles/thesciencetourmain/js/jquery.jcarousel.min.js"></script>
+    <script>
+
+        $(document).ready(function() {
+            $('.jcarousel')
+                .jcarousel({
+                    wrap: 'circular'
+                })
+                .jcarouselAutoscroll({
+                    interval: 4000,
+                    target: '+=1',
+                    autostart: true
+                })
+            ;
+
+        });
+
+    </script>
+
+
+    <style>
+        .jcarousel-wrapper {
+            margin: 20px auto;
+            position: relative;
+            border: 10px solid #fff;
+            width: 600px;
+            height: 400px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 0 2px #999;
+            -moz-box-shadow: 0 0 2px #999;
+            box-shadow: 0 0 2px #999;
+        }
+
+
+        .jcarousel-wrapper .photo-credits {
+            position: absolute;
+            right: 15px;
+            bottom: 0;
+            font-size: 13px;
+            color: #fff;
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.85);
+            opacity: .66;
+        }
+
+        .jcarousel-wrapper .photo-credits a {
+            color: #fff;
+        }
+
+        /** Carousel **/
+
+        .jcarousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .jcarousel ul {
+            width: 20000em;
+            position: relative;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .jcarousel li {
+            float: left;
+            display: inline-block;
+            width: 600px;
+        }
+
+        /** Carousel Controls **/
+
+        .jcarousel-control-prev,
+        .jcarousel-control-next {
+            position: absolute;
+            top: 200px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            background: #4E443C;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 1px #000;
+            font: 24px/27px Arial, sans-serif;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            -webkit-box-shadow: 0 0 2px #999;
+            -moz-box-shadow: 0 0 2px #999;
+            box-shadow: 0 0 2px #999;
+        }
+
+        .jcarousel-control-prev {
+            left: -50px;
+        }
+
+        .jcarousel-control-next {
+            right: -50px;
+        }
+
+        .jcarousel-control-prev:hover span,
+        .jcarousel-control-next:hover span {
+            display: block;
+        }
+
+        .jcarousel-control-prev.inactive,
+        .jcarousel-control-next.inactive {
+            opacity: .5;
+            cursor: default;
+        }
+
+        /** Carousel Pagination **/
+
+        .jcarousel-pagination {
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+        }
+
+        .jcarousel-pagination a {
+            text-decoration: none;
+            display: inline-block;
+
+            font-size: 11px;
+            line-height: 14px;
+            min-width: 14px;
+
+            background: #fff;
+            color: #4E443C;
+            border-radius: 14px;
+            padding: 3px;
+            text-align: center;
+
+            margin-right: 2px;
+
+            opacity: .75;
+        }
+
+        .jcarousel-pagination a.active {
+            background: #4E443C;
+            color: #fff;
+            opacity: 1;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+        }
+
+        #home-banner-carousel {
+            display: block;
+            width: 950px;
+            margin: 0 auto;
+        }
+        .banner-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 212px;
+            z-index: 32768;
+        }
+    </style>
+</head>
+<body>
+<div class="jcarousel-wrapper">
+
+    <div id="home-banner-carousel" c>
+        <ul>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/581337b870fe78e47396187b" alt="Lumière et couleur">
+
+                    <img title="Lumière et couleur" alt="Lumière et couleur" src="http://ss3d.com/SimAQUARIUM/sa-Free.jpg" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>Lumière et couleur</h3>
+                            <p>
+                                Se faire plaisir et se questionner
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/583ec09970fe7828206dad8a" alt="CLUB ?=+ : Naintré">
+                    <img src="http://marquisesdesanges.m.a.pic.centerblog.net/2e24f552.jpg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>CLUB ?=+ : Naintré</h3>
+                            <p>
+                                à définir
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/55377917ff867f160e143f64" alt="Le petit Doc [dans ton slip]">
+                    <img src="http://tristesa.t.r.pic.centerblog.net/m8zo9jm4.jpg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>Le petit Doc [dans ton slip]</h3>
+                            <p>
+                                Plus qu'un documentaire video sur l'histoire du réseau des Petits Débrouillards de France, nous proposons à chacun de raconter son histoire des Petits Débrouillards. Car c'est la multitude des "petites histoires" qui fait la grande Histoire.
+                                Nous invitons donc chacun : anciennes grandes figures de l…
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/582ec74470fe78831944413c" alt="Appel à Bénévole">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/582e/c7/thumb_582ec74470fe78831944413d_project_banner.png" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>Appel à Bénévole</h3>
+                            <p>
+                                Grosso modo, pour un super Kfé Science il faut :
+                                -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trouver des partenaires pour l’organisation du débat, -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choisir le thème/sujet du débat, -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trouver des locaux adéquats, -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identifier des intervenants et les contacter, -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Faire de la communication sur le débat, -&nbsp;&nbsp;&nbsp;…
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/580f4a8370fe78e0549618f0" alt="Nos Sens nous trompent-ils ?">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/580f/4a/thumb_580f4a8370fe78e0549618f1_project_banner.jpeg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>Nos Sens nous trompent-ils ?</h3>
+                            <p>
+                                .
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/57cd4cab70fe78c012dde3dd" alt="our life en sarthe">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/57cd/4c/thumb_57cd4cab70fe78c012dde3de_project_banner.jpeg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>our life en sarthe</h3>
+                            <p>
+                                Un groupe de 15 jeunes du lycée agricole de Rouillon a participé à 6 séances durant lesquelles ils ont pu imaginer le monde en 2050, avec des regards sur le quotidien : la ferme en 2050, la famille, les loisirs et la gestion des ressources. Nous avons pour cela utilisé la méthode préconisée par Our …
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/57bd894470fe7877420c1f4e" alt="Stage : Apprentis Chimistes">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/57bd/89/thumb_57bd894470fe7877420c1f4f_project_banner.jpeg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>Stage : Apprentis Chimistes</h3>
+                            <p>
+                                A partir de matériel du quotidien, les enfants expérimenteront autour de principes de base qui régissent la matière et ses transformations et ainsi découvrir que la vie de tous est faite de chimie.
+                                Les manipulations permettront en particulier aux enfants de comprendre un certain nombre d'éléments de…
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/577637c470fe78a05c313dd9" alt="A poil les Poilus !">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/5776/37/thumb_577637c470fe78a05c313dda_project_banner.jpeg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>A poil les Poilus !</h3>
+                            <p>
+                                Séjour Interculturel Franco-Allemand10 jours, 20 Jeunes Allemands et Français de 13 à 17 ans, Parcours dans toute l'Alsace !Pendant 10 jours, les jeunes se glisseront dans la peau de journalistes d’investigation ! En tant que reporters, ils pourront interviewer des descendants de Poilus, recueillir …
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/st0/web/app_dev.php/fr/project/5748168170fe78e0370932bd" alt="TAP Mulhouse Ecole Koechlin/ Apprentis chimistes /Trimestre 3">
+                    <img src="/st0/web/bundles/thesciencetourmain/img/blank.gif" delayed-src="http://178.170/72.70:8080/st0/web/app.php/uploads/media/project/5748/16/thumb_5748168170fe78e0370932be_project_banner.jpeg" class="lazy-load" alt="" width="950" height="405">
+                    <div class="banner-overlay">
+                        <div class="banner-overlay-box">
+                            <h3>TAP Mulhouse Ecole Koechlin/ Apprentis chimistes /Trimestre 3</h3>
+                            <p>
+                                Découvrir la démarche expérimentale en testant, en observant et en comprenant des réactions chimiques.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
