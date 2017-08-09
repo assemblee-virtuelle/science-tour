@@ -18,8 +18,6 @@
 
 {% block banner %}
 	{% if projectList %}
-	<div class="jcarousel-wrapper">
-	<div id="home-banner-carousel" class="jcarousel jcarousel-skin-tst-banner">
 		<ul class="jcarousel-skin-tst-banner">
 			{% for project in projectList %}
 			<li>
@@ -42,8 +40,6 @@
 			</li>
 			{% endfor %}
 		</ul>
-	</div>
-	</div>
 	{% else %}
 	<img src="{{ asset('img/test_homebanner.png') }}" alt="" />
 	{% endif %}
