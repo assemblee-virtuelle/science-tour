@@ -20,7 +20,7 @@
 	{% if projectList %}
 		<ul class="jcarousel-skin-tst-banner">
 			{% for project in projectList %}
-			<li>
+			<li class="jcarousel-diapos">
 				<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
 					{% if loop.first %}
 					{% thumbnail project.picture, 'banner'  %}
@@ -107,6 +107,16 @@
                 })
             ;
 
+        });
+
+        $('.jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .jcarouselPagination();
         });
 	</script>
 {% endblock %}
