@@ -21,6 +21,15 @@
 
         });
 
+        $('.jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .jcarouselPagination();
+
     </script>
 
 
@@ -287,6 +296,7 @@
                                 Découvrir la démarche expérimentale en testant, en observant et en comprenant des réactions chimiques.
                             </p>
                         </div>
+                        <p class="jcarousel-pagination" data-jcarouselpagination="true"></p>
                     </div>
                 </a>
             </li>
