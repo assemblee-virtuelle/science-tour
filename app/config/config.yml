@@ -44,10 +44,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-            - 'TheScienceTourMainBundle:Form:fields.html.twig'
-            - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
+    form_themes:
+        - 'TheScienceTourMainBundle:Form:fields.html.twig'
+        - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
     globals:
         tst_version: %tst_version%
         erasmusLanguages: %erasmusLanguages%
