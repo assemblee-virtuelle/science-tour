@@ -126,7 +126,7 @@ class ChallengeController extends Controller {
    * @return Response The form to be displayed on screen
    */
 
-  public function editChallengeAction($id) {
+  public function editChallengeAction(Request $request, $id) {
     $isErasmus = $this->get('session')->get('isErasmus');
     // $locale = $this->getLocale();
 
@@ -212,7 +212,6 @@ class ChallengeController extends Controller {
     }
     $form = $form->getForm();
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $challenge->removeRes();
       $form->bind($request);
@@ -302,7 +301,7 @@ class ChallengeController extends Controller {
    * Add chat/message
    */
 
-  public function addChatMessageAction($id, $idchat) {
+  public function addChatMessageAction(Request $request, $id, $idchat) {
     $newChat = ($idchat == NULL);
     $user    = $this->getUser();
     if (!$user) {
@@ -334,7 +333,6 @@ class ChallengeController extends Controller {
     $error_message = NULL;
     $mess          = "";
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $mess = $request->request->get('message');
 
