@@ -11,12 +11,22 @@ use Ivory\GoogleMap\Places\AutocompleteType;
 
 class ChallengeAdmin extends Admin {
 
-	protected function configureRoutes(RouteCollection $collection) {
+    /**
+     * configureRoutes
+     *
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection) {
 		$collection
 			->remove('create')
 		;
 	}
 
+    /**
+     * configureFormFields
+     *
+     * @param FormMapper $formMapper
+     */
 	protected function configureFormFields(FormMapper $formMapper) {
 		$formMapper
 			->add('title')

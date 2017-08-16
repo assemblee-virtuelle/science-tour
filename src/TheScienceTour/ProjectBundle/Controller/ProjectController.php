@@ -4,6 +4,7 @@ namespace TheScienceTour\ProjectBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Ivory\GoogleMap\Places\AutocompleteType;
@@ -37,8 +38,8 @@ class ProjectController extends Controller {
     ));
   }
 
-  public function projectsAction($filter, $center) {
-    if ($form = $this->getRequest()->query->get('form', FALSE)) {
+  public function projectsAction(Request $request, $filter, $center) {
+    if ($form = $request->query->get('form', FALSE)) {
       if ($form['center']) {
         return $this->redirect($this->generateUrl('tst_projects', array(
           'filter' => $filter,
@@ -428,7 +429,7 @@ class ProjectController extends Controller {
     return $form;
   }
 
-  public function addProjectAction($idchallenge) {
+  public function addProjectAction(Request $request, $idchallenge) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -453,7 +454,6 @@ class ProjectController extends Controller {
 
     // Build form.
     $form    = $form->getForm();
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       // Save erasmus project.
       $project->setIsErasmus($this->get('session')->get('isErasmus'));
@@ -549,7 +549,7 @@ class ProjectController extends Controller {
 
   }
 
-  public function editProjectAction($id) {
+  public function editProjectAction(Request $request, $id) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -607,7 +607,6 @@ class ProjectController extends Controller {
         ]
     );
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $form->bind($request);
       if ($form->isValid()) {
@@ -895,7 +894,7 @@ class ProjectController extends Controller {
     ));
   }
 
-  public function adminProjectAction($id, $tab) {
+  public function adminProjectAction(Request $request, $id, $tab) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -913,7 +912,6 @@ class ProjectController extends Controller {
       throw new AccessDeniedException();
     }
 
-    $request = $this->get('request');
 
     if ($tab == "team") {
 
@@ -1409,7 +1407,7 @@ class ProjectController extends Controller {
 
   }
 
-  public function adminProjectChatAction($id, $idres, $idhelp) {
+  public function adminProjectChatAction(Request $request, $id, $idres, $idhelp) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -1461,8 +1459,6 @@ class ProjectController extends Controller {
       $dm->persist($user);
       $dm->flush();
     }
-
-    $request = $this->get('request');
 
     if ($request->getMethod() == 'POST') {
       if ($request->request->has('stop')) {
@@ -1598,7 +1594,7 @@ class ProjectController extends Controller {
 	 *  NEWS ACTIONS
 	 */
 
-  public function addNewsAction($id) {
+  public function addNewsAction(Request $request, $id) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -1630,7 +1626,6 @@ class ProjectController extends Controller {
       ->add('content', 'purified_textarea')
       ->getForm();
     $project->setUpdatedAt(new \Datetime);
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $form->bind($request);
       if ($form->isValid()) {
@@ -1680,7 +1675,7 @@ class ProjectController extends Controller {
 
   }
 
-  public function editNewsAction($id, $idnews) {
+  public function editNewsAction(Request $request, $id, $idnews) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -1729,7 +1724,6 @@ class ProjectController extends Controller {
       ->add('content', 'purified_textarea')
       ->getForm();
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $project->setUpdatedAt(new \Datetime);
       if ($request->request->has('delete')) {
@@ -2224,7 +2218,7 @@ class ProjectController extends Controller {
 	 *  TOOLS/MATERIALS/PREMISES HELP ACTIONS
 	 */
 
-  public function resHelpAction($id, $idres) {
+  public function resHelpAction(Request $request, $id, $idres) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -2260,7 +2254,6 @@ class ProjectController extends Controller {
 
     $error_message = NULL;
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
 
       $number = intval($request->request->get('number'));
@@ -2438,7 +2431,7 @@ class ProjectController extends Controller {
 	 *  DELEGATE ACTIONS
 	*/
 
-  public function delegateAction($id) {
+  public function delegateAction(Request $request, $id) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -2458,7 +2451,6 @@ class ProjectController extends Controller {
 
     $error_message = NULL;
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $delegate_username = $request->request->get('delegate');
       if ($delegate_username == $user->getUsername()) {
@@ -2566,7 +2558,7 @@ class ProjectController extends Controller {
 	 *  CHATS ACTIONS
 	*/
 
-  public function addChatAction($id) {
+  public function addChatAction(Request $request, $id) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -2586,7 +2578,6 @@ class ProjectController extends Controller {
     $error_message = NULL;
     $mess          = "";
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $mess = $request->request->get('message');
 
@@ -2663,7 +2654,7 @@ class ProjectController extends Controller {
 
   }
 
-  public function addMessageAction($id, $idchat) {
+  public function addMessageAction(Request $request, $id, $idchat) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -2696,7 +2687,6 @@ class ProjectController extends Controller {
     $error_message = NULL;
     $mess          = "";
 
-    $request = $this->get('request');
     if ($request->getMethod() == 'POST') {
       $mess = $request->request->get('message');
 

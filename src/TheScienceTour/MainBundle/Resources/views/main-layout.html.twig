@@ -210,10 +210,11 @@
     </div>
 </header>
 
-<div id="banner"{% block banner_attributes %}{% endblock %}>
-    <div id="banner-container">
+<div id="banner" class="jcarousel-wrapper" {% block banner_attributes %}{% endblock %}>
+    <div id="banner-container" class="jcarousel jcarousel-skin-tst-banner">
         {% block banner %}{% endblock %}
     </div>
+    <p class="jcarousel-pagination" data-jcarouselpagination="true"></p>
 </div>
 
 <div id="main-container">
@@ -342,7 +343,8 @@
 </footer>
 
 <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
-<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript"
         src="{{ asset('bundles/thesciencetourmain/js/jquery.pstrength-min.1.2.js') }}"></script>
 <script>
