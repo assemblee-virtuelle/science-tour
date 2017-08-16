@@ -28,6 +28,9 @@
 /web/img/
 /web/carousel.html
 
+# Documentation by Sami
+/docs/
+
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml
