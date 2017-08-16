@@ -3,6 +3,7 @@
 namespace TheScienceTour\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -151,7 +152,7 @@ class ProfileController extends Controller {
         ));
   }
 
-  public function editAction() {
+  public function editAction(Request $request) {
     $user = $this->container->get('security.context')->getToken()->getUser();
     if (!is_object($user) || !$user instanceof UserInterface) {
       throw new AccessDeniedException('This user does not have access to this section.');
@@ -191,7 +192,7 @@ class ProfileController extends Controller {
       ->add('info3', 'purified_textarea')
       ->getForm();
 
-    $request = $this->container->get('request');
+    // $request = $this->container->get('request');
     if ($request->getMethod() == "POST") {
       $form->bind($request);
       if ($form->isValid()) {
@@ -246,7 +247,7 @@ class ProfileController extends Controller {
       ));
   }
 
-  public function addRoleAction() {
+  public function addRoleAction(Request $request) {
 
     $user = $this->container->get('security.context')->getToken()->getUser();
     if (!is_object($user) || !$user instanceof UserInterface) {
@@ -277,7 +278,7 @@ class ProfileController extends Controller {
       ))
       ->getForm();
 
-    $request = $this->container->get('request');
+    // $request = $this->container->get('request');
     if ($request->getMethod() == "POST") {
       $form->bind($request);
       if ($form->isValid()) {

@@ -37,7 +37,14 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  public function projectsAction($filter, $center) {
+  /**
+   * [projectsAction description]
+   * @param  Request $request [description]
+   * @param  string  $filter  [description]
+   * @param  string  $center  [description]
+   * @return [type]           [description]
+   */
+  public function projectsAction(Request $request, string $filter, string $center) {
     if ($form = $this->getRequest()->query->get('form', FALSE)) {
       if ($form['center']) {
         return $this->redirect($this->generateUrl('tst_projects', array(
@@ -199,7 +206,7 @@ class ProjectTranslationController extends Controller {
     $paginator  = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
       $projectListQuery,
-      $this->get('request')->query->get('page', 1),
+      $request->query->get('page', 1),
       12
     );
 
@@ -360,11 +367,12 @@ class ProjectTranslationController extends Controller {
   /**
    * addProjectTranslationAction Affichage du formulaire pour l'ajout d'une traduction de projet
    *
-   * @param Int $original clef primaire du document original à traduire
-   * @param String $language langue cible de la traduction
-   * @return Response formulaire de saisie de la traduction
+   * @param  Request $request   requête HTTP
+   * @param Int $original       clef primaire du document original à traduire
+   * @param String $language    langue cible de la traduction
+   * @return Response           formulaire de saisie de la traduction
    */
-  public function addProjectTranslationAction($original, $language) {
+  public function addProjectTranslationAction(Request $request, string $original, string $language) {
     $user = $this->getUser();
     if (!$user) {
     //  throw new AccessDeniedException();
@@ -401,7 +409,7 @@ class ProjectTranslationController extends Controller {
 
         // Build form.
         $form    = $form->getForm();
-        $request = $this->get('request');
+        // $request = $this->get('request');
 
 
         return $this->render('TheScienceTourProjectBundle:translations:form.html.twig', array(
@@ -483,10 +491,12 @@ class ProjectTranslationController extends Controller {
 
   /**
    * editProjectTranslationAction Modification de la traduction d'un projet
-   * @param  integer $id clef primaire de la traduction
-   * @return Response Formulaire d'édition de la traduction
+   *
+   * @param  Request $request   requête HTTP
+   * @param  integer $id        clef primaire de la traduction
+   * @return Response           formulaire d'édition de la traduction
    */
-  public function editProjectTranslationAction($id)
+  public function editProjectTranslationAction(Request $request, $id)
   {
     $user = $this->getUser();
     if (!$user) {
@@ -513,7 +523,7 @@ class ProjectTranslationController extends Controller {
 
     $form = $this->_formProjectTranslation($translation)->getForm();
 
-    $request = $this->get('request');
+    // $request = $this->get('request');
 
     return $this->render('TheScienceTourProjectBundle:translations:editTranslation.html.twig', array(
       'message'    => '',
@@ -525,7 +535,14 @@ class ProjectTranslationController extends Controller {
     ));
   }
 
-  public function adminProjectAction($id, $tab) {
+  /**
+   * [adminProjectAction description]
+   * @param  Request $request   requête HTTP
+   * @param  string  $id        [description]
+   * @param  string  $tab       [description]
+   * @return [type              [description]
+   */
+  public function adminProjectAction(Request $request, string $id, string $tab) {
     $user = $this->getUser();
     if (!$user) {
       throw new AccessDeniedException();
@@ -543,7 +560,7 @@ class ProjectTranslationController extends Controller {
       throw new AccessDeniedException();
     }
 
-    $request = $this->get('request');
+    // $request = $this->get('request');
 
     if ($tab == "team") {
 
