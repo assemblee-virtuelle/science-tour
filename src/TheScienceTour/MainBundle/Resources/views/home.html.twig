@@ -18,28 +18,28 @@
 
 {% block banner %}
 	{% if projectList %}
-	<ul id="home-banner-carousel" class="jcarousel-skin-tst-banner">
-		{% for project in projectList %}
-		<li>
-			<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
-				{% if loop.first %}
-				{% thumbnail project.picture, 'banner'  %}
-				{% else %}
-				<img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" height="405" width="950" delayed-src="{% path project.picture, 'banner' %}" class="lazy-load" alt="" />
-				{% endif %}
-				<div class="banner-overlay">
-					<div class="banner-overlay-box">
-						<h3>{{ project.title }}</h3>
-						<p>
-							{% set maxLength = 300 %}
-							{{ project.description|purify('no_html')|length > maxLength ? project.description|purify('no_html')[:maxLength] ~ '…' : project.description|purify('no_html') }}
-						</p>
+		<ul class="jcarousel-skin-tst-banner">
+			{% for project in projectList %}
+			<li class="jcarousel-diapos">
+				<a href="{{ path('tst_project', {'id' : project.id }) }}" alt="{{ project.title }}" >
+					{% if loop.first %}
+					{% thumbnail project.picture, 'banner'  %}
+					{% else %}
+					<img src="{{ asset('bundles/thesciencetourmain/img/blank.gif') }}" height="405" width="950" delayed-src="{% path project.picture, 'banner' %}" class="lazy-load" alt="" />
+					{% endif %}
+					<div class="banner-overlay">
+						<div class="banner-overlay-box">
+							<h3>{{ project.title }}</h3>
+							<p>
+								{% set maxLength = 300 %}
+								{{ project.description|purify('no_html')|length > maxLength ? project.description|purify('no_html')[:maxLength] ~ '…' : project.description|purify('no_html') }}
+							</p>
+						</div>
 					</div>
-				</div>
-			</a>
-		</li>
-		{% endfor %}
-	</ul>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
 	{% else %}
 	<img src="{{ asset('img/test_homebanner.png') }}" alt="" />
 	{% endif %}
@@ -91,41 +91,33 @@
 	<!--
 	  jCarousel library
 	-->
-	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/jquery.jcarousel.min.js') }}"></script>
 
 	<script type="text/javascript">
 
-	function mycarousel_initCallback(carousel, state)
-	{
-	    // Disable autoscrolling if the user clicks the prev or next button.
-	    carousel.buttonNext.bind('click', function() {
-	        carousel.startAuto(0);
-	    });
+                $(document).ready(function() {
+                    $('.jcarousel')
+                        .jcarousel({
+                            wrap: 'circular'
+                        })
+                        .jcarouselAutoscroll({
+                            interval: 4000,
+                            target: '+=1',
+                            autostart: true
+                        })
+                    ;
 
-	    carousel.buttonPrev.bind('click', function() {
-	        carousel.startAuto(0);
-	    });
+                    $('.jcarousel-pagination')
+                        .on('jcarouselpagination:active', 'a', function() {
+                            $(this).addClass('active');
+                        })
+                        .on('jcarouselpagination:inactive', 'a', function() {
+                            $(this).removeClass('active');
+                        })
+                        .jcarouselPagination();
 
-	    // Pause autoscrolling if the user moves with the cursor over the clip.
-	    carousel.clip.hover(function() {
-	        carousel.stopAuto();
-	    }, function() {
-	        carousel.startAuto();
-	    });
-	};
+                });
 
-	function mycarousel_onBeforeAnimationCallback(carousel, listItem, listItemIndex, action) {
-		if (action != 'prev') {
-			$(listItem).next('li').find('img.lazy-load').each(function() {
-				$(this).attr('src', $(this).attr('delayed-src'));
-				$(this).removeClass('lazy-load');
-			});
-		}
-	}
+    </script>
 
-	$(document).ready(function() {
-	    jQuery('#home-banner-carousel').jcarousel();
-	});
-
-	</script>
 {% endblock %}
