@@ -46,7 +46,7 @@ class MapController extends Controller
         array $menus = [],
         array $centerCoordinates = [],
         bool $defaultMap = false
-    ) : Response
+    ): Response
     {
         if ($this->get('kernel')->getEnvironment() === 'dev') {
             return new Response('Les cartes sont désactivées en environnement de dev.');
@@ -63,7 +63,8 @@ class MapController extends Controller
     }
 
     /**
-     * asideMapAction Affiche un aperçu de carte géographique
+     * Affiche un aperçu de carte géographique
+     *
      * @param array $documentList
      * @param int $zoomMax
      * @param array $sizes
@@ -78,7 +79,7 @@ class MapController extends Controller
         array $sizes = array('width' => '204px', 'height' => '153px'),
         string $htmlContainerId = 'aside-map-canvas',
         array $centerCoordinates = []
-    ) : Response
+    ): Response
     {
 
         if (!($documentList instanceof \Countable)) {
