@@ -9,6 +9,7 @@ imports:
     - { resource: "@TheScienceTourMessageBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourProjectBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourUserBundle/Resources/config/services.yml" }
+    - { resource: "@TheScienceTourContentPatternBundle/Resources/config/services.yml" }
 #    - { resource: "@TheScienceTourChallengeBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
@@ -44,15 +45,14 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-            - 'TheScienceTourMainBundle:Form:fields.html.twig'
-            - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
+    form_themes:
+        - 'TheScienceTourMainBundle:Form:fields.html.twig'
+        - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
     globals:
-        tst_version: %tst_version%
-        erasmusLanguages: %erasmusLanguages%
-        st_contact_mail: %st_contact_mail%
-        ycfc_contact_mail: %ycfc_contact_mail%
+        tst_version: '%tst_version%'
+        erasmusLanguages: '%erasmusLanguages%'
+        st_contact_mail: '%st_contact_mail%'
+        ycfc_contact_mail: '%ycfc_contact_mail%'
 
 # Assetic Configuration
 assetic:
@@ -117,7 +117,7 @@ doctrine_mongodb:
         default:
             server: mongodb://localhost:27017
             options: {}
-    default_database: %db_name%
+    default_database: '%db_name%'
     document_managers:
         default:
             auto_mapping: true
@@ -167,10 +167,25 @@ sonata_block:
     blocks:
         sonata.admin.block.admin_list:
             contexts:   [admin]
-        sonata.block.service.text:
-        sonata.block.service.rss:
+#        sonata.block.service.text: ~
+#        sonata.block.service.rss: ~
 
 sonata_admin:
+#    dashboard:
+#        groups:
+#            app.admin.content: ~
+#        blocks:
+#            - {position: left, type: sonata.admin.block.admin_list}
+#            -
+#                position: right,
+#                type: sonata.block.service.text
+#                settings:
+#                    content: >
+#                        <h2>Welcome to the Sonata Admin</h2>
+#                       <p>This is a <code>sonata.block.service.text</code> from the Block
+#                       Bundle, you can create and add new block in these area by configuring
+#                        the <code>sonata_admin</code> section.</p> <br /> For instance, here
+#                        a RSS feed parser (<code>sonata.block.service.rss</code>):
     security:
         handler: sonata.admin.security.handler.role
 

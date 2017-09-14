@@ -5,8 +5,17 @@ parameters:
 
 imports:
     # - {resource: @SonataDoctrineMongoDBAdminBundle/Resources/config/doctrine_mongo.xml}
+    # - { resource: "@TheScienceTourChallengeBundle/Resources/config/services.yml" }
+
 
 services:
+    # ...
+    admin.challenge:
+        class: TheScienceTour\ChallengeBundle\Admin\ChallengeAdmin
+        arguments: [~, TheScienceTour\ChallengeBundle\Document\Challenge, ~]
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, label: Challenges }
+        public: true
     app.is_erasmus:
         class: TheScienceTour\MainBundle\Twig\TheScienceTourErasmusExtension
         tags:

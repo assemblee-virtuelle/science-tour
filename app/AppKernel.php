@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -27,7 +27,8 @@ class AppKernel extends Kernel
       	    new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
       	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-      	    new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
 //      	    new Sonata\jQueryBundle\SonatajQueryBundle(),
       	    new Sonata\DoctrineMongoDBAdminBundle\SonataDoctrineMongoDBAdminBundle(),
       	    new Sonata\AdminBundle\SonataAdminBundle(),
@@ -41,7 +42,7 @@ class AppKernel extends Kernel
       	    new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
-	   new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+	    new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
             new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
             new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
@@ -51,16 +52,36 @@ class AppKernel extends Kernel
             new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
             new TheScienceTour\ProjectBundle\TheScienceTourProjectBundle(),
             new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
-        );
+            new TheScienceTour\ContentPatternBundle\TheScienceTourContentPatternBundle(),
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+
+            if ('dev' === $this->getEnvironment()) {
+                $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
         }
 
         return $bundles;
+    }
+
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

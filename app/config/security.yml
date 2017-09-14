@@ -68,9 +68,9 @@ security:
                  path: fos_user_security_logout
                  target: /
              remember_me:
-                 key:  %secret%
+                 secret:  '%secret%'
 
     access_control:
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        # - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/projects/add, role: ROLE_USER }
 

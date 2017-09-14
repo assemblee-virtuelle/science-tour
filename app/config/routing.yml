@@ -1,3 +1,7 @@
+the_science_tour_content_pattern:
+    resource: "@TheScienceTourContentPatternBundle/Resources/config/routing.yml"
+    prefix:   /
+
 the_science_tour_main:
     resource: "@TheScienceTourMainBundle/Resources/config/routing.yml"
     prefix:   /
@@ -96,7 +100,7 @@ media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
 
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
-    prefix: /exemple
+#app:
+#    resource: '@AppBundle/Controller/'
+#    type: annotation
+#    prefix: /exemple

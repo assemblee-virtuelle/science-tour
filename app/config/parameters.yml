@@ -12,8 +12,6 @@ parameters:
     database_user: root
     database_password: null
     db_name: sciencetour
-    tst_version: 2.0.0-dev
-    mailer_sender_address: contact@science-tour.org
     root_url: 'http://178.170/72.70:8080/st0/web/app.php'
     st_contact_mail: info@lesciencetour.fr
     ycfc_contact_mail: info@ycfc.eu
