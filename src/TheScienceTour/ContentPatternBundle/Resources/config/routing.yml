@@ -1,0 +1,3 @@
+the_science_tour_content_pattern_homepage:
+    path:     /
+    defaults: { _controller: TheScienceTourContentPatternBundle:Default:index }
