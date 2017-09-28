@@ -6,6 +6,7 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/leaflet-styles/leaflet.css') }}" />
 	{% stylesheets
 		'bundles/thesciencetourmain/css/jcarousel-skins/tst-banner/skin.css'
 		filter='cssrewrite' output='css/compiled/home.css'
@@ -61,11 +62,13 @@
 
 <h1>{% trans %}Around me{% endtrans %}</h1>
 <div class="colored-box bgRed">
+	<div id="around-me-map" style="height:200px"></div>
 	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': aroundMeProjects, 'zoom': 8 })) }#}
 </div>
 
 <h1 class="trucks_h1">{% trans %}Trucks{% endtrans %}<a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}See all{% endtrans %}</a></h1>
 <div class="colored-box bgBlue">
+	<div id="trucks-map" style="height:200px"></div>
 	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': trucksList, 'htmlContainerId' : 'trucks-canvas' })) }#}
 	<div class="events-list">
 		<table class="striped bgWhite aside-box-table">
@@ -88,6 +91,8 @@
 
 	<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
 
+	<script type="text/javascript" src="{{ asset('bundles/thesciencetourmain/js/leaflet.js') }}"></script>
+
 	<!--
 	  jCarousel library
 	-->
@@ -95,29 +100,82 @@
 
 	<script type="text/javascript">
 
-                $(document).ready(function() {
-                    $('.jcarousel')
-                        .jcarousel({
-                            wrap: 'circular'
-                        })
-                        .jcarouselAutoscroll({
-                            interval: 4000,
-                            target: '+=1',
-                            autostart: true
-                        })
-                    ;
+        const DEF_LATITUDE = 48.7,
+            DEF_LONGITUDE = 2.4,
+            DEF_ZOOM = 10;
 
-                    $('.jcarousel-pagination')
-                        .on('jcarouselpagination:active', 'a', function() {
-                            $(this).addClass('active');
-                        })
-                        .on('jcarouselpagination:inactive', 'a', function() {
-                            $(this).removeClass('active');
-                        })
-                        .jcarouselPagination();
+        var trucksMap, aroundMeMap;
+        
+        function gpsPicker() {
+            return new Promise(function (resolve, reject) {
+                console.log('GPS');
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(
+                        resolve,
+                        reject,
+                        {timeout: 10000}
+                    );
+                } else {
+                    // alert('Pas de géolocalisation');
+                    reject({"lat": DEF_LATITUDE, "long": DEF_LONGITUDE, "error": NO_GEOLOCATION});
+                }
+            });
+        }
 
-                });
+        function aroundMapBuild(position) {
+            console.log(aroundMeMap);
+            var latitude  = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            aroundMeMap.setView([latitude, longitude], 11);
+        }
 
-    </script>
+        function geoError() {
+            console.log("Erreur de géolocalisation");
+            aroundMeMap.setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
+        }
+
+        $(document).ready(function() {
+            $('.jcarousel')
+                .jcarousel({
+                    wrap: 'circular'
+                })
+                .jcarouselAutoscroll({
+                    interval: 4000,
+                    target: '+=1',
+                    autostart: true
+                })
+            ;
+
+            $('.jcarousel-pagination')
+                .on('jcarouselpagination:active', 'a', function() {
+                    $(this).addClass('active');
+                })
+                .on('jcarouselpagination:inactive', 'a', function() {
+                    $(this).removeClass('active');
+                })
+                .jcarouselPagination();
+
+         	trucksMap = L.map('trucks-map').setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
+                maxZoom: 28
+            }).addTo(trucksMap);
+
+            aroundMeMap = L.map('around-me-map');
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
+                maxZoom: 28
+            }).addTo(aroundMeMap);
+
+            gpsPicker().then(aroundMapBuild).catch(geoError);
+
+        });
+
+
+
+
+	</script>
 
 {% endblock %}
