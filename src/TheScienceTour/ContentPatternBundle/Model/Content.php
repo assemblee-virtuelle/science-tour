@@ -162,7 +162,7 @@ abstract class Content implements ContentInterface
      *
      * @return int
      */
-    public function getId() : integer
+    public function getId() : int
     {
         return $this->id;
     }
@@ -173,7 +173,7 @@ abstract class Content implements ContentInterface
      * @param int $id
      * @return ContentInterface
      */
-    public function setId(integer $id) :  ContentInterface
+    public function setId(int $id) :  ContentInterface
     {
         $this->id = $id;
         return $this;

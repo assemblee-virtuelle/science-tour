@@ -25,7 +25,7 @@ interface ContentInterface {
      *
      * @return int
      */
-    public function getId() : integer;
+    public function getId() : int;
 
     /**
      * Modifie l'identifiant du contenu
@@ -33,7 +33,7 @@ interface ContentInterface {
      * @param int $id
      * @return ContentInterface
      */
-    public function setId(integer $id) : self;
+    public function setId(int $id) : self;
 
     /**
      * Retourne l'objet représentant le créateur du contenu
