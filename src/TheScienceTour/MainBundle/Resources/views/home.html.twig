@@ -61,14 +61,14 @@
 {% include 'ADesignsCalendarBundle::calendar.html.twig' %}
 
 <h1>{% trans %}Around me{% endtrans %}</h1>
-<div class="colored-box bgRed">
-	<div id="around-me-map" style="height:200px"></div>
+<div class="aside-box colored-box bgRed">
+	<div id="around-me-map" class="aside-map map-box" data-position="self" style="height:200px"></div>
 	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': aroundMeProjects, 'zoom': 8 })) }#}
 </div>
 
 <h1 class="trucks_h1">{% trans %}Trucks{% endtrans %}<a href="{{ path('tst_agenda', {'filter' : 'trucks'}) }}">{% trans %}See all{% endtrans %}</a></h1>
-<div class="colored-box bgBlue">
-	<div id="trucks-map" style="height:200px"></div>
+<div class="aside-box colored-box bgBlue">
+	<div id="trucks-map" class="aside-map map-box" data-position="default" style="height:200px"></div>
 	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': trucksList, 'htmlContainerId' : 'trucks-canvas' })) }#}
 	<div class="events-list">
 		<table class="striped bgWhite aside-box-table">
@@ -104,8 +104,8 @@
             DEF_LONGITUDE = 2.4,
             DEF_ZOOM = 10;
 
-        var trucksMap, aroundMeMap;
-        
+        var mapBoxes = {};
+
         function gpsPicker() {
             return new Promise(function (resolve, reject) {
                 console.log('GPS');
@@ -117,22 +117,45 @@
                     );
                 } else {
                     // alert('Pas de géolocalisation');
-                    reject({"lat": DEF_LATITUDE, "long": DEF_LONGITUDE, "error": NO_GEOLOCATION});
+                    reject({"lat": DEF_LATITUDE, "long": DEF_LONGITUDE, "reason": NO_GEOLOCATION});
                 }
             });
         }
 
-        function aroundMapBuild(position) {
-            console.log(aroundMeMap);
+        function mapBuild([position, whichMap]) {
+            console.log(whichMap);
             var latitude  = position.coords.latitude;
             var longitude = position.coords.longitude;
-            aroundMeMap.setView([latitude, longitude], 11);
+            whichMap.setView([latitude, longitude], DEF_ZOOM);
         }
 
-        function geoError() {
+        function geoError(reason) {
             console.log("Erreur de géolocalisation");
-            aroundMeMap.setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
+            console.log(reason);
+            //aroundMeMap.setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
         }
+
+        function mapRender() {
+            let id = $(this).prop('id');
+            console.log(id);
+            let position = $(this).data('position');
+            console.log(position);
+            mapBoxes[id]= L.map(id);
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
+                maxZoom: 28
+            }).addTo(mapBoxes[id]);
+
+            if (position == 'default') {
+                mapBoxes[id].setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
+            } else {
+                Promise
+                    .all([gpsPicker(), Promise.resolve(mapBoxes[id])])
+                    .then(mapBuild)
+            		.catch(geoError)
+            }
+
+		}
 
         $(document).ready(function() {
             $('.jcarousel')
@@ -155,23 +178,8 @@
                 })
                 .jcarouselPagination();
 
-         	trucksMap = L.map('trucks-map').setView([DEF_LATITUDE, DEF_LONGITUDE], DEF_ZOOM);
-
-            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
-                maxZoom: 28
-            }).addTo(trucksMap);
-
-            aroundMeMap = L.map('around-me-map');
-
-            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
-                maxZoom: 28
-            }).addTo(aroundMeMap);
-
-            gpsPicker().then(aroundMapBuild).catch(geoError);
-
-        });
+            $('.map-box').each(mapRender)
+		});
 
 
 
