@@ -46,6 +46,7 @@ class AppKernel extends Kernel
 
             new TheScienceTour\CassiniLeafletBundle\TheScienceTourCassiniLeafletBundle(),
             new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
+            new TheScienceTour\ContentPatternBundle\TheScienceTourContentPatternBundle(),
             new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
             new TheScienceTour\EventBundle\TheScienceTourEventBundle(),
             new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
@@ -53,7 +54,7 @@ class AppKernel extends Kernel
             new TheScienceTour\MediaBundle\TheScienceTourMediaBundle(),
             new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
             new TheScienceTour\ProjectBundle\TheScienceTourProjectBundle(),
-            new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
+            new TheScienceTour\UserBundle\TheScienceTourUserBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

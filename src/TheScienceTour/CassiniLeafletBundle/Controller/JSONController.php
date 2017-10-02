@@ -19,13 +19,13 @@ use Http\Adapter\Guzzle6\Client;
 class JSONController extends Controller
 {
 
-    private function markerCreator($lat, $long, $label, $key) : string
+    private function markerCreator($lat, $long, $label, $key): string
     {
-    return "var marker{$key} = L.marker([{$lat}, {$long}]).addTo(map);
+        return "var marker{$key} = L.marker([{$lat}, {$long}]).addTo(map);
     marker{$key}.bindPopup(\"{$label}\");";
     }
 
-    public function markersAction (Request $request)
+    public function markersAction(Request $request)
     {
         $geocoder = new ProviderAggregator();
         // Create a chain of providers.
@@ -57,4 +57,5 @@ class JSONController extends Controller
                 echo $e->getMessage();
             }
         }
+    }
 }

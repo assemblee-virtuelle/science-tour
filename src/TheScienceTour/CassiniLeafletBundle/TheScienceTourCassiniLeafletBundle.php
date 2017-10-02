@@ -6,7 +6,6 @@
  * Time: 12:15
  */
 
-<?php
 
 namespace TheScienceTour\CassiniLeafletBundle;
 
