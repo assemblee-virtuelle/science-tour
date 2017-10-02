@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = [
+        $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -17,16 +17,16 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
 
-	    new JMS\AopBundle\JMSAopBundle(),
-	    new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+	        new JMS\AopBundle\JMSAopBundle(),
+	        new JMS\DiExtraBundle\JMSDiExtraBundle($this),
      	    new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-	    new JMS\SerializerBundle\JMSSerializerBundle(),
+	        new JMS\SerializerBundle\JMSSerializerBundle(),
       	    new FOS\UserBundle\FOSUserBundle(),
       	    new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-	    new FOS\RestBundle\FOSRestBundle(),
+	        new FOS\RestBundle\FOSRestBundle(),
       	    new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
       	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+	        new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
 //      	    new Sonata\jQueryBundle\SonatajQueryBundle(),
@@ -42,46 +42,28 @@ class AppKernel extends Kernel
       	    new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
-	    new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+	        new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+
+            new TheScienceTour\CassiniLeafletBundle\TheScienceTourCassiniLeafletBundle(),
             new TheScienceTour\ChallengeBundle\TheScienceTourChallengeBundle(),
-            new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
             new TheScienceTour\DocumentBundle\TheScienceTourDocumentBundle(),
             new TheScienceTour\EventBundle\TheScienceTourEventBundle(),
+            new TheScienceTour\MainBundle\TheScienceTourMainBundle(),
             new TheScienceTour\MapBundle\TheScienceTourMapBundle(),
             new TheScienceTour\MediaBundle\TheScienceTourMediaBundle(),
             new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
             new TheScienceTour\ProjectBundle\TheScienceTourProjectBundle(),
             new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
-            new TheScienceTour\ContentPatternBundle\TheScienceTourContentPatternBundle(),
-        ];
+        );
 
-        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+        if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-
-            if ('dev' === $this->getEnvironment()) {
-                $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
-            }
+            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
         return $bundles;
-    }
-
-    public function getRootDir()
-    {
-        return __DIR__;
-    }
-
-    public function getCacheDir()
-    {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
-    }
-
-    public function getLogDir()
-    {
-        return dirname(__DIR__).'/var/logs';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
