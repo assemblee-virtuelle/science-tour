@@ -9,7 +9,6 @@ imports:
     - { resource: "@TheScienceTourMessageBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourProjectBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourUserBundle/Resources/config/services.yml" }
-    - { resource: "@TheScienceTourContentPatternBundle/Resources/config/services.yml" }
 #    - { resource: "@TheScienceTourChallengeBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
@@ -45,9 +44,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form_themes:
-        - 'TheScienceTourMainBundle:Form:fields.html.twig'
-        - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
+#    form:
+#        resources:
+#            - 'TheScienceTourMainBundle:Form:fields.html.twig'
+#            - 'TheScienceTourMainBundle:Form:fields_errors.html.twig'
     globals:
         tst_version: '%tst_version%'
         erasmusLanguages: '%erasmusLanguages%'
@@ -311,6 +311,13 @@ exercise_html_purifier:
         CSS.AllowedProperties: 'text-decoration,padding-left,text-decoration,list-style-type'
     no_html:
         HTML.Allowed: ''
+
+# Gestion des cartes Leaflet
+the_science_tour_cassini_leaflet:
+    default_location:
+        latitude: 48.225
+        longitude: 2.2358
+        zoom: 13
 
 services:
     twig.extension.intl:
