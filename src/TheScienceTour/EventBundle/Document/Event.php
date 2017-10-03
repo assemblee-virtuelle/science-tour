@@ -4,8 +4,10 @@ namespace TheScienceTour\EventBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use TheScienceTour\ContentPatternBundle\Model\ContentInterface;
 use TheScienceTour\MapBundle\Validator\Constraints as TSTMapAssert;
 use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
+use TheScienceTour\ContentPatternBundle\Model\Content;
 
 /**
  * @MongoDB\Document(repositoryClass="TheScienceTour\EventBundle\Repository\EventRepository", requireIndexes=true)
@@ -18,7 +20,7 @@ use TheScienceTour\MediaBundle\Validator\Constraints as TSTMediaAssert;
  *   @MongoDB\Index(keys={"coordinates"="2d"})
  * })
  */
-class Event {
+class Event extends Content {
 	/**
 	 * @MongoDB\Id
 	 */
@@ -88,252 +90,77 @@ class Event {
 	protected $distance;
 
     /**
-     * Get id
+     * Get bidullActivityId
      *
-     * @return id $id
+     * @return int $bidullActivityId
      */
-    public function getId()
+    public function getBidullActivityId() : int
     {
-        return $this->id;
+        return $this->bidullActivityId;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return self
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string $title
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * Set bidullActivityId
      *
      * @param int $bidullActivityId
-     * @return self
+     * @return ContentInterface
      */
-    public function setBidullActivityId($bidullActivityId)
+    public function setBidullActivityId(int $bidullActivityId) : self
     {
     	$this->bidullActivityId = $bidullActivityId;
     	return $this;
     }
 
     /**
-     * Get bidullActivityId
+     * Alias de la méthode setStartedAt
      *
-     * @return int $bidullActivityId
+     * @param \DateTime $startDate
+     * @return ContentInterface
      */
-    public function getBidullActivityId()
+    public function setStartDate(\DateTime $startDate) :self
     {
-    	return $this->bidullActivityId;
+        return $this->setStartedAt($startDate);
     }
 
     /**
-     * Set description
+     * Alias de la méthode getStartedAt
      *
-     * @param string $description
-     * @return self
+     * @return \DateTime $startDate
      */
-    public function setDescription($description)
+    public function getStartDate() : \Datetime
     {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string $description
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set startDate
-     *
-     * @param date $startDate
-     * @return self
-     */
-    public function setStartDate($startDate)
-    {
-        $this->startDate = $startDate;
-        return $this;
-    }
-
-    /**
-     * Get startDate
-     *
-     * @return date $startDate
-     */
-    public function getStartDate()
-    {
-        return $this->startDate;
+        return (($legacy && is_null($this->startedAt)) ? $this->startDate : $this->startedAt);
     }
 
     /**
      * Set endDate
      *
-     * @param date $endDate
-     * @return self
+     * @param \DateTime $endDate
+     * @return ContentInterface
      */
-    public function setEndDate($endDate)
+    public function setEndDate($endDate) : self
     {
-        $this->endDate = $endDate;
-        return $this;
+        return $this->setFinishedAt($endDate);
     }
 
     /**
-     * Get endDate
+     * Alias de la méthode getFinishedAt
      *
-     * @return date $endDate
+     * @return \DateTime $endDate
      */
-    public function getEndDate()
+    public function getEndDate() : \DateTime
     {
-        return $this->endDate;
-    }
-
-    /**
-     * Set place
-     *
-     * @param string $place
-     * @return self
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-        return $this;
-    }
-
-    /**
-     * Get place
-     *
-     * @return string $place
-     */
-    public function getPlace()
-    {
-        return $this->place;
-    }
-
-    /**
-     * Set picture
-     *
-     * @param TheScienceTour\MediaBundle\Document\Media $picture
-     * @return self
-     */
-    public function setPicture($picture)
-    {
-    	if ($picture) {
-	        $this->picture = $picture;
-	        $this->picture->setName($this->title);
-    	} else {
-    		$this->picture = null;
-    	}
-        return $this;
-    }
-
-    /**
-     * Get picture
-     *
-     * @return TheScienceTour\MediaBundle\Document\Media $picture
-     */
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    /**
-     * Set frontPage
-     *
-     * @param boolean $frontPage
-     * @return self
-     */
-    public function setFrontPage($frontPage)
-    {
-        $this->frontPage = $frontPage;
-        return $this;
-    }
-
-    /**
-     * Get frontPage
-     *
-     * @return boolean $frontPage
-     */
-    public function getFrontPage()
-    {
-        return $this->frontPage;
-    }
-
-    /**
-     * Set coordinates
-     *
-     * @param TheScienceTour\MapBundle\Document\Coordinates $coordinates
-     * @return self
-     */
-    public function setCoordinates(\TheScienceTour\MapBundle\Document\Coordinates $coordinates)
-    {
-        $this->coordinates = $coordinates;
-        return $this;
-    }
-
-    /**
-     * Get coordinates
-     *
-     * @return TheScienceTour\MapBundle\Document\Coordinates $coordinates
-     */
-    public function getCoordinates()
-    {
-        return $this->coordinates;
-    }
-
-    public function unsetCoordinates()
-    {
-    	unset($this->coordinates);
-    }
-
-    /**
-     * Set distance
-     *
-     * @param string $distance
-     * @return self
-     */
-    public function setDistance($distance)
-    {
-        $this->distance = $distance;
-        return $this;
-    }
-
-    /**
-     * Get distance
-     *
-     * @return string $distance
-     */
-    public function getDistance()
-    {
-        return $this->distance;
+        return $this->getFinishedAt();
     }
 
     /**
      * Set label
      *
-     * @param TheScienceTour\EventBundle\Document\Label $label
+     * @param \TheScienceTour\EventBundle\Document\Label $label
      * @return self
      */
-    public function setLabel($label)
+    public function setLabel(Label $label)
     {
         $this->label = $label;
         return $this;
@@ -342,9 +169,9 @@ class Event {
     /**
      * Get label
      *
-     * @return TheScienceTour\EventBundle\Document\Label $label
+     * @return \TheScienceTour\EventBundle\Document\Label $label
      */
-    public function getLabel()
+    public function getLabel() : Label
     {
         return $this->label;
     }
