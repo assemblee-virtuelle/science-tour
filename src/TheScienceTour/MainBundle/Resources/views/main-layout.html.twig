@@ -198,7 +198,7 @@
                     {% endif %}
                     <li>
                         <form id="searchbar" method="get"
-                              action="{{ url('tst_search_noreq') }}">
+                              action="{{ path('tst_search_noreq') }}">
                             <input type="text" id="searchbar_query"
                                    name="query"/>
                             <input type="submit" value=""/>
@@ -352,6 +352,8 @@
         src="{{ asset('bundles/thesciencetourmain/js/jquery.pstrength-min.1.2.js') }}"></script>
 <script>
     $(document).ready(function () {
+
+
         $('a.login_link').click(function () {
             var url = $(this).attr('href');
             var $dialog = $('<div></div>').load(url + ' #login_form_content', function () {

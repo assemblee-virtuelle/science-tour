@@ -1,0 +1,24 @@
+<div class="banner-overlay map-overlay">
+    {% for menu in menus %}
+        <div class="banner-overlay-box">
+            {% if menu.title is defined %}<h3>{{ menu.title }}</h3>{% endif %}
+            {% if menu.before is defined %}
+                {% if menu.before.controller %}
+                    {#{ render(controller(menu.before.name, menu.before.params)) }#}
+                {% else %}
+                    {% include menu.before.name with menu.before.params %}
+                {% endif %}
+            {% endif %}
+            <ul class="banner-overlay-nav">
+                {% for item in menu.items %}
+                    <li>
+                        <a href="{{ item.href }}"{% if item.active %} class="active"{% endif %}>
+                            {% if item.icon is defined %}<i class="{{ item.icon }}"></i>{% endif %}{{ item.text }}
+                            {% if item.details is defined %}<span>{{ item.details }}</span>{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>

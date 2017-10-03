@@ -1,6 +1,4 @@
-const DEF_LATITUDE = 48.7,
-      DEF_LONGITUDE = 2.4,
-      DEF_ZOOM = 10;
+const NO_GEOLOCATION = 1;
 
 var mapBoxes = {};
 
@@ -39,7 +37,7 @@ function mapRender() {
     let position = $(this).data('position');
     console.log(position);
     mapBoxes[id]= L.map(id);
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>  ',
         maxZoom: 28
     }).addTo(mapBoxes[id]);

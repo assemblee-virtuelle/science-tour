@@ -316,15 +316,20 @@ exercise_html_purifier:
 the_science_tour_cassini_leaflet:
     default_location:
         latitude: 48.225
-        longitude: 2.2358
-        zoom: 13
+        longitude: 5.2358
+        zoom: 10
 
 services:
     twig.extension.intl:
-       class: Twig_Extensions_Extension_Intl
-       tags:
-           - { name: twig.extension }
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
     twig.extension.text:
-       class: Twig_Extensions_Extension_Text
-       tags:
-           - { name: twig.extension }
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+    twig.extension.cassini:
+        class: TheScienceTour\CassiniLeafletBundle\Twig\TheScienceTourCassiniLeafletExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }

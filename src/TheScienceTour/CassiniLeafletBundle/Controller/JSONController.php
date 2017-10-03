@@ -8,11 +8,14 @@
 
 namespace TheScienceTour\CassiniLeafletBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Provider\Chain\Chain;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\FreeGeoIp\FreeGeoIp;
 use Geocoder\ProviderAggregator;
+
 use Http\Adapter\Guzzle6\Client;
 
 
