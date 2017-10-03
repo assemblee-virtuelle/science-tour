@@ -71,6 +71,7 @@ security:
                  secret:  '%secret%'
 
     access_control:
-        # - { path: ^/admin/, role: ROLE_ADMIN }
+        #- { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_USER }
         - { path: ^/projects/add, role: ROLE_USER }
 
