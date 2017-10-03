@@ -14,12 +14,20 @@ use TheScienceTour\MainBundle\Utility\QueryBuilder;
  */
 class EventRepository extends DocumentRepository
 {
-	
+
+    /**
+     * Liste des camions su Science Tour
+     * Eventuellement limités dans un rayon de proximité autour de l'utilisateur connecté
+     *
+     * @param GeoNear|null $geoNear
+     * @return mixed
+     */
 	public function findTrucks(GeoNear $geoNear = null) {
 		$labelTypes = $this->dm->createQueryBuilder('TheScienceTour\EventBundle\Document\LabelType')
 			->field('slug')->in(array('camion', 'inserm'))
 			->getQuery()
 			->execute();
+
 
 		$lqb = $this->dm->createQueryBuilder('TheScienceTour\EventBundle\Document\Label');
 		foreach ($labelTypes as $labelType) {
