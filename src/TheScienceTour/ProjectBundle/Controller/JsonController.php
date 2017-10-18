@@ -42,7 +42,7 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project.coordinates.longitude, 'latitude' => $project.coordinates.latitude];
+            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
         }
 
         return new JsonResponse($positions);
@@ -60,12 +60,11 @@ class JsonController extends Controller
         $dm = $this->get('doctrine_mongodb')->getManager();
 
         $geoNear = new GeoNear($latitude, $longitude, self::MAX_DISTANCE);
-
         $inProgressProjects = $dm->getRepository('TheScienceTourProjectBundle:Project')->findFinished($geoNear)->execute();
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project.coordinates.longitude, 'latitude' => $project.coordinates.latitude];
+            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
         }
 
         return new JsonResponse($positions);
@@ -88,7 +87,7 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project.coordinates.longitude, 'latitude' => $project.coordinates.latitude];
+            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
         }
 
         return new JsonResponse($positions);
@@ -111,7 +110,7 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project.coordinates.longitude, 'latitude' => $project.coordinates.latitude];
+            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
         }
 
         return new JsonResponse($positions);
