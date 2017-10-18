@@ -1,0 +1,19 @@
+tst_json_in_progress_position:
+    path: /in-progress/{latitude}/{longitude}
+    defaults: { _controller: "TheScienceTourProjectBundle:Json:inProgressPositions", latitude: 0, longitude: 0 }
+    methods: [GET]
+
+tst_json_finished_position:
+    path: /finished/{latitude}/{longitude}
+    defaults: { _controller: "TheScienceTourProjectBundle:Json:finishedPositions", latitude: 0, longitude: 0 }
+    methods: [GET]
+
+tst_json_finished_soon_position:
+    path: /finished-soon/{latitude}/{longitude}
+    defaults: { _controller: "TheScienceTourProjectBundle:Json:finishedSoonPositions", latitude: 0, longitude: 0 }
+    methods: [GET]
+
+tst_json_last_updated_position:
+    path: /last-updated/{latitude}/{longitude}
+    defaults: { _controller: "TheScienceTourProjectBundle:Json:lastUpdatedPositions", latitude: 0, longitude: 0 }
+    methods: [GET]

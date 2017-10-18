@@ -1,3 +1,8 @@
+the_science_tour_content_pattern:
+    resource: "@TheScienceTourProjectBundle/Resources/config/json-routing.yml"
+    prefix:   /projects/json
+
+
 tst_projects:
     path: /{_locale}/projects/{filter}/{center}
     defaults: { _controller: "TheScienceTourProjectBundle:Project:projects", _locale: fr, filter: youngest, center: all }
