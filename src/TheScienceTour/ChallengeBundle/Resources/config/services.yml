@@ -5,8 +5,10 @@ services:
     sonata.admin.challenge:
         class: TheScienceTour\ChallengeBundle\Admin\ChallengeAdmin
         tags:
-            - { name: sonata.admin, manager_type: doctrine_mongodb, group: Challenge, label: Challenge }
+            - { name: sonata.admin, manager_type: doctrine_mongodb, group: app.admin.content, label: Challenges }
         arguments:
             - ~
             - TheScienceTour\ChallengeBundle\Document\Challenge
-            - 'SonataAdminBundle:CRUD'
+            - ~
+            # - 'SonataAdminBundle:CRUD'
+        public: true
