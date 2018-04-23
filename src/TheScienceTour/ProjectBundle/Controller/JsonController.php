@@ -23,7 +23,10 @@ use TheScienceTour\MainBundle\Model\GeoNear;
  */
 class JsonController extends Controller
 {
-    const MAX_DISTANCE = 40;
+    /**
+     * const MAX_DISTANCE Distance mesurée en mètres
+     */
+    const MAX_DISTANCE = 40000;
 
     /**
      * Liste des positions géolocalisées des projets en cours, sours forme d'un objet JSON
@@ -42,7 +45,11 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
+            $positions[] = [
+                'title' => $project->getTitle(),
+                'longitude' => $project->getCoordinates()->getLongitude(),
+                'latitude' => $project->getCoordinates()->getLatitude()
+            ];
         }
 
         return new JsonResponse($positions);
@@ -64,7 +71,11 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
+            $positions[] = [
+                'title' => $project->getTitle(),
+                'longitude' => $project->getCoordinates()->getLongitude(),
+                'latitude' => $project->getCoordinates()->getLatitude()
+            ];
         }
 
         return new JsonResponse($positions);
@@ -87,7 +98,11 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
+            $positions[] = [
+                'title' => $project->getTitle(),
+                'longitude' => $project->getCoordinates()->getLongitude(),
+                'latitude' => $project->getCoordinates()->getLatitude()
+            ];
         }
 
         return new JsonResponse($positions);
@@ -110,7 +125,11 @@ class JsonController extends Controller
 
         $positions = [];
         foreach ($inProgressProjects as $project) {
-            $positions[] = ['longitude' => $project->getCoordinates()->getLongitude(), 'latitude' => $project->getCoordinates()->getLatitude()];
+            $positions[] = [
+                'title' => $project->getTitle(),
+                'longitude' => $project->getCoordinates()->getLongitude(),
+                'latitude' => $project->getCoordinates()->getLatitude()
+            ];
         }
 
         return new JsonResponse($positions);

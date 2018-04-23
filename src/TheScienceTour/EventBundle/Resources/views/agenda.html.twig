@@ -5,6 +5,7 @@
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('bundles/thesciencetourevent/css/jquery-ui-themes/sciencetour-fullcalendar/jquery-ui-1.10.3.custom.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/thesciencetourmain/css/leaflet-styles/leaflet.css') }}" />
 {% endblock %}
 
 {% block scripts %}
@@ -14,6 +15,13 @@
 	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
 	
 	<script type="text/javascript" src="{{ asset('bundles/thesciencetourevent/js/calendar-settings.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.map-box').each(mapRender)
+        });
+
+    </script>
 {% endblock %}
 
 {%  block bodyid %}agenda{% endblock %}
@@ -22,8 +30,11 @@
 {% block nav_agenda %}{% if route.parameters.filter != 'trucks' %} id="nav_agenda"{% endif %}{% endblock %}
 
 {% block banner %}
-	{{ render(controller('TheScienceTourMapBundle:Map:map',
-		{ 'documentList': mapEventList, 'route': route, 'menus': menus, 'centerCoordinates': centerCoordinates })) }}
+	<div class="banner-box">
+		<div id="custom-map" class="main-map map-box" data-position="default"></div>
+        {% include 'TheScienceTourCassiniLeafletBundle:partiels:mapSelector.html.twig' with {'menus': menus} %}
+    	{#{ render(controller('TheScienceTourCassiniMapBundle:Map:map', { 'documentList': mapEventList, 'route': route, 'menus': menus })) }#}
+	</div>
 {% endblock %}
 
 {% block content %}
@@ -96,8 +107,9 @@
 
 {% if asideMapDocumentList %}<h1 class="favorites_h1">{{ asideMapTitle|trans }}{% if asideMapTitle == "My favorites" %}<a href="{{ path('tst_agenda', {'filter' : 'favorite'}) }}">{% trans %}See all{% endtrans %}</a>{% endif %}</h1>
 
-<div class="colored-box bgBlue">
-	{{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': asideMapDocumentList, 'zoomMax': 100 })) }}
+<div class="aside-box colored-box bgBlue">
+	<div id="all-map" class="aside-map map-box" data-position="self"></div>
+	{#{ render(controller('TheScienceTourMapBundle:Map:asideMap', { 'documentList': asideMapDocumentList, 'zoomMax': 100 })) }#}
 	<div class="events-list">
 		<table class="striped bgWhite aside-box-table">
 			{% for event in asideMapDocumentList %}

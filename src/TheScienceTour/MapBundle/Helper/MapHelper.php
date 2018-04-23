@@ -20,52 +20,52 @@ use Geocoder\ProviderAggregator;
  */
 class MapHelper {
 
-	/**
-	 * Geocode IP or street addresses
-	 * @param String $address
-	 * @throws Exception
-	 * @return Geocode
-	 */
-	public function getGeocode($address) {
-		// For local testing set your public IP
-		if ($address == '127.0.0.1') $address = '82.229.75.195';
+    /**
+     * Geocode IP or street addresses
+     * @param String $address
+     * @throws Exception
+     * @return Geocode
+     */
+    public function getGeocode($address) {
+        // For local testing set your public IP
+        if ($address == '127.0.0.1') $address = '82.229.75.195';
 
-		//$buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
-		//$adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
+        //$buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
+        //$adapter = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
 
-		//$adapter = new \Geocoder\HttpAdapter\SocketHttpAdapter();
-		$config = [
-    'timeout' => 2.0,
-    'verify' => false,
-];
-	  $guzzle = new GuzzleClient($config);
+        //$adapter = new \Geocoder\HttpAdapter\SocketHttpAdapter();
+        $config = [
+            'timeout' => 2.0,
+            'verify' => false,
+        ];
+        $guzzle = new GuzzleClient($config);
 
-	  $adapter  = new Client($guzzle);
-		//$adapter = new TSTSocketHttpAdapter();
+        $adapter  = new Client($guzzle);
+        //$adapter = new TSTSocketHttpAdapter();
 
-		$chain    = new Chain(array(
-			    new FreeGeoIp($adapter),
-				new GeoPlugin($adapter),
-				new HostIp($adapter),
-			    new GoogleMaps($adapter, 'fr_FR', 'France', true)
-		));
+        $chain    = new Chain(array(
+            new FreeGeoIp($adapter),
+            new GeoPlugin($adapter),
+            new HostIp($adapter),
+            new GoogleMaps($adapter, 'fr_FR', 'France', true)
+        ));
 
-		$aggregator = new ProviderAggregator();
-		$aggregator->registerProvider($chain);
-		//$geocoder = new \Geocoder\Geocoder();
-		//$geocoder->registerProvider($chain);
+        $aggregator = new ProviderAggregator();
+        $aggregator->registerProvider($chain);
+        //$geocoder = new \Geocoder\Geocoder();
+        //$geocoder->registerProvider($chain);
 
-		try {
-			  $query = GeocodeQuery::create($address);
-		    $geocode = $aggregator->geocodeQuery(GeocodeQuery::create($address));
-		} catch (\Geocoder\Exception\ChainNoResultException $e) {
-		    error_log($e->getMessage());
-		} catch (Exception $e) {
-		    error_log($e->getMessage());
-		    throw $e;
-		}
+        try {
+            //$geocode = $aggregator->geocodeQuery(GeocodeQuery::create($address));
+            $geocode = $aggregator->geocode($address);
+        } catch (\Geocoder\Exception\ChainNoResultException $e) {
+            error_log($e->getMessage());
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            throw $e;
+        }
 
-	    return $geocode;
-	}
+        return $geocode;
+    }
 
 }

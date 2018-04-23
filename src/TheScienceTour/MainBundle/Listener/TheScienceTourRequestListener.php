@@ -15,17 +15,45 @@ class TheScienceTourRequestListener {
 
     const ACCCEPT_LANGUAGE_PATTERN = "/([a-z]{2,3})(-[A-Z]{2,3})?(;q=(\d)(\.\d+)?)?/";
 
+    /**
+     * Le composant Routeur (de Symfony par défaut)
+     *
+     * @var Router
+     */
     private $router;
+
+    /**
+     * Liste des noms de domaines associés au site YCFC (Youth Committed For Change)
+     * @todo A supprimer dans la version définitive, chaque organisation ayant sa propre plate-forme
+     *
+     * @var array
+     */
     private $erasmusDomains;
 
-    public function __construct(Router $router, $erasmusDomains, $languages) {
+    /**
+     * Liste des langues disponibles pour les traductions de la plate-forme du Science Tour
+     *
+     * @var array
+     */
+    private $languages;
+
+    /**
+     * constructeur de TheScienceTourRequestListener.
+     *
+     * L'écouteur est défini comme service, les valeurs des paramètres sont donc données dans les fichier de configuration services.yml
+     *
+     * @param Router $router
+     * @param array $erasmusDomains
+     * @param array $languages
+     */
+    public function __construct(Router $router, array $erasmusDomains, array $languages) {
         $this->router         = $router;
         $this->erasmusDomains = $erasmusDomains;
         $this->languages      = $languages;
     }
 
     /**
-    * onKernelRequest Fonction de rappel liée à l'événement kernel.request
+    * Fonction de rappel liée à l'événement kernel.request
     *
     * @param  GetResponseEvent $event [description]
     * @return void

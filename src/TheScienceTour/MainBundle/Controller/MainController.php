@@ -10,6 +10,7 @@ class MainController extends Controller {
 
   public function homeAction() {
     // Use session.
+      //@TODO : Supprimer les références à Erasmuns (event, etc.)
     $session   = $this->get('session');
     $isErasmus = $session->get('isErasmus', FALSE);
 
@@ -33,7 +34,7 @@ class MainController extends Controller {
       ->findTrucks();
 
     try {
-      $userGeocode           = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR']);
+      $userGeocode           = $mapHelper->getGeocode($_SERVER['HTTP_X_FORWARDED_FOR']);
       $coord = $userGeocode->first()->getCoordinates();
       $aroundMeProjectsQuery = $projectRepo->findGeoNear($coord->getLatitude(), $coord->getLongitude(), $maxDistance, $isErasmus);
       $aroundMeProjects      = $aroundMeProjectsQuery->execute();

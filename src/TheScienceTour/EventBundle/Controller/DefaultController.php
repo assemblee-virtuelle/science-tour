@@ -5,6 +5,7 @@ namespace TheScienceTour\EventBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TheScienceTour\EventBundle\Document\Event;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Geocoder\Geocoder;
 use TheScienceTour\MainBundle\Model\GeoNear;
@@ -17,15 +18,35 @@ use TheScienceTour\MainBundle\Model\GeoNear;
 class DefaultController extends Controller
 {
 
+    private function _agenda (Request $request, string $filter, $center, string $date = null) : Response
+    {
+        $user = $this->getUser();
+        if ($filter == "favorite" && !$user) {
+            throw new AccessDeniedException();
+        }
+
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $eventRepo = $dm->getRepository('TheScienceTourEventBundle:Event');
+
+
+        return $this->render('TheScienceTourEventBundle::agenda.html.twig', [
+            'listTitle' => $this->get('translator')->trans($listTitle),
+            'eventList' => $eventList,
+            'userFavoriteEvents' => $userFavoriteEvents,
+            'menus' => $menus,
+        ]);
+
+    }
+
     /**
      *
      * @param string $filter
      * @param string $date
      * @return \Symfony\Component\HttpFoundation\Response
      */
-	private function _agendaAction($filter, $center, $date = null)
+	private function _agendaAction(Request $request, string $filter, $center, string $date = null) : Response
     {
-    	if ($form = $this->getRequest()->query->get('form', false)) {
+    	if ($form = $request->query->get('form', false)) {
     		if ($form['center']) {
     			if ($filter == "day") {
     				return $this->redirect($this->generateUrl('tst_agenda_day', array('date' => $date, 'center' => $form['center'])));
@@ -40,15 +61,12 @@ class DefaultController extends Controller
     		throw new AccessDeniedException();
     	}
 
-    	// + Get Document Manager and repositories
-    	// + --------------------------------------------------
     	$dm = $this->get('doctrine_mongodb')->getManager();
-			/* @var $eventRepo \TheScienceTour\EventBundle\Repository\EventRepository */
     	$eventRepo = $dm->getRepository('TheScienceTourEventBundle:Event');
 
-		//$user = $this->getUser();
-    	// + --------------------------------------------------
+		$user = $this->getUser();
 
+		// + --------------------------------------------------
     	// + Geocoders
     	// + --------------------------------------------------
     	$mapHelper = $this->get('the_science_tour_map.map_helper');
@@ -62,8 +80,7 @@ class DefaultController extends Controller
 
     	if ($center == 'around-me') {
 	    	// For local testing put in your public IP.
-	    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR'])->first()->getCoordinates();
-        var_dump($userGeocode); die;
+	    	$userGeocode = $mapHelper->getGeocode($_SERVER['HTTP_X_FORWARDED_FOR'])->first()->getCoordinates();
 			$geoNear = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
 	    	$centerCoordinates = array(
 	    			'latitude' => $userGeocode->getLatitude(),
@@ -212,9 +229,8 @@ class DefaultController extends Controller
 
     		if (!$userGeocode) {
 		    	// For local testing put in your public IP.
-		    	$userGeocode = $mapHelper->getGeocode($_SERVER['REMOTE_ADDR'])->first()->getCoordinates();
+		    	$userGeocode = $mapHelper->getGeocode($_SERVER['HTTP_X_FORWARDED_FOR'])->first()->getCoordinates();
 	    	}
-        //var_dump($userGeocode->first()->getCoordinates()); die
 
 	    	$aroundMeGeoNear = new GeoNear($userGeocode->getLatitude(), $userGeocode->getLongitude(), $maxDistance);
 
@@ -240,43 +256,49 @@ class DefaultController extends Controller
 	    	}
     	}
 
-		return $this->render('TheScienceTourEventBundle::agenda.html.twig', array(
-				'mapEventList' => $mapEventList,
-				'eventList' => $eventList,
-				'listTitle' => $this->get('translator')->trans($listTitle),
-				'route' => $route,
-				'menus' => $menus,
-				'centerCoordinates' => $centerCoordinates,
-				'userFavoriteEvents' => $userFavoriteEvents,
-				'asideMapTitle' => $asideMapTitle,
-				'asideMapDocumentList' => $asideMapDocumentList
-		));
+        return $this->render('TheScienceTourEventBundle::agenda.html.twig', [
+            'asideMapDocumentList' => $asideMapDocumentList,
+            'asideMapTitle' => $asideMapTitle,
+            'centerCoordinates' => $centerCoordinates,
+            'eventList' => $eventList,
+            'listTitle' => $this->get('translator')->trans($listTitle),
+            'mapEventList' => $mapEventList,
+            'menus' => $menus,
+            'route' => $route,
+            'userFavoriteEvents' => $userFavoriteEvents,
+        ]);
     }
 
     /**
-     * List event regarding the given filter
+     * Liste des événements répondant à un certain critère de sélection
+     *
      * @param unknown $filter
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function agendaAction($filter, $center) {
-    	return $this->_agendaAction($filter, $center);
+    public function agendaAction(Request $request, string $filter, string $center) : Response
+    {
+    	return $this->_agendaAction($request, $filter, $center);
     }
 
     /**
-     * List events which take place on the given day
+     * Liste des événements se déroulant un jour donné
+     *
      * @param string $date
      */
-    public function dayAction($date, $center)
+    public function dayAction(Request $request, string $date, $center) : Response
     {
-    	return $this->_agendaAction('day', $center, $date);
+    	return $this->_agendaAction($request,'day', $center, $date);
     }
 
 	/**
-	 *
+	 * Liste des événements notés « favoris » par l'utilisateur connecté.
+     * Renvoie une liste vide si l'utilisateur est anonyme
+     *
 	 * @param string $id
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function showAction($id) {
+	public function showAction(string $id) : Response
+    {
     	$user = $this->getUser();
 
     	if (!$user) {
@@ -300,7 +322,15 @@ class DefaultController extends Controller
     	));
 	}
 
-	public function favoritesAction($id, $action) {
+    /**
+     * Ajoute un événement aux favoris de l'utilisateur connecté
+     *
+     * @param string $id
+     * @param string $action
+     * @return Response
+     */
+	public function favoritesAction(string $id, string $action)  : Response
+    {
 		$user = $this->getUser();
 
 		if (!$user) {

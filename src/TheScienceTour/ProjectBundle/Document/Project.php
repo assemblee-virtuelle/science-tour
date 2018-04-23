@@ -37,7 +37,7 @@ use TheScienceTour\DocumentBundle\Document\Document as BaseDocument;
  * })
  * @TSTProjectAssert\AtLeastOneRes(groups={"publish"})
  */
-class Project /* extends BaseDocument */ {
+class Project /* extends Content */ {
 
   /**
    * @MongoDB\Id

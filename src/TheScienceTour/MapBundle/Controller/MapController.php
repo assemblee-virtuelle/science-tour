@@ -46,7 +46,7 @@ class MapController extends Controller
         array $menus = [],
         array $centerCoordinates = [],
         bool $defaultMap = false
-    ): Response
+    ) : Response
     {
         if ($this->get('kernel')->getEnvironment() === 'dev') {
             return new Response('Les cartes sont désactivées en environnement de dev.');
@@ -63,8 +63,7 @@ class MapController extends Controller
     }
 
     /**
-     * Affiche un aperçu de carte géographique
-     *
+     * asideMapAction Affiche un aperçu de carte géographique
      * @param array $documentList
      * @param int $zoomMax
      * @param array $sizes
@@ -74,12 +73,12 @@ class MapController extends Controller
      * @return Response
      */
     public function asideMapAction(
-        array $documentList = [],
-        integer $zoomMax = 5,
-        array $sizes = array('width' => '204px', 'height' => '153px'),
-        string $htmlContainerId = 'aside-map-canvas',
-        array $centerCoordinates = []
-    ): Response
+        /*array*/ $documentList = [],
+        /*integer*/ $zoomMax = 5,
+        /*array*/ $sizes = array('width' => '204px', 'height' => '153px'),
+        /*string*/ $htmlContainerId = 'aside-map-canvas',
+        /*array*/ $centerCoordinates = []
+    ) : Response
     {
 
         if (!($documentList instanceof \Countable)) {
@@ -112,12 +111,13 @@ class MapController extends Controller
 
     /**
      * _addMarkers
+     *
      * @param array $documentList
      * @param array $centerCoordinates
      * @param bool $showInfoWindow
      * @return Map
      */
-    private function _addMarkers(array $documentList, array $centerCoordinates, bool $showInfoWindow) : Map
+    private function _addMarkers($documentList, array $centerCoordinates, bool $showInfoWindow) : Map
     {
         // + Google Map and markers
         // + --------------------------------------------------
