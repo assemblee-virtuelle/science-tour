@@ -54,7 +54,8 @@ class AppKernel extends Kernel
             new TheScienceTour\MediaBundle\TheScienceTourMediaBundle(),
             new TheScienceTour\MessageBundle\TheScienceTourMessageBundle(),
             new TheScienceTour\ProjectBundle\TheScienceTourProjectBundle(),
-            new TheScienceTour\UserBundle\TheScienceTourUserBundle()
+            new TheScienceTour\UserBundle\TheScienceTourUserBundle(),
+            new TheScienceTour\PeerBundle\PeerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

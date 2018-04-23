@@ -9,6 +9,7 @@ imports:
     - { resource: "@TheScienceTourMessageBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourProjectBundle/Resources/config/services.yml" }
     - { resource: "@TheScienceTourUserBundle/Resources/config/services.yml" }
+#    - { resource: "@TheScienceTourPeerBundle/Resources/config/services.xml" }
 #    - { resource: "@TheScienceTourChallengeBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed

@@ -1,3 +1,7 @@
+peer:
+    resource: "@TheScienceTourPeerBundle/Resources/config/routing.xml"
+    prefix:   /
+
 the_science_tour_content_pattern:
     resource: "@TheScienceTourContentPatternBundle/Resources/config/routing.yml"
     prefix:   /
